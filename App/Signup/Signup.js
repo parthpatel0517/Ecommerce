@@ -3,6 +3,7 @@ import React from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Foundation from 'react-native-vector-icons/Foundation';
+import { horizontalScale, verticalScale } from '../../assets/Metrics/Metrics';
 
 export default function Signup() {
   return (
@@ -14,8 +15,8 @@ export default function Signup() {
         barStyle="dark-content"
       />
 
-      <Text style={{ marginLeft: -13,marginBottom:20 }}><MaterialIcons name="keyboard-arrow-left" size={50} color="black" /></Text>
-      <Text style={{ fontFamily: 'Metropolis-Bold', fontSize: 34, color: 'black', marginBottom: 50, }}>Sign Up</Text>
+      <Text style={{ marginLeft: verticalScale(-13),marginBottom:horizontalScale(20) }}><MaterialIcons name="keyboard-arrow-left" size={50} color="black" /></Text>
+      <Text style={{ fontFamily: 'Metropolis-Bold', fontSize: moderateScale(14), color: 'black', marginBottom: verticalScale(50), }}>Sign Up</Text>
       <View>
         <TextInput
 
@@ -36,8 +37,8 @@ export default function Signup() {
           autoCapitalize="none"
           placeholderTextColor='#9B9B9B'
         />
-        <View style={{ flexDirection: 'row', marginLeft: 210, alignItems: 'center', marginTop: 13 }}>
-          <Text style={{ color: 'black', fontSize: 14 }}>Already have an account?</Text>
+        <View style={{ flexDirection: 'row', marginLeft: horizontalScale(210), alignItems: 'center', marginTop: verticalScale(13) }}>
+          <Text style={{ color: 'black', fontSize: moderateScale(14) }}>Already have an account?</Text>
           <Text><MaterialIcons name="arrow-right-alt" size={35} color="red" /></Text>
         </View>
 
@@ -52,14 +53,14 @@ export default function Signup() {
           fontWeight: '500',
           alignItems: 'center',
           marginTop: 30
-        }}><Text style={{ color: 'white', fontSize: 16, fontFamily: 'Metropolis-Medium' }}>SIGN UP</Text></TouchableOpacity>
+        }}><Text style={{ color: 'white', fontSize: moderateScale(16), fontFamily: 'Metropolis-Medium' }}>SIGN UP</Text></TouchableOpacity>
       </View>
       <Text style={{
         color: '#222222',
         textAlign: 'center',
         marginTop: 165,
         marginHorizontal:'auto',
-        fontSize: 15
+        fontSize: moderateScale(15)
       }}>Or sign up with social account</Text>
 
       <View style={{
