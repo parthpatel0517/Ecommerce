@@ -168,7 +168,7 @@ export default function HomePage() {
 
       </View>
       <View style={style.FisrtNew}>
-        <Image source={require('../../assets/img/Graphic.png')} style={{ width: '100%', height: '100%' }} />
+        <TouchableOpacity><Image source={require('../../assets/img/Graphic.png')} style={{ width: '100%', height: '100%' }} /></TouchableOpacity>
         <Text style={style.FistViewText}>New collection</Text>
       </View>
 
@@ -177,23 +177,23 @@ export default function HomePage() {
         <View style={style.SecondView}>
           <View style={style.SummSale}>
             <View style={style.SumTextView}>
-              <Text style={style.SummText1}>Summer Sale</Text>
+              <TouchableOpacity><Text style={style.SummText1}>Summer Sale</Text></TouchableOpacity>
             </View>
 
 
           </View>
           <View style={style.BlackView}>
-            <Image source={require('../../assets/img/Graphic1.png')} style={{ width: '100%', height: '100%' }} />
+            <TouchableOpacity><Image source={require('../../assets/img/Graphic1.png')} style={{ width: '100%', height: '100%' }} /></TouchableOpacity>
             <Text style={style.BlackText}>Black</Text>
           </View>
         </View>
 
         <View style={style.BodieView}>
-          <Image source={require('../../assets/img/Graphic3.png')} style={{ width: '100%', height: '100%' }}/>
+        <TouchableOpacity><Image source={require('../../assets/img/Graphic3.png')} style={{ width: '100%', height: '100%' }} /></TouchableOpacity>
           <View style={style.hoodieTextView}>
-            <Text style={style.hoodieText}>Men's hoodies</Text>
+        <Text style={style.hoodieText}>Men's hoodies</Text>
           </View>
-         
+
         </View>
       </View>
 
@@ -303,7 +303,6 @@ const style = StyleSheet.create({
     marginTop: 60,
     width: '100%',
     height: 390,
-    backgroundColor: 'red',
     position: 'relative'
   },
   FistViewText: {
@@ -334,7 +333,6 @@ const style = StyleSheet.create({
     fontFamily: 'Metropolis-Bold',
   },
   BlackView: {
-    backgroundColor: 'red',
     width: '100%',
     height: '50%',
     position: 'relative'
@@ -357,301 +355,22 @@ const style = StyleSheet.create({
     flexDirection: 'row'
   },
   BodieView: {
-    backgroundColor: 'red',
+   
     width: '50%',
     height: '100%',
-    position:'relative'
+    position: 'relative'
   },
-  hoodieTextView:{
-    position:'absolute',
-    bottom:170,
-    left:50,
+  hoodieTextView: {
+    position: 'absolute',
+    bottom: 170,
+    left: 50,
+  },
 
-  },
-  hoodieText : {
-    color:'white',
-    fontSize:35, 
-    fontFamily: 'Metropolis-Bold', 
+  hoodieText: {
+    color: 'white',
+    fontSize: 35,
+    fontFamily: 'Metropolis-Bold',
   }
 
 })
 
-
-
-
-
-
-
-// import React from 'react';
-// import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
-
-// const App = () => {
-//   return (
-//     <View style={styles.container}>
-//       <View style={styles.header}>
-//         <TouchableOpacity>
-//           <Image source={require('./assets/back.png')} style={styles.backIcon} />
-//         </TouchableOpacity>
-//         <Text style={styles.headerText}>9:41</Text>
-//         <TouchableOpacity>
-//           <Image source={require('./assets/search.png')} style={styles.searchIcon} />
-//         </TouchableOpacity>
-//       </View>
-//       <View style={styles.filterBar}>
-//         <TouchableOpacity style={styles.filterButton}>
-//           <Text style={styles.filterText}>Filters</Text>
-//         </TouchableOpacity>
-//         <View style={styles.sortContainer}>
-//           <TouchableOpacity style={styles.sortButton}>
-//             <Image source={require('./assets/sort.png')} style={styles.sortIcon} />
-//           </TouchableOpacity>
-//           <Text style={styles.sortText}>Price: lowest to high</Text>
-//         </View>
-//         <TouchableOpacity style={styles.gridButton}>
-//           <Image source={require('./assets/grid.png')} style={styles.gridIcon} />
-//         </TouchableOpacity>
-//       </View>
-//       <View style={styles.productList}>
-//         <View style={styles.productItem}>
-//           <Image source={require('./assets/product1.jpg')} style={styles.productImage} />
-//           <View style={styles.productInfo}>
-//             <Text style={styles.productName}>Pullover</Text>
-//             <Text style={styles.productBrand}>Mango</Text>
-//             <View style={styles.ratingContainer}>
-//               <Image source={require('./assets/star.png')} style={styles.starIcon} />
-//               <Image source={require('./assets/star.png')} style={styles.starIcon} />
-//               <Image source={require('./assets/star.png')} style={styles.starIcon} />
-//               <Image source={require('./assets/star.png')} style={styles.starIcon} />
-//               <Image source={require('./assets/star.png')} style={styles.starIcon} />
-//               <Text style={styles.ratingText}>(3)</Text>
-//             </View>
-//             <Text style={styles.productPrice}>51$</Text>
-//           </View>
-//           <TouchableOpacity style={styles.heartButton}>
-//             <Image source={require('./assets/heart.png')} style={styles.heartIcon} />
-//           </TouchableOpacity>
-//         </View>
-//         <View style={styles.productItem}>
-//           <Image source={require('./assets/product2.jpg')} style={styles.productImage} />
-//           <View style={styles.productInfo}>
-//             <Text style={styles.productName}>Pullover</Text>
-//             <Text style={styles.productBrand}>Mango</Text>
-//             <View style={styles.ratingContainer}>
-//               <Image source={require('./assets/star.png')} style={styles.starIcon} />
-//               <Image source={require('./assets/star.png')} style={styles.starIcon} />
-//               <Image source={require('./assets/star.png')} style={styles.starIcon} />
-//               <Image source={require('./assets/star.png')} style={styles.starIcon} />
-//               <Image source={require('./assets/star.png')} style={styles.starIcon} />
-//               <Text style={styles.ratingText}>(0)</Text>
-//             </View>
-//           </View>
-//           <TouchableOpacity style={styles.heartButton}>
-//             <Image source={require('./assets/heart.png')} style={styles.heartIcon} />
-//           </TouchableOpacity>
-//         </View>
-//         <View style={styles.productItem}>
-//           <Image source={require('./assets/product3.jpg')} style={styles.productImage} />
-//           <View style={styles.productInfo}>
-//             <Text style={styles.productName}>Pullover</Text>
-//             <Text style={styles.productBrand}>Mango</Text>
-//             <View style={styles.ratingContainer}>
-//               <Image source={require('./assets/star.png')} style={styles.starIcon} />
-//               <Image source={require('./assets/star.png')} style={styles.starIcon} />
-//               <Image source={require('./assets/star.png')} style={styles.starIcon} />
-//               <Image source={require('./assets/star.png')} style={styles.starIcon} />
-//               <Image source={require('./assets/star.png')} style={styles.starIcon} />
-//               <Text style={styles.ratingText}>(10)</Text>
-//             </View>
-//           </View>
-//           <TouchableOpacity style={styles.heartButton}>
-//             <Image source={require('./assets/heart.png')} style={styles.heartIcon} />
-//           </TouchableOpacity>
-//         </View>
-//         <View style={styles.productItem}>
-//           <Image source={require('./assets/product4.jpg')} style={styles.productImage} />
-//           <View style={styles.productInfo}>
-//             <Text style={styles.productName}>Pullover</Text>
-//             <Text style={styles.productBrand}>Mango</Text>
-//             <View style={styles.ratingContainer}>
-//               <Image source={require('./assets/star.png')} style={styles.starIcon} />
-//               <Image source={require('./assets/star.png')} style={styles.starIcon} />
-//               <Image source={require('./assets/star.png')} style={styles.starIcon} />
-//               <Image source={require('./assets/star.png')} style={styles.starIcon} />
-//               <Image source={require('./assets/star.png')} style={styles.starIcon} />
-//               <Text style={styles.ratingText}>(3)</Text>
-//             </View>
-//             <Text style={styles.productPrice}>51$</Text>
-//           </View>
-//           <TouchableOpacity style={styles.heartButton}>
-//             <Image source={require('./assets/heart.png')} style={styles.heartIcon} />
-//           </TouchableOpacity>
-//         </View>
-//       </View>
-//       <View style={styles.footer}>
-//         <TouchableOpacity style={styles.footerButton}>
-//           <Image source={require('./assets/home.png')} style={styles.footerIcon} />
-//           <Text style={styles.footerText}>Home</Text>
-//         </TouchableOpacity>
-//         <TouchableOpacity style={styles.footerButton}>
-//           <Image source={require('./assets/shop.png')} style={styles.footerIcon} />
-//           <Text style={styles.footerText}>Shop</Text>
-//         </TouchableOpacity>
-//         <TouchableOpacity style={styles.footerButton}>
-//           <Image source={require('./assets/bag.png')} style={styles.footerIcon} />
-//           <Text style={styles.footerText}>Bag</Text>
-//         </TouchableOpacity>
-//         <TouchableOpacity style={styles.footerButton}>
-//           <Image source={require('./assets/favorite.png')} style={styles.footerIcon} />
-//           <Text style={styles.footerText}>Favorites</Text>
-//         </TouchableOpacity>
-//         <TouchableOpacity style={styles.footerButton}>
-//           <Image source={require('./assets/profile.png')} style={styles.footerIcon} />
-//           <Text style={styles.footerText}>Profile</Text>
-//         </TouchableOpacity>
-//       </View>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//   },
-//   header: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     justifyContent: 'space-between',
-//     padding: 16,
-//     backgroundColor: '#fff',
-//     elevation: 5,
-//   },
-//   backIcon: {
-//     width: 24,
-//     height: 24,
-//   },
-//   headerText: {
-//     fontSize: 20,
-//     fontWeight: 'bold',
-//   },
-//   searchIcon: {
-//     width: 24,
-//     height: 24,
-//   },
-//   filterBar: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     justifyContent: 'space-between',
-//     padding: 16,
-//     backgroundColor: '#fff',
-//     elevation: 5,
-//   },
-//   filterButton: {
-//     padding: 8,
-//   },
-//   filterText: {
-//     fontSize: 16,
-//     color: '#000',
-//   },
-//   sortContainer: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//   },
-//   sortButton: {
-//     padding: 8,
-//   },
-//   sortIcon: {
-//     width: 16,
-//     height: 16,
-//   },
-//   sortText: {
-//     fontSize: 16,
-//     color: '#000',
-//   },
-//   gridButton: {
-//     padding: 8,
-//   },
-//   gridIcon: {
-//     width: 24,
-//     height: 24,
-//   },
-//   productList: {
-//     flex: 1,
-//     padding: 16,
-//   },
-//   productItem: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     justifyContent: 'space-between',
-//     padding: 16,
-//     marginBottom: 8,
-//     backgroundColor: '#fff',
-//     elevation: 5,
-//     borderRadius: 8,
-//   },
-//   productImage: {
-//     width: 100,
-//     height: 100,
-//     borderRadius: 8,
-//   },
-//   productInfo: {
-//     flex: 1,
-//     marginLeft: 16,
-//   },
-//   productName: {
-//     fontSize: 18,
-//     fontWeight: 'bold',
-//     marginBottom: 4,
-//   },
-//   productBrand: {
-//     fontSize: 14,
-//     color: '#666',
-//     marginBottom: 8,
-//   },
-//   ratingContainer: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     marginBottom: 8,
-//   },
-//   starIcon: {
-//     width: 16,
-//     height: 16,
-//   },
-//   ratingText: {
-//     fontSize: 14,
-//     marginLeft: 4,
-//   },
-//   productPrice: {
-//     fontSize: 16,
-//     fontWeight: 'bold',
-//   },
-//   heartButton: {
-//     padding: 8,
-//   },
-//   heartIcon: {
-//     width: 24,
-//     height: 24,
-//   },
-//   footer: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     justifyContent: 'space-around',
-//     padding: 16,
-//     backgroundColor: '#fff',
-//     elevation: 5,
-//   },
-//   footerButton: {
-//     alignItems: 'center',
-//   },
-//   footerIcon: {
-//     width: 24,
-//     height: 24,
-//     marginBottom: 4,
-//   },
-//   footerText: {
-//     fontSize: 12,
-//     color: '#000',
-//   },
-// });
-
-// export default App;
