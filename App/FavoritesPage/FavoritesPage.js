@@ -2,6 +2,7 @@ import { View, Text, ScrollView, StatusBar, StyleSheet, FlatList, Image, Touchab
 import React from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 import { horizontalScale, moderateScale, verticalScale } from '../../assets/Metrics/Metrics'
 const data = [
     {
@@ -67,9 +68,14 @@ export default function SubCategories2() {
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <View style={styles.productMainView}>
                 <View style={styles.productImg}>
-                    <Image source={v.img} style={{ width: '100%', height: '100%',borderTopLeftRadius:15,borderTopRightRadius:15}} />
-                    <TouchableOpacity><FontAwesome name="heart-o" size={20} color="black" style={styles.heart} /></TouchableOpacity>
+                    <Image source={v.img} style={{ width: '100%', height: '100%', borderTopLeftRadius: 15, borderTopRightRadius: 15 }} />
+                   
                 </View>
+              <View>
+              <Fontisto name="shopping-bag" size={18} color="#F9F9F9"  style={styles.shoppingcard}/>
+              </View>
+                 
+        
                 <View style={styles.productText}>
                     <View style={styles.iconview}>
                         <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
@@ -95,8 +101,8 @@ export default function SubCategories2() {
                 barStyle="dark-content"
             />
             <View style={styles.ArrowView}>
-                <Text style={styles.KeyboardArrow}><MaterialIcons name="keyboard-arrow-left" size={50} color="black" /></Text>
-                <Text style={styles.ArrowText}>Women's tops</Text>
+
+                <Text style={styles.ArrowText}>Favorites</Text>
                 <TouchableOpacity><MaterialIcons name="search" size={30} color="black" style={{ marginTop: 25 }} /></TouchableOpacity>
             </View>
             <View style={{ backgroundColor: 'white', marginBottom: 25 }}>
@@ -108,8 +114,8 @@ export default function SubCategories2() {
                 />
 
                 <View style={styles.FilterOptions}>
-                    <TouchableOpacity style={{flexDirection:'row'}}><MaterialIcons name="filter-list" size={30} color="black" /><Text style={styles.filterText}>Filters</Text></TouchableOpacity>
-                    <TouchableOpacity style={{flexDirection:'row'}}><FontAwesome name="arrows-v" size={26} color="black" /><Text style={styles.filterText}>Price:lowest to high</Text></TouchableOpacity>
+                    <TouchableOpacity style={{ flexDirection: 'row' }}><MaterialIcons name="filter-list" size={30} color="black" /><Text style={styles.filterText}>Filters</Text></TouchableOpacity>
+                    <TouchableOpacity style={{ flexDirection: 'row' }}><FontAwesome name="arrows-v" size={26} color="black" /><Text style={styles.filterText}>Price:lowest to high</Text></TouchableOpacity>
                     <TouchableOpacity><FontAwesome name="th-list" size={26} color="black" /></TouchableOpacity>
                 </View>
             </View>
@@ -147,7 +153,9 @@ const styles = StyleSheet.create({
     ArrowText: {
         color: 'black',
         fontSize: 23,
-        marginTop: 22
+        fontFamily: 'Metropolis-SemiBold',
+        marginTop: 25,
+        marginLeft: 150
     },
     KeyboardArrow: {
         marginTop: 16,
@@ -182,33 +190,27 @@ const styles = StyleSheet.create({
         color: 'black',
         paddingRight: verticalScale(60),
         marginTop: 4,
-        marginLeft:10
+        marginLeft: 10
     },
     productMainView: {
         width: 180,
         height: 350,
-        marginBottom:40
+        marginBottom: 40,
+        position: 'relative',
     },
     productImg: {
         width: '100%',
         height: '68%',
-        position: 'relative',
+      
     },
-    heart: {
-        position: 'absolute',
-        bottom: -10,
-        right: 0,
-        backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 10
-    },
+
     productText: {
         width: '100%',
         height: '32%',
-        backgroundColor:'white',
-        borderBottomLeftRadius:15,
-        borderBottomRightRadius:15,
-        elevation:2
+        backgroundColor: 'white',
+        elevation:2,
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15
     },
     iconview: {
         flexDirection: 'row',
@@ -228,14 +230,25 @@ const styles = StyleSheet.create({
         fontFamily: 'Metropolis-SemiBold',
         fontSize: 18,
         paddingHorizontal: 6,
-        marginTop:3
+        marginTop: 3
     },
     price: {
         color: 'black',
         fontSize: 16,
         fontFamily: 'Metropolis-Medium',
         paddingHorizontal: 7,
-        marginTop:4
+        marginTop: 4
+    },
+
+    shoppingcard: {
+       backgroundColor:'#DA2F23',
+       position:'absolute',
+       padding:15,
+       borderRadius:50 ,
+       bottom:-16,
+       right:0,
+       zIndex:999
+      
     },
 
 
