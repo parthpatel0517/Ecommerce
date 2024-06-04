@@ -9,7 +9,7 @@ import SubCategories2 from './App/SubCategories2/SubCategories2';
 
 export default function App() {
   return (
-    <View style={{backgroundColor:'#ffffff' , height:900}}>
+    <View style={{backgroundColor:'#ffffff',height:'100%'}}>
     {/* <Signup></Signup> */}
     {/* <Login></Login> */}
     {/* <Forgot_pass></Forgot_pass> */}

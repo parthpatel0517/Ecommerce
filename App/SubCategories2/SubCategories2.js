@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, StatusBar, StyleSheet, FlatList } from 'react-native'
+import { View, Text, ScrollView, StatusBar, StyleSheet, FlatList, Image } from 'react-native'
 import React from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -25,7 +25,36 @@ const data = [
 
     }
 ]
-
+const Data2= [
+    {
+        id:1,
+        img :require('../../assets/img/see_you.png'),
+        title:'Mango',
+        SubTitle:'T-Shirt SPANISH',
+        price:9
+    },
+    {
+        id:2,
+        img :require('../../assets/img/see_you.png'),
+        title:'Mango',
+        SubTitle:'T-Shirt SPANISH',
+        price:9
+    },
+    {
+        id:3,
+        img :require('../../assets/img/see_you.png'),
+        title:'Mango',
+        SubTitle:'T-Shirt SPANISH',
+        price:9
+    },
+    {
+        id:4,
+        img :require('../../assets/img/see_you.png'),
+        title:'Mango',
+        SubTitle:'T-Shirt SPANISH',
+        price:9
+    }
+]
 export default function SubCategories2() {
     const ProductCard = ({ v }) => (
 
@@ -33,6 +62,29 @@ export default function SubCategories2() {
             <View style={styles.Options}><Text style={styles.OptionsText}>{v.title}</Text></View>
 
         </View>
+    )
+    const ProductData = ({ v }) => (
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View style={styles.productMainView}>
+        <View style={styles.productImg}>
+            <Image source={v.img} style={{ width: '100%', height: '100%', borderRadius: 15 }} />
+        </View>
+        <View style={styles.productText}>
+            <View style={styles.iconview}>
+                <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
+                <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
+                <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
+                <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
+                <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
+                <Text style={{ color: '#9B9B9B' }}>(3)</Text>
+            </View>
+            <Text style={styles.mangoText}>{v.title}</Text>
+            <Text style={styles.tShirt}>{v.SubTitle}</Text>
+            <Text style={styles.price}>{v.price}$</Text>
+        </View>
+
+    </View>
+    </View>
     )
     return (
         <ScrollView style={styles.container}>
@@ -44,19 +96,30 @@ export default function SubCategories2() {
             <View style={styles.ArrowView}>
                 <Text style={styles.KeyboardArrow}><MaterialIcons name="keyboard-arrow-left" size={50} color="black" /></Text>
                 <Text style={styles.ArrowText}>Women's tops</Text>
-                <MaterialIcons name="search" size={30} color="black" style={{marginTop:25}}/>
+                <MaterialIcons name="search" size={30} color="black" style={{ marginTop: 25 }} />
             </View>
+            <View style={{ backgroundColor: 'white', marginBottom: 25 }}>
+                <FlatList
+                    data={data}
+                    renderItem={({ item }) => <ProductCard v={item} />}
+                    keyExtractor={item => item.id}
+                    horizontal={true}
+                />
+                <View style={styles.FilterOptions}>
+                    <FontAwesome name="wifi" size={26} color="black" /><Text style={styles.filterText}>Filters</Text>
+                    <FontAwesome name="arrows-v" size={26} color="black" /><Text style={styles.filterText}>Price:lowest to high</Text>
+                    <FontAwesome name="th" size={26} color="black" />
+                </View>
+            </View>
+          
             <FlatList
-                data={data}
-                renderItem={({ item }) => <ProductCard v={item} />}
-                keyExtractor={item => item.id}
-                horizontal={true}
+                    data={Data2}
+                    renderItem={({ item }) => <ProductData v={item} />}
+                    keyExtractor={item => item.id}
             />
-            <View style={styles.FilterOptions}>
-        <FontAwesome name="wifi" size={26} color="black" /><Text style={styles.filterText}>Filters</Text>
-        <FontAwesome name="arrows-v" size={26} color="black" /><Text style={styles.filterText}>Price:lowest to high</Text>
-        <FontAwesome name="th" size={26} color="black" />
-      </View>
+          
+            
+
         </ScrollView>
     )
 }
@@ -65,7 +128,8 @@ export default function SubCategories2() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: 15
+        paddingHorizontal: 15,
+        backgroundColor: '#F9F9F9'
     },
     ArrowView: {
         width: '100%',
@@ -107,11 +171,53 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         backgroundColor: '#F9F9F9',
         marginBottom: verticalScale(20)
-      },
-      filterText: {
+    },
+    filterText: {
         color: 'black',
         paddingRight: verticalScale(60),
-        marginTop:4
-        
-      },
+        marginTop: 4
+
+    },
+    productMainView: {
+        width: 180,
+        height: 375,
+
+
+    },
+    productImg: {
+        width: '100%',
+        height: '60%',
+
+    },
+    productText: {
+        width: '100%',
+        height: '40%',
+
+    },
+    iconview: {
+        flexDirection: 'row',
+        paddingHorizontal: 4,
+        marginTop: 6,
+
+    },
+    mangoText: {
+        color: '#9B9B9B',
+        fontSize: 14,
+        paddingHorizontal: 6,
+        marginTop: 4,
+        fontFamily: 'Metropolis-SemiBold'
+    },
+    tShirt: {
+        color: 'black',
+        fontFamily: 'Metropolis-SemiBold',
+        fontSize: 18,
+        paddingHorizontal: 6,
+    },
+    price: {
+        color: 'black',
+        fontSize: 15,
+        fontFamily: 'Metropolis-Medium',
+        paddingHorizontal: 6,
+    }
+
 })
