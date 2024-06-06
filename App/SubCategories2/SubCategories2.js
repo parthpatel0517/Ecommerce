@@ -67,8 +67,10 @@ export default function SubCategories2() {
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <View style={styles.productMainView}>
                 <View style={styles.productImg}>
-                    <Image source={v.img} style={{ width: '100%', height: '100%',borderTopLeftRadius:15,borderTopRightRadius:15}} />
-                    <TouchableOpacity><FontAwesome name="heart-o" size={20} color="black" style={styles.heart} /></TouchableOpacity>
+                    <Image source={v.img} style={{ width: '100%', height: '100%',borderTopLeftRadius:15,borderTopRightRadius:15}} />   
+                </View>
+                <View>
+                <TouchableOpacity><FontAwesome name="heart-o" size={20} color="black" style={styles.heart} /></TouchableOpacity>
                 </View>
                 <View style={styles.productText}>
                     <View style={styles.iconview}>
@@ -200,7 +202,8 @@ const styles = StyleSheet.create({
         right: 0,
         backgroundColor: 'white',
         borderRadius: 20,
-        padding: 10
+        padding: 10,
+        
     },
     productText: {
         width: '100%',
