@@ -140,26 +140,26 @@ export default function SubCategories2() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: 15,
+        paddingHorizontal: horizontalScale(15),
         backgroundColor: '#F9F9F9'
     },
     ArrowView: {
         width: '100%',
-        height: 80,
-        marginTop: 40,
+        height: verticalScale(80),
+        marginTop: verticalScale(40),
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
     ArrowText: {
         color: 'black',
-        fontSize: 23,
+        fontSize: moderateScale(23),
         fontFamily: 'Metropolis-SemiBold',
-        marginTop: 25,
-        marginLeft: 150
+        marginTop: verticalScale(25),
+        marginLeft: horizontalScale(150)
     },
     KeyboardArrow: {
-        marginTop: 16,
-        marginLeft: -15
+        marginTop:  verticalScale(16),
+        marginLeft: horizontalScale(-15)
     },
     CategorisView: {
         paddingRight: horizontalScale(10),
@@ -189,13 +189,13 @@ const styles = StyleSheet.create({
     filterText: {
         color: 'black',
         paddingRight: verticalScale(60),
-        marginTop: 4,
-        marginLeft: 10
+        marginTop: verticalScale(4),
+        marginLeft: horizontalScale(10)
     },
     productMainView: {
-        width: 180,
-        height: 350,
-        marginBottom: 40,
+        width: verticalScale(170),
+        height: horizontalScale(350),
+        marginBottom: verticalScale(40),
         position: 'relative',
     },
     productImg: {
@@ -214,39 +214,40 @@ const styles = StyleSheet.create({
     },
     iconview: {
         flexDirection: 'row',
-        paddingHorizontal: 4,
-        marginTop: 5,
+        paddingHorizontal: horizontalScale(4),
+        marginTop: verticalScale(5),
 
     },
     mangoText: {
         color: '#9B9B9B',
-        fontSize: 15,
-        paddingHorizontal: 6,
-        marginTop: 6,
+        fontSize: moderateScale(15),
+        paddingHorizontal: horizontalScale(6),
+        marginTop: verticalScale(6),
         fontFamily: 'Metropolis-SemiBold'
     },
     tShirt: {
         color: 'black',
         fontFamily: 'Metropolis-SemiBold',
-        fontSize: 18,
-        paddingHorizontal: 6,
-        marginTop: 3
+        fontSize: moderateScale(18),
+        paddingHorizontal: horizontalScale(6),
+        marginTop: verticalScale(3)
     },
     price: {
         color: 'black',
-        fontSize: 16,
+        fontSize:moderateScale(16),
         fontFamily: 'Metropolis-Medium',
-        paddingHorizontal: 7,
-        marginTop: 4
+        paddingHorizontal:horizontalScale(7),
+        marginTop: verticalScale(4)
     },
 
     shoppingcard: {
        backgroundColor:'#DA2F23',
        position:'absolute',
-       padding:15,
-       borderRadius:50 ,
-       bottom:-16,
-       right:0,
+       padding:horizontalScale(15),
+       padding:verticalScale(15),
+       borderRadius:moderateScale(50) ,
+       bottom:verticalScale(-15),
+       right:horizontalScale(0),
        zIndex:999
       
     },

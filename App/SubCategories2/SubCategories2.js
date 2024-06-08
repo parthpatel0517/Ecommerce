@@ -3,6 +3,8 @@ import React from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { horizontalScale, moderateScale, verticalScale } from '../../assets/Metrics/Metrics'
+import Collapsible from 'react-native-collapsible';
+
 const data = [
     {
         id: 1,

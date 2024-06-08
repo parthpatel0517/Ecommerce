@@ -8,6 +8,7 @@ import HomePage from './App/Home_page/HomePage';
 import SubCategories2 from './App/SubCategories2/SubCategories2';
 import FavoritesPage from './App/FavoritesPage/FavoritesPage';
 import ProductCard from './App/ProductCard/ProductCard';
+import AddShipingAddress from './App/AddShipingAddress/AddShipingAddress';
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
     {/* <SubCategories2></SubCategories2> */}
     {/* <FavoritesPage></FavoritesPage> */}
    <ProductCard></ProductCard>
+   {/* <AddShipingAddress></AddShipingAddress> */}
     
     </View>
   )
