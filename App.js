@@ -9,19 +9,25 @@ import SubCategories2 from './App/SubCategories2/SubCategories2';
 import FavoritesPage from './App/FavoritesPage/FavoritesPage';
 import ProductCard from './App/ProductCard/ProductCard';
 import AddShipingAddress from './App/AddShipingAddress/AddShipingAddress';
+import Counter from './App/counter/Counter';
+import { configurestore } from './App/redux/store';
+import { Provider } from 'react-redux';
 
 export default function App() {
+  const store = configurestore()
   return (
-    <View style={{backgroundColor:'#ffffff',height:'100%'}}>
+    <Provider store={store}>
+    {/* // <View style={{backgroundColor:'#ffffff',height:'100%'}}> */}
     {/* <Signup></Signup> */}
     {/* <Login></Login> */}
     {/* <Forgot_pass></Forgot_pass> */}
     {/* <HomePage></HomePage> */}
     {/* <SubCategories2></SubCategories2> */}
     {/* <FavoritesPage></FavoritesPage> */}
-   <ProductCard></ProductCard>
+   {/* <ProductCard></ProductCard> */}
    {/* <AddShipingAddress></AddShipingAddress> */}
-    
-    </View>
+    <Counter></Counter>
+    {/* // </View> */}
+    </Provider>
   )
 }
