@@ -1,13 +1,24 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { decrement, increment } from '../redux/action/counter.action'
+import { decrement, increment } from '../redux/Slice/counter.slice'
+import { fetchcategory } from '../redux/Slice/category.slice'
+
 
 
 export default function Counter() {
+
+
     const dispatch = useDispatch()
 
-    const counter = useSelector(state => state.count)
+    useEffect(() => {
+      dispatch(fetchcategory())
+    } , [])
+    // const counter = useSelector(state => state.count);
+
+    const category = useSelector(state => state.categoryfire);
+
+    console.log("sjdjdjdjjdjjd",category);
 
     const handalInc = ()=>{
         dispatch(increment())
@@ -26,7 +37,7 @@ export default function Counter() {
             <Text>+</Text>
         </TouchableOpacity>
 
-        <Text>{counter.count}</Text>
+        {/* <Text>{counter.count}</Text> */}
 
         <TouchableOpacity onPress={handalDec}>
             <Text>-</Text>

@@ -1,7 +1,13 @@
 import { combineReducers } from "redux";
-import { counterReducer } from "./counter.reducer";
+import counterslice  from "../Slice/counter.slice";
+import { categoryslice } from "../Slice/category.slice";
+
+
+
+
 
 
 export const rootReducer = combineReducers({
-    count : counterReducer
+    count : counterslice,
+    categoryfire : categoryslice
 })
