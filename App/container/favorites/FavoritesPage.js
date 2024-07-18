@@ -3,7 +3,7 @@ import React from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import { horizontalScale, moderateScale, verticalScale } from '../../assets/Metrics/Metrics'
+import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics'
 const data = [
     {
         id: 1,
@@ -29,28 +29,28 @@ const data = [
 const Data2 = [
     {
         id: 1,
-        img: require('../../assets/img/see_you.png'),
+        img: require('../../../assets/img/see_you.png'),
         title: 'Mango',
         SubTitle: 'T-Shirt SPANISH',
         price: 9
     },
     {
         id: 2,
-        img: require('../../assets/img/see_you.png'),
+        img: require('../../../assets/img/see_you.png'),
         title: 'Mango',
         SubTitle: 'T-Shirt SPANISH',
         price: 9
     },
     {
         id: 3,
-        img: require('../../assets/img/see_you.png'),
+        img: require('../../../assets/img/see_you.png'),
         title: 'Mango',
         SubTitle: 'T-Shirt SPANISH',
         price: 9
     },
     {
         id: 4,
-        img: require('../../assets/img/see_you.png'),
+        img: require('../../../assets/img/see_you.png'),
         title: 'Mango',
         SubTitle: 'T-Shirt SPANISH',
         price: 9
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
         fontSize: moderateScale(23),
         fontFamily: 'Metropolis-SemiBold',
         marginTop: verticalScale(25),
-        marginLeft: horizontalScale(150)
+        marginLeft: horizontalScale(10)
     },
     KeyboardArrow: {
         marginTop:  verticalScale(16),

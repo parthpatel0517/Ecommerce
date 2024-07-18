@@ -1,9 +1,9 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, StatusBar } from 'react-native'
 import React from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+// import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Foundation from 'react-native-vector-icons/Foundation';
-import { horizontalScale, verticalScale } from '../../assets/Metrics/Metrics';
+import { horizontalScale, verticalScale,moderateScale } from '../../../assets/Metrics/Metrics';
 
 export default function Signup() {
   return (
@@ -16,7 +16,7 @@ export default function Signup() {
       />
 
       <Text style={{ marginLeft: verticalScale(-13),marginBottom:horizontalScale(20) }}><MaterialIcons name="keyboard-arrow-left" size={50} color="black" /></Text>
-      <Text style={{ fontFamily: 'Metropolis-Bold', fontSize: moderateScale(14), color: 'black', marginBottom: verticalScale(50), }}>Sign Up</Text>
+      <Text style={{ fontFamily: 'Metropolis-Bold', fontSize: moderateScale(34), color: 'black', marginBottom: verticalScale(50), }}>Sign Up</Text>
       <View>
         <TextInput
 
@@ -90,7 +90,7 @@ export default function Signup() {
          justifyContent: 'center',
          alignItems: 'center',
          flexDirection: 'row',
-        }}><Image source={require('../../assets/img/search_copy.png')} style={{width:39,height:39}} />
+        }}><Image source={require('../../../assets/img/search_copy.png')} style={{width:39,height:39}} />
      </TouchableOpacity> 
         <TouchableOpacity style={{
              shadowColor: 'rgba(0,0,0, .4)', // IOS

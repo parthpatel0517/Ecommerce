@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, StatusBar, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { horizontalScale, moderateScale, verticalScale } from '../../assets/Metrics/Metrics'
+import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics'
 import React from 'react'
 
 export default function AddShipingAddress() {

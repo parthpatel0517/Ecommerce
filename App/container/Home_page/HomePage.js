@@ -1,7 +1,9 @@
 import { View, Text, StatusBar, ImageBackground, StyleSheet, ScrollView, TouchableOpacity, Image, FlatList, VirtualizedList } from 'react-native'
-import React, { startTransition } from 'react'
-import { horizontalScale, moderateScale, verticalScale } from '../../assets/Metrics/Metrics'
+import React, { startTransition, useEffect } from 'react'
+import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { fetchcategory } from '../../redux/Slice/category.slice';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const Data = [
@@ -9,7 +11,7 @@ const Data = [
     id: 1,
     title: 'Dorothy perkins',
     subtitle: 'Evening Dress',
-    img: require('../../assets/img/shopping.webp'),
+    img: require('../../../assets/img/shopping.webp'),
     price: 15,
     discount: 12
   },
@@ -17,7 +19,7 @@ const Data = [
     id: 0,
     title: 'Dorothy perkins',
     subtitle: 'Evening Dress',
-    img: require('../../assets/img/Dress2.webp'),
+    img: require('../../../assets/img/Dress2.webp'),
     price: 15,
     discount: 12
   },
@@ -25,7 +27,7 @@ const Data = [
     id: 2,
     title: 'Dorothy perkins',
     subtitle: 'Evening Dress',
-    img: require('../../assets/img/shopping.webp'),
+    img: require('../../../assets/img/shopping.webp'),
     price: 15,
     discount: 12
   },
@@ -33,7 +35,7 @@ const Data = [
     id: 3,
     title: 'Dorothy perkins',
     subtitle: 'Evening Dress',
-    img: require('../../assets/img/shopping.webp'),
+    img: require('../../../assets/img/shopping.webp'),
     price: 15,
     discount: 12
   }
@@ -43,7 +45,7 @@ const Data1 = [
     id: 1,
     title: 'Sittly',
     subtitle: 'Sport Dress',
-    img: require('../../assets/img/Dress1.jpg'),
+    img: require('../../../assets/img/Dress1.jpg'),
     price: 19,
     discount: 22
   },
@@ -51,7 +53,7 @@ const Data1 = [
     id: 0,
     title: 'Sittly',
     subtitle: 'Sport Dress',
-    img: require('../../assets/img/Dress1.jpg'),
+    img: require('../../../assets/img/Dress1.jpg'),
     price: 19,
     discount: 22
   },
@@ -59,7 +61,7 @@ const Data1 = [
     id: 2,
     title: 'Sittly',
     subtitle: 'Sport Dress',
-    img: require('../../assets/img/Dress1.jpg'),
+    img: require('../../../assets/img/Dress1.jpg'),
     price: 19,
     discount: 22
   },
@@ -67,12 +69,25 @@ const Data1 = [
     id: 3,
     title: 'Sittly',
     subtitle: 'Sport Dress',
-    img: require('../../assets/img/Dress1.jpg'),
+    img: require('../../../assets/img/Dress1.jpg'),
     price: 19,
     discount: 22
   }
 ]
-export default function HomePage() {
+
+
+
+export default function HomePage({ route, navigation }) {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchcategory())
+  }, [])
+
+
+  const category = useSelector(state => state.categoryfire);
+
+  console.log("sjdjdjdjjdjjd", category);
   const ProductCard = ({ v }) => (
     <View style={{ marginHorizontal: 10 }}>
 
@@ -109,7 +124,7 @@ export default function HomePage() {
       />
       <View style={style.mainview}>
         <ImageBackground
-          source={require('../../assets/img/pexels-godisable-jacob-226636-896293.jpg')}
+          source={require('../../../assets/img/pexels-godisable-jacob-226636-896293.jpg')}
           style={{
             width: "100%",
             height: "100%"
@@ -167,35 +182,58 @@ export default function HomePage() {
         />
 
       </View>
-      <View style={style.FisrtNew}>
-        <TouchableOpacity><Image source={require('../../assets/img/Graphic.png')} style={{ width: '100%', height: '100%' }} /></TouchableOpacity>
-        <Text style={style.FistViewText}>New collection</Text>
-      </View>
+      {category.categoryfire.map((v, i) => {
+        return (
+          <View key={i}>
+
+            {i % 4 === 0 &&
+              <View style={{width: '100%', height: 200}}> 
+                <TouchableOpacity 
+                  onPress={() => navigation.navigate("")}
+                ><Image source={require('../../../assets/img/Graphic.png')} style={{ width: '100%', height: '100%' }} /></TouchableOpacity>
+                <Text style={style.FistViewText}>{v.name}</Text>
+
+              </View>
+            }
 
 
-      <View style={style.DirectView}>
-        <View style={style.SecondView}>
-          <View style={style.SummSale}>
-            <View style={style.SumTextView}>
-              <TouchableOpacity><Text style={style.SummText1}>Summer Sale</Text></TouchableOpacity>
+
+
+            {/* <View style={i % 2 == 0 ? style.DirectView : ''}> */}
+              {/* <View style={style.SecondView}> */}
+                {i % 4 === 1 &&
+                  <View style={{width: '100%', height: 200}}>
+                    <View>
+                      <TouchableOpacity><Text style={style.SummText1}>{v.name}</Text></TouchableOpacity>
+                    </View>
+
+
+
+                  </View>
+                }
+                {i % 4 === 2 &&
+                  <View style={{width: '50%', height: 200}}>
+                    <TouchableOpacity><Image source={require('../../../assets/img/Graphic1.png')} style={{ width: '100%', height: '100%' }} /></TouchableOpacity>
+                    <Text>Black</Text>
+                  </View>
+                }
+              {/* </View> */}
+
+              {i % 4 === 3 &&
+                <View >
+                  <TouchableOpacity><Image source={require('../../../assets/img/Graphic3.png')} style={{ width: '100%', height: '100%' }} /></TouchableOpacity>
+                  <View>
+                    <Text>Men's hoodies</Text>
+                  </View>
+
+                </View>
+              }
             </View>
+          // </View>
+        )
 
+      })}
 
-          </View>
-          <View style={style.BlackView}>
-            <TouchableOpacity><Image source={require('../../assets/img/Graphic1.png')} style={{ width: '100%', height: '100%' }} /></TouchableOpacity>
-            <Text style={style.BlackText}>Black</Text>
-          </View>
-        </View>
-
-        <View style={style.BodieView}>
-        <TouchableOpacity><Image source={require('../../assets/img/Graphic3.png')} style={{ width: '100%', height: '100%' }} /></TouchableOpacity>
-          <View style={style.hoodieTextView}>
-        <Text style={style.hoodieText}>Men's hoodies</Text>
-          </View>
-
-        </View>
-      </View>
 
     </ScrollView>
   )
@@ -240,135 +278,129 @@ const style = StyleSheet.create({
   },
   SaleView: {
     flex: 1,
-    marginTop: 18,
+    marginTop: verticalScale(18),
     flexDirection: 'row',
-    paddingHorizontal: 12,
+    paddingHorizontal: horizontalScale(12),
     justifyContent: 'space-between',
-    marginBottom: 30
+    marginBottom: verticalScale(30)
   },
   SaleText: {
     color: '#222222',
-    fontSize: 32,
+    fontSize: moderateScale(32),
     fontFamily: 'Metropolis-Bold'
   },
   SummerText: {
     color: '#9B9B9B',
-    fontSize: 11,
+    fontSize: moderateScale(11),
     fontFamily: 'Metropolis-Regular'
   },
   ViewAll: {
-    paddingRight: 10,
-    marginTop: 19,
-    fontSize: 13,
+    paddingRight: horizontalScale(10),
+    marginTop: verticalScale(19),
+    fontSize: moderateScale(13),
     fontFamily: 'Metropolis-Regular',
     color: 'black'
   },
   title: {
     color: 'black',
-    paddingHorizontal: 4,
-    fontSize: 13,
+    paddingHorizontal: horizontalScale(4),
+    fontSize: moderateScale(13),
     fontFamily: 'Metropolis-Regular'
   },
   subtitle: {
     color: 'black',
-    paddingHorizontal: 4,
-    fontSize: 19,
+    paddingHorizontal: horizontalScale(4),
+    fontSize: moderateScale(19),
     fontFamily: 'Metropolis-SemiBold'
   },
   iconview: {
     flexDirection: 'row',
-    paddingHorizontal: 2,
-    marginBottom: 10,
-    marginTop: 6
+    paddingHorizontal: horizontalScale(2),
+    marginBottom: verticalScale(10),
+    marginTop: verticalScale(6)
   },
   PriceView: {
     flexDirection: 'row'
   },
   discount: {
     color: '#9B9B9B',
-    fontSize: 19,
-    marginTop: 2,
-    paddingHorizontal: 3,
+    fontSize: moderateScale(19),
+    marginTop: verticalScale(2),
+    paddingHorizontal: horizontalScale(3),
     textDecorationLine: 'line-through',
     fontFamily: 'Metropolis-Medium'
   },
   price: {
     color: '#DB3022',
-    fontSize: 19,
-    marginTop: 2,
-    paddingLeft: 6,
+    fontSize: moderateScale(19),
+    marginTop: verticalScale(2),
+    paddingLeft: horizontalScale(6),
     fontFamily: 'Metropolis-Medium'
   },
   FisrtNew: {
-    marginTop: 60,
+    marginTop: verticalScale(60),
     width: '100%',
-    height: 390,
-    position: 'relative'
+    height: verticalScale(390)
   },
   FistViewText: {
     color: 'white',
     fontFamily: 'Metropolis-Bold',
-    fontSize: 38,
+    fontSize: moderateScale(38),
     position: 'absolute',
-    bottom: 17,
-    right: 22
+    bottom: verticalScale(18),
+    right: horizontalScale(22)
   },
 
   SummSale: {
     backgroundColor: 'white',
-    width: '100%',
+    width: '50%',
     height: '50%',
-    position: 'relative'
   },
   SumTextView: {
-    width: 150,
-    height: 100,
-    position: 'absolute',
-    bottom: 30,
-    left: 18
+    width: horizontalScale(150),
+    height: verticalScale(100),
+ 
   },
   SummText1: {
     color: '#DB3022',
-    fontSize: 35,
+    fontSize: moderateScale(35),
     fontFamily: 'Metropolis-Bold',
   },
   BlackView: {
+    position: 'relative',
     width: '100%',
     height: '50%',
-    position: 'relative'
   },
   BlackText: {
     color: 'white',
-    fontSize: 35,
+    fontSize: moderateScale(35),
     fontFamily: 'Metropolis-Bold',
     position: 'absolute',
-    bottom: 10,
-    left: 18
+    bottom: verticalScale(10),
+    left: horizontalScale(18)
   },
   SecondView: {
     width: '50%',
-    height: 400
+    height: verticalScale(400)
   },
   DirectView: {
     width: '100%',
-    height: 400,
+    height: verticalScale(400),
     flexDirection: 'row'
   },
   BodieView: {
-   
+
     width: '50%',
     height: '100%',
     position: 'relative'
   },
   hoodieTextView: {
-    position: 'absolute',
-    bottom: 170,
-    left: 50,
+  
   },
 
   hoodieText: {
     color: 'white',
-    fontSize: 35,
+    fontSize: moderateScale(35),
     fontFamily: 'Metropolis-Bold',
   }
 

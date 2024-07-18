@@ -2,7 +2,7 @@ import { View, Text, ScrollView, StatusBar, StyleSheet, FlatList, Image, Touchab
 import React from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { horizontalScale, moderateScale, verticalScale } from '../../assets/Metrics/Metrics'
+import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics'
 import Collapsible from 'react-native-collapsible';
 
 const data = [
@@ -30,28 +30,28 @@ const data = [
 const Data2 = [
     {
         id: 1,
-        img: require('../../assets/img/see_you.png'),
+        img: require('../../../assets/img/see_you.png'),
         title: 'Mango',
         SubTitle: 'T-Shirt SPANISH',
         price: 9
     },
     {
         id: 2,
-        img: require('../../assets/img/see_you.png'),
+        img: require('../../../assets/img/see_you.png'),
         title: 'Mango',
         SubTitle: 'T-Shirt SPANISH',
         price: 9
     },
     {
         id: 3,
-        img: require('../../assets/img/see_you.png'),
+        img: require('../../../assets/img/see_you.png'),
         title: 'Mango',
         SubTitle: 'T-Shirt SPANISH',
         price: 9
     },
     {
         id: 4,
-        img: require('../../assets/img/see_you.png'),
+        img: require('../../../assets/img/see_you.png'),
         title: 'Mango',
         SubTitle: 'T-Shirt SPANISH',
         price: 9
@@ -138,24 +138,24 @@ export default function SubCategories2() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: 15,
+        paddingHorizontal: horizontalScale(15),
         backgroundColor: '#F9F9F9'
     },
     ArrowView: {
         width: '100%',
-        height: 80,
-        marginTop: 40,
+        height: verticalScale(80),
+        marginTop: verticalScale(40),
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
     ArrowText: {
         color: 'black',
-        fontSize: 23,
-        marginTop: 22
+        fontSize: moderateScale(23),
+        marginTop: verticalScale(22)
     },
     KeyboardArrow: {
-        marginTop: 16,
-        marginLeft: -15
+        marginTop: verticalScale(16),
+        marginLeft: horizontalScale(-15)
     },
     CategorisView: {
         paddingRight: horizontalScale(10),
@@ -185,13 +185,13 @@ const styles = StyleSheet.create({
     filterText: {
         color: 'black',
         paddingRight: verticalScale(60),
-        marginTop: 4,
-        marginLeft:10
+        marginTop: verticalScale(4),
+        marginLeft:horizontalScale(10)
     },
     productMainView: {
-        width: 180,
-        height: 350,
-        marginBottom:40
+        width: horizontalScale(180),
+        height: verticalScale(350),
+        marginBottom:verticalScale(40)
     },
     productImg: {
         width: '100%',
@@ -200,11 +200,12 @@ const styles = StyleSheet.create({
     },
     heart: {
         position: 'absolute',
-        bottom: -10,
+        bottom: verticalScale(-20),
         right: 0,
         backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 10,
+        borderRadius: moderateScale(20),
+        padding: horizontalScale(10),
+        padding: verticalScale(10),
         
     },
     productText: {
@@ -217,30 +218,30 @@ const styles = StyleSheet.create({
     },
     iconview: {
         flexDirection: 'row',
-        paddingHorizontal: 4,
-        marginTop: 5,
+        paddingHorizontal: horizontalScale(4),
+        marginTop: verticalScale(5),
 
     },
     mangoText: {
         color: '#9B9B9B',
         fontSize: 15,
-        paddingHorizontal: 6,
-        marginTop: 6,
+        paddingHorizontal: horizontalScale(6),
+        marginTop: verticalScale(6),
         fontFamily: 'Metropolis-SemiBold'
     },
     tShirt: {
         color: 'black',
         fontFamily: 'Metropolis-SemiBold',
-        fontSize: 18,
-        paddingHorizontal: 6,
-        marginTop:3
+        fontSize: moderateScale(18),
+        paddingHorizontal: horizontalScale(6),
+        marginTop:verticalScale(3)
     },
     price: {
         color: 'black',
-        fontSize: 16,
+        fontSize: moderateScale(16),
         fontFamily: 'Metropolis-Medium',
-        paddingHorizontal: 7,
-        marginTop:4
+        paddingHorizontal: horizontalScale(7),
+        marginTop:verticalScale(4)
     },
 
 

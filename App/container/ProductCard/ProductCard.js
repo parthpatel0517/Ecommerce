@@ -3,7 +3,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { SliderBox } from "react-native-image-slider-box";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import React, { useState } from 'react'
-import { horizontalScale, moderateScale, verticalScale } from '../../assets/Metrics/Metrics';
+import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics';
 import Collapsible from 'react-native-collapsible';
 
 const Data = [
@@ -11,7 +11,7 @@ const Data = [
         id: 1,
         title: 'Dorothy perkins',
         subtitle: 'Evening Dress',
-        img: require('../../assets/img/shopping.webp'),
+        img: require('../../../assets/img/shopping.webp'),
         price: 15,
         discount: 12
     },
@@ -19,7 +19,7 @@ const Data = [
         id: 0,
         title: 'Dorothy perkins',
         subtitle: 'Evening Dress',
-        img: require('../../assets/img/Dress2.webp'),
+        img: require('../../../assets/img/Dress2.webp'),
         price: 15,
         discount: 12
     },
@@ -27,7 +27,7 @@ const Data = [
         id: 2,
         title: 'Dorothy perkins',
         subtitle: 'Evening Dress',
-        img: require('../../assets/img/shopping.webp'),
+        img: require('../../../assets/img/shopping.webp'),
         price: 15,
         discount: 12
     },
@@ -35,7 +35,7 @@ const Data = [
         id: 3,
         title: 'Dorothy perkins',
         subtitle: 'Evening Dress',
-        img: require('../../assets/img/shopping.webp'),
+        img: require('../../../assets/img/shopping.webp'),
         price: 15,
         discount: 12
     }
@@ -43,8 +43,8 @@ const Data = [
 export default function ProductCard() {
     const [images, setImages] = useState(
         [
-            require('../../assets/img/Dress1.jpg'),
-            require('../../assets/img/Dress2.webp')          // Local image
+            require('../../../assets/img/Dress1.jpg'),
+            require('../../../assets/img/Dress2.webp')          // Local image
         ]
     )
     console.log(images);

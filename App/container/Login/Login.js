@@ -81,7 +81,7 @@ export default function Login() {
          justifyContent: 'center',
          alignItems: 'center',
          flexDirection: 'row',
-        }}><Image source={require('../../assets/img/search_copy.png')} style={{width:39,height:39}} />
+        }}><Image source={require('../../../assets/img/search_copy.png')} style={{width:39,height:39}} />
      </TouchableOpacity> 
         <TouchableOpacity style={{
              shadowColor: 'rgba(0,0,0, .4)', // IOS
