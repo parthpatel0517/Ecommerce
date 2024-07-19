@@ -89,7 +89,7 @@ export default function HomePage({ route, navigation }) {
 
   console.log("sjdjdjdjjdjjd", category);
   const ProductCard = ({ v }) => (
-    <View style={{ marginHorizontal: 10 }}>
+    <TouchableOpacity style={{ marginHorizontal: 10 }} onPress={()=>navigation.navigate("ProductCard")}>
 
       <Image source={v.img} style={{ width: 170, height: 250, borderRadius: 10 }}></Image>
 
@@ -110,7 +110,7 @@ export default function HomePage({ route, navigation }) {
 
       </View>
 
-    </View>
+    </TouchableOpacity>
 
 
 
