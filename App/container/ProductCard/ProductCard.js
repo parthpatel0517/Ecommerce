@@ -40,7 +40,7 @@ const Data = [
         discount: 12
     }
 ]
-export default function ProductCard() {
+export default function ProductCard({ route, navigation }) {
     const [images, setImages] = useState(
         [
             require('../../../assets/img/Dress1.jpg'),
@@ -231,7 +231,7 @@ export default function ProductCard() {
                     
                 </ScrollView>
             </View>
-            <TouchableOpacity style={styles.ButtonView}>
+            <TouchableOpacity style={styles.ButtonView} onPress={() => navigation.navigate("My_Bag")}>
                 <View style={styles.ButtonUnderView}>
                     <Text style={styles.AddCart}>ADD TO CART</Text>
                 </View>

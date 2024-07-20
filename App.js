@@ -44,6 +44,7 @@ export default function App() {
    {/* <AddShipingAddress></AddShipingAddress> */}
     {/* <Counter></Counter> */}
     {/* <Filter></Filter> */}
+    {/* <OrderDetails/> */}
     {/* // </View> */}
     </NavigationContainer>
     </Provider>

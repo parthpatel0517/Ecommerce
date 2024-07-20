@@ -57,7 +57,7 @@ const Data2 = [
         price: 9
     }
 ]
-export default function SubCategories2() {
+export default function SubCategories2({route, navigation }) {
     const ProductCard = ({ v }) => (
 
         <View style={styles.CategorisView}>
@@ -66,6 +66,7 @@ export default function SubCategories2() {
         </View>
     )
     const ProductData = ({ v }) => (
+        <TouchableOpacity onPress={() => navigation.navigate("ProductCard")}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <View style={styles.productMainView}>
                 <View style={styles.productImg}>
@@ -90,6 +91,7 @@ export default function SubCategories2() {
 
             </View>
         </View>
+        </TouchableOpacity>
     )
     return (
         <ScrollView style={styles.container}>
@@ -106,7 +108,7 @@ export default function SubCategories2() {
             <View style={{ backgroundColor: 'white', marginBottom: 25 }}>
                 <FlatList
                     data={data}
-                    renderItem={({ item }) => <TouchableOpacity><ProductCard v={item} /></TouchableOpacity>}
+                    renderItem={({ item }) =><ProductCard v={item} />}
                     keyExtractor={item => item.id}
                     horizontal={true}
                 />

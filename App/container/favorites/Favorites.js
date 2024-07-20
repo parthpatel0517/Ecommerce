@@ -130,12 +130,12 @@ export default function Favorites({ route, navigation }) {
       <StatusBar
         animated={true}
         backgroundColor={'transparent'}
+        
       />
       <TouchableOpacity style={{ paddingBottom: 25 }}>
-
         <Fontisto style={styles.FontAwesomeicon} name="search" size={22} color="black" />
       </TouchableOpacity>
-      <Text style={styles.fonts}>Favorites</Text>
+      {/* <Text style={styles.fonts}>Favorites</Text> */}
 
       <FlatList
         data={data}
