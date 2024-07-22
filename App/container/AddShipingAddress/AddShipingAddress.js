@@ -3,7 +3,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics'
 import React from 'react'
 
-export default function AddShipingAddress() {
+export default function AddShipingAddress({ route, navigation }) {
     return (
         <ScrollView style={styles.container}>
             <StatusBar
@@ -56,7 +56,7 @@ export default function AddShipingAddress() {
 
                 </View>
             </View>
-            <TouchableOpacity style={styles.ButtonView}><View style={styles.ButtonUnderView}>
+            <TouchableOpacity style={styles.ButtonView} onPress={() => navigation.navigate("ShippingAddresses")}><View style={styles.ButtonUnderView}>
                 <Text style={styles.AddCart}>SAVE ADDRESS</Text>
             </View>
             </TouchableOpacity>

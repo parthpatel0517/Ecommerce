@@ -134,7 +134,7 @@ export default function HomePage({ route, navigation }) {
         <View style={{ width: horizontalScale(200) }}>
           <Text style={style.Fashionsale}>Fashion Sale</Text>
 
-          <TouchableOpacity style={style.checkbutton}>
+          <TouchableOpacity style={style.checkbutton} onPress={()=>navigation.navigate("CategoriesTwo")}>
             <Text style={style.CheckText}>Check</Text>
 
           </TouchableOpacity>

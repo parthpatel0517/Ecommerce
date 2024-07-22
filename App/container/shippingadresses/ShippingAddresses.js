@@ -28,7 +28,7 @@ const useaddresses = [
     },
 ];
 
-export default function ShippingAddresses() {
+export default function ShippingAddresses({ route, navigation }) {
     const ShippingAddresses = ({ v }) => (
         <View style={styles.olldeta}>
             <Text style={styles.addtext1}>{v.name}</Text>
@@ -65,6 +65,11 @@ export default function ShippingAddresses() {
                  <TouchableOpacity style={styles.addButton}>
                 <MaterialCommunityIcons name="plus-circle" size={35} color="black" />
             </TouchableOpacity>
+            </View>
+            <View>
+                <TouchableOpacity style={styles.placeorder}  onPress={() => navigation.navigate("Success")}>
+                    <Text  style={styles.AddCart}>Place your order</Text>
+                </TouchableOpacity>
             </View>
            
         </ScrollView>
@@ -136,5 +141,21 @@ const styles = StyleSheet.create({
     btnView:{
         flexDirection:'row',
         justifyContent:'flex-end'
+    },
+    AddCart: {
+        color: 'black',
+        fontFamily: 'Metropolis-Medium',
+        fontSize: moderateScale(17),
+        margin: 'auto'
+    },
+    placeorder:{
+      backgroundColor:'red',
+      width:300,
+      margin:'auto',
+      padding:10,
+      borderRadius:20,
+      marginTop:90,
+      borderWidth:1,
+      borderColor:'black'
     }
 });

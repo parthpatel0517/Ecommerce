@@ -5,7 +5,7 @@ import Signup from './App/container/Signup/Signup';
 import Login from './App/container/Login/Login';
 import Forgot_pass from './App/container/Forgot_pass/Forgot_pass';
 import HomePage from './App/container/Home_page/HomePage';
-import SubCategories2 from './App/container/SubCategories2/SubCategories2';
+import SubCategories2 from './App/container/shhoping/shopping';
 import FavoritesPage from './App/container/FavoritesPage/FavoritesPage';
 import ProductCard from './App/container/ProductCard/ProductCard';
 import AddShipingAddress from './App/container/AddShipingAddress/AddShipingAddress';
@@ -20,6 +20,7 @@ import Filter from './App/container/filter/Filter';
 import { NavigationContainer } from '@react-navigation/native';
 import Bottom from './App/navigation/Bottom';
 import 'react-native-gesture-handler';
+import Success from './App/container/success/Success';
 
 
 export default function App() {
@@ -36,8 +37,9 @@ export default function App() {
     {/* <Womens_top/> */}
     {/* <OrderDetails/> */}
     {/* <ShippingAddresses/> */}
-    {/* <SubCategories2></SubCategories2> */}
-    <Bottom></Bottom>
+    <SubCategories2></SubCategories2>
+    {/* <Bottom></Bottom> */}
+    {/* <Success></Success> */}
     {/* <FavoritesPage></FavoritesPage> */}
     {/* <FavoritesPage></FavoritesPage> */}
    {/* <ProductCard></ProductCard> */}

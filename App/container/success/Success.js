@@ -12,9 +12,9 @@ import {
   horizontalScale,
   moderateScale,
   verticalScale,
-} from '../../../assets/Metrics';
+} from '../../../assets/Metrics/Metrics';
 
-export default function Success() {
+export default function Success({ route, navigation }) {
   return (
     <ScrollView style={{flex: 1, backgroundColor: '#fff'}}>
       <StatusBar backgroundColor="#fff" barStyle="dark-content" />
@@ -23,7 +23,7 @@ export default function Success() {
         <TouchableOpacity>
           <Image
             style={Styles.img}
-            source={require('../../../assets/image/success.png')}></Image>
+            source={require('../../../assets/img/success.jpeg')}></Image>
         </TouchableOpacity>
       </View>
 
@@ -34,7 +34,7 @@ export default function Success() {
       <Text style={Styles.TextThankyou}>Thank you for choosing our app!</Text>
 
       <View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("HomePage")}>
           <Text style={Styles.continueShpBtn}>CONTINUE SHOPPING</Text>
         </TouchableOpacity>
       </View>

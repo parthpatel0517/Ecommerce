@@ -5,10 +5,10 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import React from 'react'
 import Signup from '../container/Signup/Signup';
-import SubCategories2 from '../container/SubCategories2/SubCategories2';
+import SubCategories2 from '../container/shhoping/shopping';
 import HomePage from '../container/Home_page/HomePage';
 import Favorites from '../container/favorites/Favorites';
-import { Favoritestack, Homestack, Mybagstack, Profilestack, Subcategorystack, subcategorystack } from './stacknavigator';
+import { Favoritestack, Homestack, Mybagstack, Profilestack, Shoppingstack, Subcategorystack, shoppingstack, subcategorystack } from './stacknavigator';
 import My_Bag from '../container/mybag/My_Bag';
 import My_Profile from '../container/myprofile/My_Profile';
 
@@ -41,11 +41,11 @@ export default function Bottom() {
             }} name="My_Bag" component={Mybagstack} />
              <Tab.Screen options={{
                 headerShown: false,
-                tabBarLabel: 'subcategory',
+                tabBarLabel: 'shopping',
                 tabBarIcon: ({ color, size }) => (
                     <MaterialIcons name="shopping-cart" color={color} size={size} />
                 ),
-            }} name="SubCategories2" component={Subcategorystack} />
+            }} name="shopping" component={Shoppingstack} />
              <Tab.Screen options={{
                 headerShown: false,
                 tabBarLabel: 'Profile',

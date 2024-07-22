@@ -16,6 +16,7 @@ import {
   moderateScale,
   verticalScale,
 } from '../../../assets/Metrics/Metrics';
+import ShippingAddresses from '../shippingadresses/ShippingAddresses';
 
 export default function My_Orders({ route, navigation }) {
   return (
@@ -70,7 +71,7 @@ export default function My_Orders({ route, navigation }) {
             </View>
 
             <View>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("ShippingAddresses")}>
                 <MaterialIcons
                   name="keyboard-arrow-right"
                   size={30}

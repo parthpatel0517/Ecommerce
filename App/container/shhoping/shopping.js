@@ -57,7 +57,7 @@ const Data2 = [
         price: 9
     }
 ]
-export default function SubCategories2({route, navigation }) {
+export default function shhoping({route, navigation }) {
     const ProductCard = ({ v }) => (
 
         <View style={styles.CategorisView}>
@@ -73,7 +73,7 @@ export default function SubCategories2({route, navigation }) {
                     <Image source={v.img} style={{ width: '100%', height: '100%',borderTopLeftRadius:15,borderTopRightRadius:15}} />   
                 </View>
                 <View>
-                <TouchableOpacity><FontAwesome name="heart-o" size={20} color="black" style={styles.heart} /></TouchableOpacity>
+                <TouchableOpacity style={{zIndex:999}}><FontAwesome name="heart-o" size={20} color="black" style={styles.heart} /></TouchableOpacity>
                 </View>
                 <View style={styles.productText}>
                     <View style={styles.iconview}>
@@ -191,9 +191,10 @@ const styles = StyleSheet.create({
         marginLeft:horizontalScale(10)
     },
     productMainView: {
-        width: horizontalScale(180),
+        width: horizontalScale(170),
         height: verticalScale(350),
         marginBottom:verticalScale(40)
+        
     },
     productImg: {
         width: '100%',
