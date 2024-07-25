@@ -37,8 +37,8 @@ export default function App() {
     {/* <Womens_top/> */}
     {/* <OrderDetails/> */}
     {/* <ShippingAddresses/> */}
-    <SubCategories2></SubCategories2>
-    {/* <Bottom></Bottom> */}
+    {/* <SubCategories2></SubCategories2> */}
+    <Bottom></Bottom>
     {/* <Success></Success> */}
     {/* <FavoritesPage></FavoritesPage> */}
     {/* <FavoritesPage></FavoritesPage> */}

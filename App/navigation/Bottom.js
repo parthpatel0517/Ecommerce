@@ -17,41 +17,55 @@ const Tab = createBottomTabNavigator();
 
 export default function Bottom() {
     return (
-        <Tab.Navigator initialRouteName='homepage'>
+        <Tab.Navigator initialRouteName='homepage'
+        screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName;
+  
+              if (route.name === 'homepage') {
+                iconName = focused
+                  ? 'home'
+                  : 'home-outline';
+              } else if (route.name === 'Favorites') {
+                iconName = focused ? 'cards-heart' : 'cards-heart-outline';
+              }else if (route.name === 'My_Bag') {
+                iconName = focused ? 'shopping' : 'shopping-outline';
+              }else if (route.name === 'shopping') {
+                iconName = focused ? 'cart' : 'cart-outline';
+              }else if (route.name === 'Profile') {
+                iconName = focused ? 'account-circle' : 'account-circle-outline';
+              }
+              // You can return any component that you like here!
+              return<MaterialCommunityIcons name={iconName} color={color} size={size} />;
+            },
+            tabBarActiveTintColor: 'tomato',
+            tabBarInactiveTintColor: 'gray',
+          })}
+        >
             <Tab.Screen  name="homepage" component={Homestack} options={{
                 headerShown: false,
                 tabBarLabel: 'Home',
-                tabBarIcon: ({ color, size }) => (
-                    <FontAwesome name="home" color={color} size={size} />
-                ),
+               
             }}/>
             <Tab.Screen options={{
                 headerShown: false,
                 tabBarLabel: 'favourites',
-                tabBarIcon: ({ color, size }) => (
-                    <MaterialIcons name="favorite" color={color} size={size} />
-                ),
+                
             }} name="Favorites" component={Favoritestack} />
             <Tab.Screen options={{
                 headerShown: true,
                 tabBarLabel: 'My Bag',
-                tabBarIcon: ({ color, size }) => (
-                    <MaterialIcons name="shopping-bag" color={color} size={size} />
-                ),
+               
             }} name="My_Bag" component={Mybagstack} />
              <Tab.Screen options={{
                 headerShown: false,
                 tabBarLabel: 'shopping',
-                tabBarIcon: ({ color, size }) => (
-                    <MaterialIcons name="shopping-cart" color={color} size={size} />
-                ),
+                
             }} name="shopping" component={Shoppingstack} />
              <Tab.Screen options={{
                 headerShown: false,
                 tabBarLabel: 'Profile',
-                tabBarIcon: ({ color, size }) => (
-                    <MaterialIcons name="account-circle" color={color} size={size} />
-                ),
+                
             }} name="Profile" component={Profilestack} />
             
         </Tab.Navigator>
