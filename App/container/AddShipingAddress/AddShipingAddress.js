@@ -11,10 +11,10 @@ export default function AddShipingAddress({ route, navigation }) {
                 translucent backgroundColor="transparent"
                 barStyle="dark-content"
             />
-            <View style={styles.ArrowView}>
+            {/* <View style={styles.ArrowView}>
                 <Text style={styles.KeyboardArrow}><MaterialIcons name="keyboard-arrow-left" size={50} color="black" /></Text>
                 <Text style={styles.ArrowText}>Add shipping address</Text>
-            </View>
+            </View> */}
             <View>
                 <TextInput
                     style={styles.input}

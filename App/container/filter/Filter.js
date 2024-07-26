@@ -35,10 +35,10 @@ export default function Filter() {
                         translucent backgroundColor='white'
                     />
 
-                    <View style={style.titlebar}>
+                    {/* <View style={style.titlebar}>
                         <MaterialIcons name='chevron-left' size={30} color='black'></MaterialIcons>
                         <Text style={style.filtertext}>Filters</Text>
-                    </View>
+                    </View> */}
 
                     <Text style={style.text}>Price range</Text>
                     <View style={style.viewstyle}>

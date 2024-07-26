@@ -24,13 +24,13 @@ export default function My_Orders({ route, navigation }) {
       <StatusBar backgroundColor="#fff" barStyle="dark-content" />
 
       <View style={Styles.container}>
-        <View style={Styles.search}>
+        {/* <View style={Styles.search}>
           <TouchableOpacity>
             <EvilIcons name="search" size={32} color="#222222" />
           </TouchableOpacity>
-        </View>
+        </View> */}
 
-        <Text style={Styles.myProfile}>My Profile</Text>
+        {/* <Text style={Styles.myProfile}>My Profile</Text> */}
 
         <View style={Styles.profileHead}>
           <Image
@@ -47,14 +47,14 @@ export default function My_Orders({ route, navigation }) {
         </View>
 
         <View style={Styles.datamain}>
-          <View style={Styles.dataHead}>
+          <TouchableOpacity  onPress={() => navigation.navigate("My_Profile")} style={Styles.dataHead}>
             <View>
               <Text style={Styles.data1}>My orders</Text>
               <Text style={Styles.data2}>Already have 12 orders</Text>
             </View>
 
             <View>
-              <TouchableOpacity onPress={() => navigation.navigate("My_Profile")}>
+              <TouchableOpacity >
                 <MaterialIcons
                   name="keyboard-arrow-right"
                   size={30}
@@ -62,16 +62,16 @@ export default function My_Orders({ route, navigation }) {
                 />
               </TouchableOpacity>
             </View>
-          </View>
+          </TouchableOpacity>
 
-          <View style={Styles.dataHead}>
+          <TouchableOpacity onPress={() => navigation.navigate("ShippingAddresses")} style={Styles.dataHead}>
             <View>
               <Text style={Styles.data1}>Shipping addresses</Text>
               <Text style={Styles.data2}>3 ddresses</Text>
             </View>
 
             <View>
-              <TouchableOpacity onPress={() => navigation.navigate("ShippingAddresses")}>
+              <TouchableOpacity >
                 <MaterialIcons
                   name="keyboard-arrow-right"
                   size={30}
@@ -79,7 +79,7 @@ export default function My_Orders({ route, navigation }) {
                 />
               </TouchableOpacity>
             </View>
-          </View>
+          </TouchableOpacity>
 
           <View style={Styles.dataHead}>
             <View>
@@ -115,7 +115,7 @@ export default function My_Orders({ route, navigation }) {
             </View>
           </View>
 
-          <View style={Styles.dataHead}>
+          <TouchableOpacity style={Styles.dataHead} onPress={() => navigation.navigate("Rating")}>
             <View>
               <Text style={Styles.data1}>My reviews</Text>
               <Text style={Styles.data2}>Reviews for 4 items</Text>
@@ -130,7 +130,7 @@ export default function My_Orders({ route, navigation }) {
                 />
               </TouchableOpacity>
             </View>
-          </View>
+          </TouchableOpacity>
 
           <View style={Styles.dataHead}>
             <View>

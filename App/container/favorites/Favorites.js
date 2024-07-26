@@ -132,9 +132,9 @@ export default function Favorites({ route, navigation }) {
         backgroundColor={'transparent'}
         
       />
-      <TouchableOpacity style={{ paddingBottom: 25 }}>
+      {/* <TouchableOpacity style={{ paddingBottom: 25 }}>
         <Fontisto style={styles.FontAwesomeicon} name="search" size={22} color="black" />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       {/* <Text style={styles.fonts}>Favorites</Text> */}
 
       <FlatList
@@ -145,7 +145,7 @@ export default function Favorites({ route, navigation }) {
       />
 
       <View style={styles.fontsicon}>
-        <TouchableOpacity style={styles.filtertoch}><Ionicons name="filter" size={26} color="black" /><Text style={styles.filter}>filters</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.filtertoch} onPress={() => navigation.navigate("filter")}><Ionicons name="filter" size={26} color="black" /><Text style={styles.filter}>filters</Text></TouchableOpacity>
         <TouchableOpacity style={styles.filtertoch}><FontAwesome name="arrows-v" size={26} color="black" /><Text style={styles.filter}>price:lowest to high</Text></TouchableOpacity>
         <TouchableOpacity style={styles.filtertoch}><FontAwesome name="th-list" size={26} color="black" /></TouchableOpacity>
       </View>

@@ -16,58 +16,63 @@ import My_Profile from '../container/myprofile/My_Profile';
 const Tab = createBottomTabNavigator();
 
 export default function Bottom() {
-    return (
-        <Tab.Navigator initialRouteName='homepage'
-        screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused, color, size }) => {
-              let iconName;
-  
-              if (route.name === 'homepage') {
-                iconName = focused
-                  ? 'home'
-                  : 'home-outline';
-              } else if (route.name === 'Favorites') {
-                iconName = focused ? 'cards-heart' : 'cards-heart-outline';
-              }else if (route.name === 'My_Bag') {
-                iconName = focused ? 'shopping' : 'shopping-outline';
-              }else if (route.name === 'shopping') {
-                iconName = focused ? 'cart' : 'cart-outline';
-              }else if (route.name === 'Profile') {
-                iconName = focused ? 'account-circle' : 'account-circle-outline';
-              }
-              // You can return any component that you like here!
-              return<MaterialCommunityIcons name={iconName} color={color} size={size} />;
-            },
-            tabBarActiveTintColor: 'tomato',
-            tabBarInactiveTintColor: 'gray',
-          })}
-        >
-            <Tab.Screen  name="homepage" component={Homestack} options={{
-                headerShown: false,
-                tabBarLabel: 'Home',
-               
-            }}/>
-            <Tab.Screen options={{
-                headerShown: false,
-                tabBarLabel: 'favourites',
-                
-            }} name="Favorites" component={Favoritestack} />
-            <Tab.Screen options={{
-                headerShown: true,
-                tabBarLabel: 'My Bag',
-               
-            }} name="My_Bag" component={Mybagstack} />
-             <Tab.Screen options={{
-                headerShown: false,
-                tabBarLabel: 'shopping',
-                
-            }} name="shopping" component={Shoppingstack} />
-             <Tab.Screen options={{
-                headerShown: false,
-                tabBarLabel: 'Profile',
-                
-            }} name="Profile" component={Profilestack} />
-            
-        </Tab.Navigator>
-    )
+  return (
+    <Tab.Navigator initialRouteName='homepage'
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'homepageTab') {
+            iconName = focused
+              ? 'home'
+              : 'home-outline';
+          } else if (route.name === 'FavoritesTab') {
+            iconName = focused ? 'cards-heart' : 'cards-heart-outline';
+          } else if (route.name === 'My_BagTab') {
+            iconName = focused ? 'shopping' : 'shopping-outline';
+          } else if (route.name === 'shoppingTab') {
+            iconName = focused ? 'cart' : 'cart-outline';
+          } else if (route.name === 'ProfileTab') {
+            iconName = focused ? 'account-circle' : 'account-circle-outline';
+          }
+          // You can return any component that you like here!
+          return <MaterialCommunityIcons name={iconName} color={color} size={size} />;
+        },
+        tabBarActiveTintColor: 'tomato',
+        tabBarInactiveTintColor: 'gray',
+      })}
+    >
+      <Tab.Screen options={{
+        headerShown: false,
+        tabBarLabel: 'Home',
+
+      }} name="homepageTab" component={Homestack} />
+
+      <Tab.Screen options={{
+        headerShown: false,
+        tabBarLabel: 'favourites',
+
+      }} name="FavoritesTab" component={Favoritestack} />
+
+      <Tab.Screen options={{
+        headerShown: false,
+        tabBarLabel: 'My Bag',
+
+      }} name="My_BagTab" component={Mybagstack} />
+
+      <Tab.Screen options={{
+        headerShown: false,
+        tabBarLabel: 'shopping',
+
+      }} name="shoppingTab" component={Shoppingstack} />
+
+      <Tab.Screen options={{
+        headerShown: false,
+        tabBarLabel: 'Profile',
+
+      }} name="ProfileTab" component={Profilestack} />
+
+
+    </Tab.Navigator>
+  )
 }

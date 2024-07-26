@@ -13,11 +13,11 @@ export default function CategoriesTwo() {
                 barStyle="dark-content"
             />
 
-            <View style={Styles.viewcategories}>
+            {/* <View style={Styles.viewcategories}>
                 <EvilIcons name="chevron-left" size={45} color="black" />
                 <Text style={Styles.categories}>Categories</Text>
                 <FontAwesome name="search" size={22} color="black" />
-            </View>
+            </View> */}
 
             <View>
                 <TouchableOpacity><Text style={Styles.button}>VIEW ALL ITEMS</Text></TouchableOpacity>
