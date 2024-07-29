@@ -188,6 +188,16 @@ export const Homestack = () => {
           ),
         })}
       />
+       <Stack.Screen
+        name="shhoping"
+        component={shhoping}
+        options={({ navigation }) => ({
+          title: 'Shopping',
+          headerLeft: () => (
+            <Customback navigation={navigation} />
+          )
+        })}
+      />
       <Stack.Screen
         name="My_Bag"
         component={My_Bag}

@@ -1,11 +1,22 @@
 import { View, Text, StatusBar, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import React from 'react'
+import React, { useEffect } from 'react'
 import Login from '../Login/Login';
 import Signup from '../Signup/Signup';
+import { useDispatch, useSelector } from 'react-redux';
+import { SubByCat } from '../../redux/Slice/subcategory.slice';
 
-export default function CategoriesTwo() {
+export default function CategoriesTwo({ route, navigation }) {
+
+    const dispatch = useDispatch()
+    const subcategoryfire = useSelector(state => state.subcategoryfire);
+    console.log("skskkskskskks",subcategoryfire.Subcategoryfire);
+  useEffect(() => {
+    dispatch(SubByCat(route.params.cat_id))
+  }, [])
+
+    console.log("route.params.cat_id",route.params.cat_id);
     return (
         <ScrollView>
             <StatusBar
@@ -23,19 +34,16 @@ export default function CategoriesTwo() {
                 <TouchableOpacity><Text style={Styles.button}>VIEW ALL ITEMS</Text></TouchableOpacity>
                 <Text style={Styles.textchoosect}>Choose category</Text>
             </View>
+         
 
+           
             <View style={{ marginTop: 10 }}>
-                <TouchableOpacity><Text style={Styles.product}>Tops</Text></TouchableOpacity>
-                <TouchableOpacity><Text style={Styles.product}>Shirts & Blouses</Text></TouchableOpacity>
-                <TouchableOpacity><Text style={Styles.product}>Cardigans & Sweaters</Text></TouchableOpacity>
-                <TouchableOpacity><Text style={Styles.product}>Knitwear</Text></TouchableOpacity>
-                <TouchableOpacity><Text style={Styles.product}>Blazers</Text></TouchableOpacity>
-                <TouchableOpacity><Text style={Styles.product}>Outerwear</Text></TouchableOpacity>
-                <TouchableOpacity><Text style={Styles.product}>Pants</Text></TouchableOpacity>
-                <TouchableOpacity><Text style={Styles.product}>Jeans</Text></TouchableOpacity>
-                <TouchableOpacity><Text style={Styles.product}>Shorts</Text></TouchableOpacity>
-                <TouchableOpacity><Text style={Styles.product}>Skirts</Text></TouchableOpacity>
-                <TouchableOpacity><Text style={Styles.product}>Dresses</Text></TouchableOpacity>
+            {
+            subcategoryfire.Subcategoryfire.map((v)=>(
+                <TouchableOpacity><Text style={Styles.product}>{v.name}</Text></TouchableOpacity>
+
+            ))
+            }
             </View>
 
             {/* <View>
@@ -88,7 +96,7 @@ const Styles = StyleSheet.create({
         width: '100%',
         height: 45,
         marginTop: 3,
-        color: '#222222',
+        color: 'black',
         fontFamily: 'Metropolis-Regular',
         paddingHorizontal: 40,
         paddingVertical: 14,

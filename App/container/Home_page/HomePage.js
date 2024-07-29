@@ -89,7 +89,7 @@ export default function HomePage({ route, navigation }) {
 
   console.log("sjdjdjdjjdjjd", category);
   const ProductCard = ({ v }) => (
-    <TouchableOpacity style={{ marginHorizontal: 10 }} onPress={()=>navigation.navigate("ProductCard")}>
+    <TouchableOpacity style={{ marginHorizontal: 10 }} onPress={() => navigation.navigate("ProductCard")}>
 
       <Image source={v.img} style={{ width: 170, height: 250, borderRadius: 10 }}></Image>
 
@@ -134,7 +134,7 @@ export default function HomePage({ route, navigation }) {
         <View style={{ width: horizontalScale(200) }}>
           <Text style={style.Fashionsale}>Fashion Sale</Text>
 
-          <TouchableOpacity style={style.checkbutton} onPress={()=>navigation.navigate("CategoriesTwo")}>
+          <TouchableOpacity style={style.checkbutton}>
             <Text style={style.CheckText}>Check</Text>
 
           </TouchableOpacity>
@@ -182,59 +182,49 @@ export default function HomePage({ route, navigation }) {
         />
 
       </View>
-      {category.categoryfire.map((v, i) => {
+      {category.categoryfire.map((v,i) => {
+
         return (
-          <View key={i}>
-
-            {i % 4 === 0 &&
-              <View style={{width: '100%', height: 200}}> 
-                <TouchableOpacity 
-                  onPress={() => navigation.navigate("")}
-                ><Image source={require('../../../assets/img/Graphic.png')} style={{ width: '100%', height: '100%' }} /></TouchableOpacity>
-                <Text style={style.FistViewText}>{v.name}</Text>
-
+          <View>
+            {i % 10 === 0 &&
+            
+            <View>
+              <View style={style.FisrtNew}>
+                <TouchableOpacity  onPress={() => navigation.navigate("CategoriesTwo",{
+                  cat_id:v.id
+                })}><Image source={require('../../../assets/img/Graphic.png')} style={{ width: '100%', height: '100%' }} /></TouchableOpacity>
+                <Text style={style.FistViewText}>New collection {v.name}</Text>
               </View>
-            }
 
 
-
-
-            {/* <View style={i % 2 == 0 ? style.DirectView : ''}> */}
-              {/* <View style={style.SecondView}> */}
-                {i % 4 === 1 &&
-                  <View style={{width: '100%', height: 200}}>
-                    <View>
-                      <TouchableOpacity><Text style={style.SummText1}>{v.name}</Text></TouchableOpacity>
+              <View style={style.DirectView}>
+                <View style={style.SecondView}>
+                  <View style={style.SummSale}>
+                    <View style={style.SumTextView}>
+                      <TouchableOpacity><Text style={style.SummText1}> {v.name}</Text></TouchableOpacity>
                     </View>
 
 
-
                   </View>
-                }
-                {i % 4 === 2 &&
-                  <View style={{width: '50%', height: 200}}>
+                  <View style={style.BlackView}>
                     <TouchableOpacity><Image source={require('../../../assets/img/Graphic1.png')} style={{ width: '100%', height: '100%' }} /></TouchableOpacity>
-                    <Text>Black</Text>
+                    <Text style={style.BlackText}>Black</Text>
                   </View>
-                }
-              {/* </View> */}
+                </View>
 
-              {i % 4 === 3 &&
-                <View >
-                  <TouchableOpacity><Image source={require('../../../assets/img/Graphic3.png')} style={{ width: '100%', height: '100%' }} /></TouchableOpacity>
-                  <View>
-                    <Text>Men's hoodies</Text>
-                  </View>
+                <View style={style.BodieView}>
+                  <TouchableOpacity><Image source={require('../../../assets/img/Graphic3.png')} style={{ width: '100%', height: '100%' }} />
+
+                    <Text style={style.hoodieText}>Men's hoodies</Text>
+                  </TouchableOpacity>
 
                 </View>
-              }
+              </View>
             </View>
-          // </View>
+      }
+          </View>
         )
-
       })}
-
-
     </ScrollView>
   )
 }
@@ -359,11 +349,12 @@ const style = StyleSheet.create({
   SumTextView: {
     width: horizontalScale(150),
     height: verticalScale(100),
- 
+
   },
   SummText1: {
     color: '#DB3022',
-    fontSize: moderateScale(35),
+    fontSize: moderateScale(30),
+    marginTop:20,
     fontFamily: 'Metropolis-Bold',
   },
   BlackView: {
@@ -395,10 +386,13 @@ const style = StyleSheet.create({
     position: 'relative'
   },
   hoodieTextView: {
-  
+
   },
 
   hoodieText: {
+    position: 'absolute',
+    bottom: 185,
+    left: 50,
     color: 'white',
     fontSize: moderateScale(35),
     fontFamily: 'Metropolis-Bold',
