@@ -22,7 +22,10 @@ export const SubByCat = createAsyncThunk(
 
                     querySnapshot.forEach(documentSnapshot => {
                         if(documentSnapshot.data().category_id===cat_id){
-                            SubCateData.push(documentSnapshot.data())
+                            SubCateData.push({
+                                id:documentSnapshot.id,
+                                ...documentSnapshot.data()
+                        })
                         }
                       console.log(SubCateData);
                     });

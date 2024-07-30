@@ -2,9 +2,11 @@ import { View, Text, ScrollView, StyleSheet, StatusBar, TouchableOpacity, Image,
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { SliderBox } from "react-native-image-slider-box";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics';
 import Collapsible from 'react-native-collapsible';
+import { useDispatch, useSelector } from 'react-redux';
+import { ProBySub } from '../../redux/Slice/product.slice';
 
 const Data = [
     {
@@ -41,6 +43,21 @@ const Data = [
     }
 ]
 export default function ProductCard({ route, navigation }) {
+    console.log("rorooroor",route);
+    
+    const productfire = useSelector(state => state.productfire);
+    console.log("skskkskskskks", productfire.Productfire);
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(ProBySub({cat_id: route.params.cat_id  , subcate_id:route.params.subcate_id}))
+    
+    }, [])
+
+    console.log("route.params.cat_id", route.params.cat_id);
+    console.log("route.params.subcate_id", route.params.subcate_id);
+
     const [images, setImages] = useState(
         [
             require('../../../assets/img/Dress1.jpg'),
@@ -129,31 +146,35 @@ export default function ProductCard({ route, navigation }) {
                             <TouchableOpacity><FontAwesome name="heart-o" size={20} color="black" style={styles.heart} /></TouchableOpacity>
                         </View>
                     </View>
-
-                    <View style={styles.HandMView}>
-                        <View>
-                            <Text style={styles.HAndM}>H&M</Text>
-                            <Text style={styles.ShortDress}>Short black dress</Text>
-                            <View style={styles.iconview}>
-                                <FontAwesome name="star" size={13} style={{ color: '#FFBA49', marginRight: 2, marginTop: 2 }} />
-                                <FontAwesome name="star" size={13} style={{ color: '#FFBA49', marginRight: 2, marginTop: 2 }} />
-                                <FontAwesome name="star" size={13} style={{ color: '#FFBA49', marginRight: 2, marginTop: 2 }} />
-                                <FontAwesome name="star" size={13} style={{ color: '#FFBA49', marginRight: 2, marginTop: 2 }} />
-                                <FontAwesome name="star" size={13} style={{ color: '#FFBA49', marginRight: 3, marginTop: 2 }} />
-                                <Text style={{ color: '#9B9B9B', fontSize: 13 }}>(10)</Text>
-                            </View>
-                        </View>
-                        <View>
-                            <Text style={styles.HANdMPrice}>$19.99</Text>
-                        </View>
-                    </View>
-
-                    <View style={styles.TextsView}>
-                        <Text style={styles.Texts}>Short dress in soft cotton jersey with decorative buttons down the
-                            front and a wide, frill-trimmed square neckline with concealed elastication. Elasticated
-                            seam under the bust and short puff sleeves with a small frill trim.
-                        </Text>
-                    </View>
+                        {
+                                productfire.Productfire.map((v)=>(
+                                    <View>
+                                         <View style={styles.HandMView}>
+                                                <View>
+                                                    <Text style={styles.HAndM}>{v.Productname}</Text>
+                                                    <Text style={styles.ShortDress}>Short black dress</Text>
+                                                 <View style={styles.iconview}>
+                                                            <FontAwesome name="star" size={13} style={{ color: '#FFBA49', marginRight: 2, marginTop: 2 }} />
+                                                            <FontAwesome name="star" size={13} style={{ color: '#FFBA49', marginRight: 2, marginTop: 2 }} />
+                                                            <FontAwesome name="star" size={13} style={{ color: '#FFBA49', marginRight: 2, marginTop: 2 }} />
+                                                            <FontAwesome name="star" size={13} style={{ color: '#FFBA49', marginRight: 2, marginTop: 2 }} />
+                                                            <FontAwesome name="star" size={13} style={{ color: '#FFBA49', marginRight: 3, marginTop: 2 }} />
+                                                    <Text style={{ color: '#9B9B9B', fontSize: 13 }}>(10)</Text>
+                                                </View>
+                                                    </View>
+                                         <View>
+                                            <Text style={styles.HANdMPrice}>${v.Price}</Text>
+                                            </View>   
+                                             </View>
+                                             <View style={styles.TextsView}>
+                                             <Text style={styles.Texts}>{v.Description}
+                                             </Text>
+                                         </View>
+                                         </View>
+                                ))
+                                  }
+                                  
+                    
                     <TouchableOpacity
                             onPress={toggleExpand}
                         >

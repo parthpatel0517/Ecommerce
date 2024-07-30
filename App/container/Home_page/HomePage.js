@@ -182,46 +182,47 @@ export default function HomePage({ route, navigation }) {
         />
 
       </View>
-      {category.categoryfire.map((v,i) => {
+      {category.categoryfire.map((v, i) => {
 
         return (
+
           <View>
             {i % 10 === 0 &&
-            
-            <View>
-              <View style={style.FisrtNew}>
-                <TouchableOpacity  onPress={() => navigation.navigate("CategoriesTwo",{
-                  cat_id:v.id
-                })}><Image source={require('../../../assets/img/Graphic.png')} style={{ width: '100%', height: '100%' }} /></TouchableOpacity>
-                <Text style={style.FistViewText}>New collection {v.name}</Text>
-              </View>
+
+              <View>
+                <View style={style.FisrtNew}>
+                  <TouchableOpacity onPress={() => navigation.navigate("CategoriesTwo", {
+                    cat_id: v.id
+                  })}><Image source={require('../../../assets/img/Graphic.png')} style={{ width: '100%', height: '100%' }} /></TouchableOpacity>
+                  <Text style={style.FistViewText}>New collection {v.name}</Text>
+                </View>
 
 
-              <View style={style.DirectView}>
-                <View style={style.SecondView}>
-                  <View style={style.SummSale}>
-                    <View style={style.SumTextView}>
-                      <TouchableOpacity><Text style={style.SummText1}> {v.name}</Text></TouchableOpacity>
+                <View style={style.DirectView}>
+                  <View style={style.SecondView}>
+                    <View style={style.SummSale}>
+                      <View style={style.SumTextView}>
+                        <TouchableOpacity><Text style={style.SummText1}> {v.name}</Text></TouchableOpacity>
+                      </View>
+
+
                     </View>
+                    <View style={style.BlackView}>
+                      <TouchableOpacity><Image source={require('../../../assets/img/Graphic1.png')} style={{ width: '100%', height: '100%' }} /></TouchableOpacity>
+                      <Text style={style.BlackText}>Black</Text>
+                    </View>
+                  </View>
 
+                  <View style={style.BodieView}>
+                    <TouchableOpacity><Image source={require('../../../assets/img/Graphic3.png')} style={{ width: '100%', height: '100%' }} />
+
+                      <Text style={style.hoodieText}>Men's hoodies</Text>
+                    </TouchableOpacity>
 
                   </View>
-                  <View style={style.BlackView}>
-                    <TouchableOpacity><Image source={require('../../../assets/img/Graphic1.png')} style={{ width: '100%', height: '100%' }} /></TouchableOpacity>
-                    <Text style={style.BlackText}>Black</Text>
-                  </View>
-                </View>
-
-                <View style={style.BodieView}>
-                  <TouchableOpacity><Image source={require('../../../assets/img/Graphic3.png')} style={{ width: '100%', height: '100%' }} />
-
-                    <Text style={style.hoodieText}>Men's hoodies</Text>
-                  </TouchableOpacity>
-
                 </View>
               </View>
-            </View>
-      }
+            }
           </View>
         )
       })}
@@ -354,7 +355,7 @@ const style = StyleSheet.create({
   SummText1: {
     color: '#DB3022',
     fontSize: moderateScale(30),
-    marginTop:20,
+    marginTop: 20,
     fontFamily: 'Metropolis-Bold',
   },
   BlackView: {

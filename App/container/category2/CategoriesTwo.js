@@ -11,16 +11,16 @@ export default function CategoriesTwo({ route, navigation }) {
 
     const dispatch = useDispatch()
     const subcategoryfire = useSelector(state => state.subcategoryfire);
-    console.log("skskkskskskks",subcategoryfire.Subcategoryfire);
-  useEffect(() => {
-    dispatch(SubByCat(route.params.cat_id))
-  }, [])
+    console.log("skskkskskskks", subcategoryfire.Subcategoryfire);
+    useEffect(() => {
+        dispatch(SubByCat(route.params.cat_id))
+    }, [])
 
-    console.log("route.params.cat_id",route.params.cat_id);
+    console.log("route.params.cat_id", route.params.cat_id);
     return (
         <ScrollView>
             <StatusBar
-                backgroundColor="#fff"              
+                backgroundColor="#fff"
                 barStyle="dark-content"
             />
 
@@ -34,16 +34,22 @@ export default function CategoriesTwo({ route, navigation }) {
                 <TouchableOpacity><Text style={Styles.button}>VIEW ALL ITEMS</Text></TouchableOpacity>
                 <Text style={Styles.textchoosect}>Choose category</Text>
             </View>
-         
 
-           
+
+
             <View style={{ marginTop: 10 }}>
-            {
-            subcategoryfire.Subcategoryfire.map((v)=>(
-                <TouchableOpacity><Text style={Styles.product}>{v.name}</Text></TouchableOpacity>
+                {
+                    subcategoryfire.Subcategoryfire.map((v) => (
 
-            ))
-            }
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate("ProductCard", {
+                                cat_id: route.params.cat_id,
+                                subcate_id: v.id
+                            })}
+                        ><Text style={Styles.product}>{v.name}</Text></TouchableOpacity>
+
+                    ))
+                }
             </View>
 
             {/* <View>
