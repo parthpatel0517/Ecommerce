@@ -1,9 +1,12 @@
 import { View, Text, ScrollView, StatusBar, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics'
 import Collapsible from 'react-native-collapsible';
+import { useDispatch, useSelector } from 'react-redux';
+import { ProBySub } from '../../redux/Slice/product.slice';
+import { ShopbySub } from '../../redux/Slice/shopping.slice';
 
 const data = [
     {
@@ -27,37 +30,20 @@ const data = [
 
     }
 ]
-const Data2 = [
-    {
-        id: 1,
-        img: require('../../../assets/img/see_you.png'),
-        title: 'Mango',
-        SubTitle: 'T-Shirt SPANISH',
-        price: 9
-    },
-    {
-        id: 2,
-        img: require('../../../assets/img/see_you.png'),
-        title: 'Mango',
-        SubTitle: 'T-Shirt SPANISH',
-        price: 9
-    },
-    {
-        id: 3,
-        img: require('../../../assets/img/see_you.png'),
-        title: 'Mango',
-        SubTitle: 'T-Shirt SPANISH',
-        price: 9
-    },
-    {
-        id: 4,
-        img: require('../../../assets/img/see_you.png'),
-        title: 'Mango',
-        SubTitle: 'T-Shirt SPANISH',
-        price: 9
-    }
-]
-export default function shhoping({route, navigation }) {
+
+export default function shhoping({ route, navigation }) {
+
+    console.log("roooroororor", route);
+    const shopping = useSelector(state => state.shoppingfire);
+    console.log("skskkskskskks", shopping.Shoppingfire);
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(ShopbySub({ cat_id: route.params.cat_id, subcate_id: route.params.subcate_id }))
+
+    }, [])
+
     const ProductCard = ({ v }) => (
 
         <View style={styles.CategorisView}>
@@ -66,31 +52,37 @@ export default function shhoping({route, navigation }) {
         </View>
     )
     const ProductData = ({ v }) => (
-        <TouchableOpacity onPress={() => navigation.navigate("ProductCard")}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <View style={styles.productMainView}>
-                <View style={styles.productImg}>
-                    <Image source={v.img} style={{ width: '100%', height: '100%',borderTopLeftRadius:15,borderTopRightRadius:15}} />   
-                </View>
-                <View>
-                <TouchableOpacity style={{zIndex:999}}><FontAwesome name="heart-o" size={20} color="black" style={styles.heart} /></TouchableOpacity>
-                </View>
-                <View style={styles.productText}>
-                    <View style={styles.iconview}>
-                        <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
-                        <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
-                        <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
-                        <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
-                        <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
-                        <Text style={{ color: '#9B9B9B' }}>(3)</Text>
-                    </View>
-                    <Text style={styles.mangoText}>{v.title}</Text>
-                    <Text style={styles.tShirt}>{v.SubTitle}</Text>
-                    <Text style={styles.price}>{v.price}$</Text>
-                </View>
 
-            </View>
-        </View>
+        <TouchableOpacity onPress={() => navigation.navigate("ProductCard")}>
+            {
+                shopping.Shoppingfire.map((v) => (
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <View style={styles.productMainView}>
+                            <View style={styles.productImg}>
+                                <Image source={require('../../../assets/img/Dress1.jpg')} style={{ width: '100%', height: '100%', borderTopLeftRadius: 15, borderTopRightRadius: 15 }} />
+                            </View>
+                            <View>
+                                <TouchableOpacity style={{ zIndex: 999 }}><FontAwesome name="heart-o" size={20} color="black" style={styles.heart} /></TouchableOpacity>
+                            </View>
+                            <View style={styles.productText}>
+                                <View style={styles.iconview}>
+                                    <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
+                                    <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
+                                    <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
+                                    <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
+                                    <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
+                                    <Text style={{ color: '#9B9B9B' }}>(3)</Text>
+                                </View>
+                                <Text style={styles.mangoText}>{v.Productname}</Text>
+                                <Text style={styles.tShirt}>{v.Productname}</Text>
+                                <Text style={styles.price}>${v.Price}</Text>
+                            </View>
+
+                        </View>
+                    </View>
+                ))
+            }
+
         </TouchableOpacity>
     )
     return (
@@ -108,20 +100,20 @@ export default function shhoping({route, navigation }) {
             <View style={{ backgroundColor: 'white', marginBottom: 25 }}>
                 <FlatList
                     data={data}
-                    renderItem={({ item }) =><ProductCard v={item} />}
+                    renderItem={({ item }) => <ProductCard v={item} />}
                     keyExtractor={item => item.id}
                     horizontal={true}
                 />
 
                 <View style={styles.FilterOptions}>
-                    <TouchableOpacity style={{flexDirection:'row'}} onPress={() => navigation.navigate("filter")}><MaterialIcons name="filter-list" size={30} color="black" /><Text style={styles.filterText}>Filters</Text></TouchableOpacity>
-                    <TouchableOpacity style={{flexDirection:'row'}}><FontAwesome name="arrows-v" size={26} color="black" /><Text style={styles.filterText}>Price:lowest to high</Text></TouchableOpacity>
+                    <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.navigate("filter")}><MaterialIcons name="filter-list" size={30} color="black" /><Text style={styles.filterText}>Filters</Text></TouchableOpacity>
+                    <TouchableOpacity style={{ flexDirection: 'row' }}><FontAwesome name="arrows-v" size={26} color="black" /><Text style={styles.filterText}>Price:lowest to high</Text></TouchableOpacity>
                     <TouchableOpacity><FontAwesome name="th-list" size={26} color="black" /></TouchableOpacity>
                 </View>
             </View>
 
             <FlatList
-                data={Data2}
+                data={shopping.Shoppingfire}
                 numColumns={2}
                 columnWrapperStyle={{ justifyContent: 'space-between' }}
                 renderItem={({ item }) => <TouchableOpacity><ProductData v={item} /></TouchableOpacity>}
@@ -188,13 +180,13 @@ const styles = StyleSheet.create({
         color: 'black',
         paddingRight: verticalScale(60),
         marginTop: verticalScale(4),
-        marginLeft:horizontalScale(10)
+        marginLeft: horizontalScale(10)
     },
     productMainView: {
         width: horizontalScale(170),
         height: verticalScale(350),
-        marginBottom:verticalScale(40)
-        
+        marginBottom: verticalScale(40)
+
     },
     productImg: {
         width: '100%',
@@ -209,15 +201,15 @@ const styles = StyleSheet.create({
         borderRadius: moderateScale(20),
         padding: horizontalScale(10),
         padding: verticalScale(10),
-        
+
     },
     productText: {
         width: '100%',
         height: '32%',
-        backgroundColor:'white',
-        borderBottomLeftRadius:15,
-        borderBottomRightRadius:15,
-        elevation:2
+        backgroundColor: 'white',
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15,
+        elevation: 2
     },
     iconview: {
         flexDirection: 'row',
@@ -237,14 +229,14 @@ const styles = StyleSheet.create({
         fontFamily: 'Metropolis-SemiBold',
         fontSize: moderateScale(18),
         paddingHorizontal: horizontalScale(6),
-        marginTop:verticalScale(3)
+        marginTop: verticalScale(3)
     },
     price: {
         color: 'black',
         fontSize: moderateScale(16),
         fontFamily: 'Metropolis-Medium',
         paddingHorizontal: horizontalScale(7),
-        marginTop:verticalScale(4)
+        marginTop: verticalScale(4)
     },
 
 

@@ -45,18 +45,18 @@ const Data = [
 export default function ProductCard({ route, navigation }) {
     console.log("rorooroor",route);
     
-    const productfire = useSelector(state => state.productfire);
-    console.log("skskkskskskks", productfire.Productfire);
+    // const productfire = useSelector(state => state.productfire);
+    // console.log("skskkskskskks", productfire.Productfire);
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(ProBySub({cat_id: route.params.cat_id  , subcate_id:route.params.subcate_id}))
+    // useEffect(() => {
+    //     dispatch(ProBySub({cat_id: route.params.cat_id  , subcate_id:route.params.subcate_id}))
     
-    }, [])
+    // }, [])
 
-    console.log("route.params.cat_id", route.params.cat_id);
-    console.log("route.params.subcate_id", route.params.subcate_id);
+    // console.log("route.params.cat_id", route.params.cat_id);
+    // console.log("route.params.subcate_id", route.params.subcate_id);
 
     const [images, setImages] = useState(
         [
@@ -146,12 +146,11 @@ export default function ProductCard({ route, navigation }) {
                             <TouchableOpacity><FontAwesome name="heart-o" size={20} color="black" style={styles.heart} /></TouchableOpacity>
                         </View>
                     </View>
-                        {
-                                productfire.Productfire.map((v)=>(
+                      
                                     <View>
                                          <View style={styles.HandMView}>
                                                 <View>
-                                                    <Text style={styles.HAndM}>{v.Productname}</Text>
+                                                    <Text style={styles.HAndM}>H&M</Text>
                                                     <Text style={styles.ShortDress}>Short black dress</Text>
                                                  <View style={styles.iconview}>
                                                             <FontAwesome name="star" size={13} style={{ color: '#FFBA49', marginRight: 2, marginTop: 2 }} />
@@ -163,17 +162,18 @@ export default function ProductCard({ route, navigation }) {
                                                 </View>
                                                     </View>
                                          <View>
-                                            <Text style={styles.HANdMPrice}>${v.Price}</Text>
+                                            <Text style={styles.HANdMPrice}>$99</Text>
                                             </View>   
                                              </View>
                                              <View style={styles.TextsView}>
-                                             <Text style={styles.Texts}>{v.Description}
+                                             <Text style={styles.Texts}> It uses a dictionary of over 200 Latin words, 
+                                combined with a handful of model sentence structures, 
+                                to generate Lorem Ipsum which looks reasonable
+                        
                                              </Text>
                                          </View>
                                          </View>
-                                ))
-                                  }
-                                  
+                            
                     
                     <TouchableOpacity
                             onPress={toggleExpand}
