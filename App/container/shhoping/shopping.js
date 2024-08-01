@@ -1,5 +1,5 @@
-import { View, Text, ScrollView, StatusBar, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native'
-import React, { useEffect } from 'react'
+import { View, Text, ScrollView, StatusBar, StyleSheet, FlatList, Image, TouchableOpacity, TextInput } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics'
@@ -7,6 +7,7 @@ import Collapsible from 'react-native-collapsible';
 import { useDispatch, useSelector } from 'react-redux';
 import { ProBySub } from '../../redux/Slice/product.slice';
 import { ShopbySub } from '../../redux/Slice/shopping.slice';
+import {BottomSheetModal} from '@gorhom/bottom-sheet';
 
 const data = [
     {
@@ -32,6 +33,9 @@ const data = [
 ]
 
 export default function shhoping({ route, navigation }) {
+    
+
+    const [search , setSearch] = useState('')
 
     console.log("roooroororor", route);
     const shopping = useSelector(state => state.shoppingfire);
@@ -53,7 +57,10 @@ export default function shhoping({ route, navigation }) {
     )
     const ProductData = ({ v }) => (
 
-        <TouchableOpacity onPress={() => navigation.navigate("ProductCard")}>
+        <TouchableOpacity onPress={() => navigation.navigate("ProductCard",{
+            cat_id: route.params.cat_id,
+            subcate_id: route.params.subcate_id
+        })}>
             {
                 shopping.Shoppingfire.map((v) => (
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -85,6 +92,18 @@ export default function shhoping({ route, navigation }) {
 
         </TouchableOpacity>
     )
+    
+   const SesrchData = () =>{
+        console.log("ssjjsjsjsjs",search);
+       const Fdata =  shopping.Shoppingfire.filter((v)=>(
+            v.Productname.toLowerCase().includes(search.toLowerCase())||
+            v.Description.toLowerCase().includes(search.toLowerCase())||
+            v.Price.toString().includes(search)
+        ))
+        return Fdata
+    }
+    const FinaleData = SesrchData()
+
     return (
         <ScrollView style={styles.container}>
             <StatusBar
@@ -110,10 +129,17 @@ export default function shhoping({ route, navigation }) {
                     <TouchableOpacity style={{ flexDirection: 'row' }}><FontAwesome name="arrows-v" size={26} color="black" /><Text style={styles.filterText}>Price:lowest to high</Text></TouchableOpacity>
                     <TouchableOpacity><FontAwesome name="th-list" size={26} color="black" /></TouchableOpacity>
                 </View>
+                <View>
+                <TextInput
+                    name="search"
+                    onChangeText={setSearch}
+                    placeholder="Search"
+                />
+                </View>
             </View>
 
             <FlatList
-                data={shopping.Shoppingfire}
+                data={FinaleData}
                 numColumns={2}
                 columnWrapperStyle={{ justifyContent: 'space-between' }}
                 renderItem={({ item }) => <TouchableOpacity><ProductData v={item} /></TouchableOpacity>}
