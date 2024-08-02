@@ -1,5 +1,5 @@
-import { View, Text, ScrollView, StatusBar, StyleSheet, FlatList, Image, TouchableOpacity, TextInput } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { View, Text, ScrollView, StatusBar, StyleSheet, FlatList, Image, TouchableOpacity, TextInput, Button } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics'
@@ -7,7 +7,10 @@ import Collapsible from 'react-native-collapsible';
 import { useDispatch, useSelector } from 'react-redux';
 import { ProBySub } from '../../redux/Slice/product.slice';
 import { ShopbySub } from '../../redux/Slice/shopping.slice';
-import {BottomSheetModal} from '@gorhom/bottom-sheet';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import { useFocusEffect } from '@react-navigation/native';
+
 
 const data = [
     {
@@ -32,10 +35,26 @@ const data = [
     }
 ]
 
-export default function shhoping({ route, navigation }) {
-    
+const items = [''];
 
-    const [search , setSearch] = useState('')
+
+
+const YourOwnComponent = () => (
+    <View style={{ padding: 20 }}>
+        <Text>This is your own component inside the bottom sheet</Text>
+    </View>
+);
+
+export default function shhoping({ route, navigation }) {
+    useFocusEffect(
+        React.useCallback(() => {
+          return () => bottomSheetRef.current?.close()
+        }, [])
+      );
+
+    const refRBSheet = useRef([]);
+    const [search, setSearch] = useState('')
+    const [sort, setSort] = useState('')
 
     console.log("roooroororor", route);
     const shopping = useSelector(state => state.shoppingfire);
@@ -57,13 +76,10 @@ export default function shhoping({ route, navigation }) {
     )
     const ProductData = ({ v }) => (
 
-        <TouchableOpacity onPress={() => navigation.navigate("ProductCard",{
+        <TouchableOpacity onPress={() => navigation.navigate("ProductCard", {
             cat_id: route.params.cat_id,
             subcate_id: route.params.subcate_id
-        })}>
-            {
-                shopping.Shoppingfire.map((v) => (
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        })}><View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <View style={styles.productMainView}>
                             <View style={styles.productImg}>
                                 <Image source={require('../../../assets/img/Dress1.jpg')} style={{ width: '100%', height: '100%', borderTopLeftRadius: 15, borderTopRightRadius: 15 }} />
@@ -87,20 +103,63 @@ export default function shhoping({ route, navigation }) {
 
                         </View>
                     </View>
-                ))
-            }
-
         </TouchableOpacity>
     )
-    
-   const SesrchData = () =>{
-        console.log("ssjjsjsjsjs",search);
-       const Fdata =  shopping.Shoppingfire.filter((v)=>(
-            v.Productname.toLowerCase().includes(search.toLowerCase())||
-            v.Description.toLowerCase().includes(search.toLowerCase())||
+
+    const renderItem = ({ item, index, refRBSheet }) => {
+        return (
+            <View>
+                <RBSheet ref={ref => (refRBSheet.current[index] = ref)}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => {setSort('lh'),refRBSheet.current[0].close()}}
+                        
+                    >
+                        <Text style={styles.buttonText}>Low - High</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => {setSort('hl'),refRBSheet.current[0].close()}}
+                    >
+                        <Text style={styles.buttonText}>High - Low</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => {setSort('az'),refRBSheet.current[0].close()}}
+                    >
+                        <Text style={styles.buttonText}>A-Z</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => {setSort('za'),refRBSheet.current[0].close()}}
+                    >
+                        <Text style={styles.buttonText}>Z-A</Text>
+                    </TouchableOpacity>
+                </RBSheet>
+            </View>
+        );
+    };
+    const SesrchData = () => {
+        console.log("ssjjsjsjsjs", sort);
+        const Fdata = shopping.Shoppingfire.filter((v) => (
+            v.Productname.toLowerCase().includes(search.toLowerCase()) ||
+            v.Description.toLowerCase().includes(search.toLowerCase()) ||
             v.Price.toString().includes(search)
         ))
-        return Fdata
+        const Sdata = Fdata.sort((a, b) => {
+            if (sort === 'lh') {
+                return a.Price - b.Price
+            } else if (sort === 'hl') {
+                return b.Price - a.Price
+            } else if (sort === 'az') {
+                return a.Productname.localeCompare(b.Productname)
+            } else if (sort === 'za') {
+                return b.Productname.localeCompare(a.Productname)
+            }
+        })
+
+        return Sdata
+
     }
     const FinaleData = SesrchData()
 
@@ -111,11 +170,6 @@ export default function shhoping({ route, navigation }) {
                 translucent backgroundColor="transparent"
                 barStyle="dark-content"
             />
-            {/* <View style={styles.ArrowView}>
-                <Text style={styles.KeyboardArrow}><MaterialIcons name="keyboard-arrow-left" size={50} color="black" /></Text>
-                <Text style={styles.ArrowText}>Women's tops</Text>
-                <TouchableOpacity><MaterialIcons name="search" size={30} color="black" style={{ marginTop: 25 }} /></TouchableOpacity>
-            </View> */}
             <View style={{ backgroundColor: 'white', marginBottom: 25 }}>
                 <FlatList
                     data={data}
@@ -126,15 +180,47 @@ export default function shhoping({ route, navigation }) {
 
                 <View style={styles.FilterOptions}>
                     <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.navigate("filter")}><MaterialIcons name="filter-list" size={30} color="black" /><Text style={styles.filterText}>Filters</Text></TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row' }}><FontAwesome name="arrows-v" size={26} color="black" /><Text style={styles.filterText}>Price:lowest to high</Text></TouchableOpacity>
+                    <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => refRBSheet.current[0].open()}><FontAwesome name="arrows-v" size={26} color="black" /><Text style={styles.filterText}>Price:lowest to high</Text></TouchableOpacity>
                     <TouchableOpacity><FontAwesome name="th-list" size={26} color="black" /></TouchableOpacity>
                 </View>
+                <View style={{ flex: 1 }}>
+                    <FlatList
+                        data={items}
+                        renderItem={(props) => renderItem({ ...props, refRBSheet })}
+                        keyExtractor={(item, index) => index.toString()}
+                    />
+                    {/* <Button
+                        title="OPEN BOTTOM SHEET"
+                        onPress={() => refRBSheet.current[0].open()}
+                    /> */}
+                    <RBSheet
+                        ref={refRBSheet.current[0]}
+                        useNativeDriver={true}
+                        customStyles={{
+                            wrapper: {
+                                backgroundColor: 'transparent',
+                            },
+                            draggableIcon: {
+                                backgroundColor: '#000',
+                            },
+                        }}
+                        customModalProps={{
+                            animationType: 'slide',
+                            statusBarTranslucent: true,
+                        }}
+                        customAvoidingViewProps={{
+                            enabled: false,
+                        }}
+                    >
+                        <YourOwnComponent />
+                    </RBSheet>
+                </View>
                 <View>
-                <TextInput
-                    name="search"
-                    onChangeText={setSearch}
-                    placeholder="Search"
-                />
+                    <TextInput
+                        name="search"
+                        onChangeText={setSearch}
+                        placeholder="Search"
+                    />
                 </View>
             </View>
 
@@ -263,6 +349,23 @@ const styles = StyleSheet.create({
         fontFamily: 'Metropolis-Medium',
         paddingHorizontal: horizontalScale(7),
         marginTop: verticalScale(4)
+    },
+    button: {
+
+        margin: 'auto',
+        width: 380,
+        paddingVertical: 15,
+        backgroundColor: 'green',
+        marginBottom: 10,
+        borderRadius: 20
+    },
+    buttonText: {
+        color: 'white',
+        textAlign: 'center',
+    },
+    bottomSheetText: {
+        fontSize: 18,
+        color: 'black'
     },
 
 

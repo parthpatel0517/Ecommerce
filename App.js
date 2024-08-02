@@ -13,7 +13,6 @@ import Counter from './App/counter/Counter';
 import { configurestore } from './App/redux/store';
 import { Provider } from 'react-redux';
 import Rating from './App/container/rating/Rating';
-import Womens_top from './App/container/women\'stop/Womens_top';
 import OrderDetails from './App/container/orderdetail/OrderDetails';
 import ShippingAddresses from './App/container/shippingadresses/ShippingAddresses';
 import Filter from './App/container/filter/Filter';
@@ -21,6 +20,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Bottom from './App/navigation/Bottom';
 import 'react-native-gesture-handler';
 import Success from './App/container/success/Success';
+import BottomSheet from './App/container/bottomsheet/Bottomsheet';
 
 
 export default function App() {
@@ -39,6 +39,7 @@ export default function App() {
     {/* <ShippingAddresses/> */}
     {/* <SubCategories2></SubCategories2> */}
     <Bottom></Bottom>
+    {/* <BottomSheet/> */}
     {/* <Success></Success> */}
     {/* <FavoritesPage></FavoritesPage> */}
     {/* <FavoritesPage></FavoritesPage> */}

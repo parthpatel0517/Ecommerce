@@ -19,6 +19,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { horizontalScale, moderateScale, verticalScale } from "../../assets/Metrics/Metrics";
 import Rating from "../container/rating/Rating";
 import Filter from "../container/filter/Filter";
+import Shop from "../container/Shop/Shop";
 
 const Stack = createStackNavigator();
 
@@ -433,7 +434,7 @@ export const Shoppingstack = () => {
       }}>
       <Stack.Screen
         name="shhoping"
-        component={shhoping}
+        component={Shop}
         options={({ navigation }) => ({
           title: 'Shopping',
           headerLeft: () => (
