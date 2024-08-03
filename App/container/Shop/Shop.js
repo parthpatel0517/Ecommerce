@@ -10,30 +10,9 @@ import { ShopbySub } from '../../redux/Slice/shopping.slice';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { useFocusEffect } from '@react-navigation/native';
+import { fetchcategory } from '../../redux/Slice/category.slice';
 
 
-const data = [
-    {
-        id: 1,
-        title: 'T-shirts',
-
-    },
-    {
-        id: 2,
-        title: 'Crop tops',
-
-    },
-    {
-        id: 3,
-        title: 'Blouses',
-
-    },
-    {
-        id: 4,
-        title: 'Shirt',
-
-    }
-]
 
 const items = [''];
 
@@ -50,23 +29,33 @@ export default function Shop({ route, navigation }) {
     const refRBSheet = useRef([]);
     const [search, setSearch] = useState('')
     const [sort, setSort] = useState('')
+    const [selectCat, setSelectCat] = useState('')
 
     console.log("roooroororor", route);
     const shopping = useSelector(state => state.productfire);
+
+    const categoryfire = useSelector(state => state.categoryfire);
+
     console.log("skskkskskskks", shopping);
 
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getProducts())
+        dispatch(fetchcategory())
     }, [])
 
     const ProductCard = ({ v }) => (
 
-        <View style={styles.CategorisView}>
-            <View style={styles.Options}><Text style={styles.OptionsText}>{v.title}</Text></View>
+        <TouchableOpacity
+            style={styles.CategorisView}
+            onPress={() => { setSelectCat(v.id) }}
+        >
+            <View style={selectCat === v.id ? styles.AfterClick : styles.Options}>
+                <Text style={styles.OptionsText}>{v.name}</Text>
+            </View>
 
-        </View>
+        </TouchableOpacity>
     )
     const ProductData = ({ v }) => (
 
@@ -74,29 +63,29 @@ export default function Shop({ route, navigation }) {
             // cat_id: route.params.cat_id,
             // subcate_id: route.params.subcate_id
         })}><View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <View style={styles.productMainView}>
-                            <View style={styles.productImg}>
-                                <Image source={require('../../../assets/img/Dress1.jpg')} style={{ width: '100%', height: '100%', borderTopLeftRadius: 15, borderTopRightRadius: 15 }} />
-                            </View>
-                            <View>
-                                <TouchableOpacity style={{ zIndex: 999 }}><FontAwesome name="heart-o" size={20} color="black" style={styles.heart} /></TouchableOpacity>
-                            </View>
-                            <View style={styles.productText}>
-                                <View style={styles.iconview}>
-                                    <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
-                                    <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
-                                    <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
-                                    <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
-                                    <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
-                                    <Text style={{ color: '#9B9B9B' }}>(3)</Text>
-                                </View>
-                                <Text style={styles.mangoText}>{v.Productname}</Text>
-                                <Text style={styles.tShirt}>{v.Productname}</Text>
-                                <Text style={styles.price}>${v.Price}</Text>
-                            </View>
-
-                        </View>
+                <View style={styles.productMainView}>
+                    <View style={styles.productImg}>
+                        <Image source={require('../../../assets/img/Dress1.jpg')} style={{ width: '100%', height: '100%', borderTopLeftRadius: 15, borderTopRightRadius: 15 }} />
                     </View>
+                    <View>
+                        <TouchableOpacity style={{ zIndex: 999 }}><FontAwesome name="heart-o" size={20} color="black" style={styles.heart} /></TouchableOpacity>
+                    </View>
+                    <View style={styles.productText}>
+                        <View style={styles.iconview}>
+                            <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
+                            <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
+                            <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
+                            <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
+                            <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
+                            <Text style={{ color: '#9B9B9B' }}>(3)</Text>
+                        </View>
+                        <Text style={styles.mangoText}>{v.Productname}</Text>
+                        <Text style={styles.tShirt}>{v.Productname}</Text>
+                        <Text style={styles.price}>${v.Price}</Text>
+                    </View>
+
+                </View>
+            </View>
         </TouchableOpacity>
     )
 
@@ -106,26 +95,26 @@ export default function Shop({ route, navigation }) {
                 <RBSheet ref={ref => (refRBSheet.current[index] = ref)}>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => {setSort('lh'),refRBSheet.current[0].close()}}
-                        
+                        onPress={() => { setSort('lh'), refRBSheet.current[0].close() }}
+
                     >
                         <Text style={styles.buttonText}>Low - High</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => {setSort('hl'),refRBSheet.current[0].close()}}
+                        onPress={() => { setSort('hl'), refRBSheet.current[0].close() }}
                     >
                         <Text style={styles.buttonText}>High - Low</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => {setSort('az'),refRBSheet.current[0].close()}}
+                        onPress={() => { setSort('az'), refRBSheet.current[0].close() }}
                     >
                         <Text style={styles.buttonText}>A-Z</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => {setSort('za'),refRBSheet.current[0].close()}}
+                        onPress={() => { setSort('za'), refRBSheet.current[0].close() }}
                     >
                         <Text style={styles.buttonText}>Z-A</Text>
                     </TouchableOpacity>
@@ -134,7 +123,7 @@ export default function Shop({ route, navigation }) {
         );
     };
     const SesrchData = () => {
-        console.log("ssjjsjsjsjs", sort);
+        console.log("ssjjsjsjsjs", selectCat);
         const Fdata = shopping.Productfire.filter((v) => (
             v.Productname.toLowerCase().includes(search.toLowerCase()) ||
             v.Description.toLowerCase().includes(search.toLowerCase()) ||
@@ -152,23 +141,42 @@ export default function Shop({ route, navigation }) {
             }
         })
 
+        if (selectCat != '') {
+            const selData = Sdata.filter((v) => v.category_id === selectCat)
+
+            return selData
+        }
+
         return Sdata
 
     }
     const FinaleData = SesrchData()
 
     return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
             <StatusBar
                 animated={true}
                 translucent backgroundColor="transparent"
                 barStyle="dark-content"
             />
             <View style={{ backgroundColor: 'white', marginBottom: 25 }}>
+                <View style={styles.allCategory}>
+                    <TouchableOpacity
+                        style={styles.CategorisView}
+                        onPress={() => { setSelectCat('') }}
+
+                    >
+                        <View style={selectCat === '' ? styles.AfterClick : styles.Options}>
+                            <Text style={styles.OptionsText}>ALL</Text>
+                        </View>
+
+                    </TouchableOpacity>
+                </View>
+
                 <FlatList
-                    data={data}
+                    data={categoryfire.categoryfire}
                     renderItem={({ item }) => <ProductCard v={item} />}
-                    keyExtractor={item => item.id}
+                    keyExtractor={(item, index) => String(index)}
                     horizontal={true}
                 />
 
@@ -223,14 +231,14 @@ export default function Shop({ route, navigation }) {
                 numColumns={2}
                 columnWrapperStyle={{ justifyContent: 'space-between' }}
                 renderItem={({ item }) => <TouchableOpacity><ProductData v={item} /></TouchableOpacity>}
-                keyExtractor={item => item.id}
+                keyExtractor={(item, index) => String(index)}
             // horizontal={true}
             />
 
 
 
 
-        </ScrollView>
+        </View>
     )
 }
 
@@ -259,6 +267,13 @@ const styles = StyleSheet.create({
     },
     CategorisView: {
         paddingRight: horizontalScale(10),
+        // flexDirection: 'row',
+        display:'flex'
+    },
+    allCategory: {
+        // paddingRight: horizontalScale(10),
+        display:'flex'
+        // marginVertical: 20
     },
     Options: {
         width: horizontalScale(90),
@@ -268,6 +283,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
 
+    },
+    AfterClick: {
+        width: horizontalScale(90),
+        height: verticalScale(35),
+        backgroundColor: 'red',
+        borderRadius: horizontalScale(100),
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     OptionsText: {
         fontSize: moderateScale(14),
