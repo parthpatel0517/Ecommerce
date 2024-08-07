@@ -38,7 +38,7 @@ export default function App() {
     {/* <OrderDetails/> */}
     {/* <ShippingAddresses/> */}
     {/* <SubCategories2></SubCategories2> */}
-    <Bottom></Bottom>
+    {/* <Bottom></Bottom> */}
     {/* <BottomSheet/> */}
     {/* <Success></Success> */}
     {/* <FavoritesPage></FavoritesPage> */}
@@ -46,7 +46,7 @@ export default function App() {
    {/* <ProductCard></ProductCard> */}
    {/* <AddShipingAddress></AddShipingAddress> */}
     {/* <Counter></Counter> */}
-    {/* <Filter></Filter> */}
+    <Filter></Filter>
     {/* <OrderDetails/> */}
     {/* // </View> */}
     </NavigationContainer>

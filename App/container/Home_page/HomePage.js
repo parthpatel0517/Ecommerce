@@ -183,7 +183,6 @@ export default function HomePage({ route, navigation }) {
 
       </View>
       {category.categoryfire.map((v, i) => {
-
         return (
 
           <View>

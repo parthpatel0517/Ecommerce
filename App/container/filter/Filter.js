@@ -1,30 +1,50 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StatusBar, ScrollView, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics';
 import Slider from '@react-native-assets/slider';
 import CheckBox from 'react-native-check-box';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchcolor } from '../../redux/Slice/color.slice';
+import { fetchbrand } from '../../redux/Slice/brand.slice';
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 
 export default function Filter() {
     const [price, setPrice] = useState(78);
     const [selectedSize, setSelectedSize] = useState(null);
     const [selectedCategory, setselectedCategory] = useState(null);
-    const [selctbrand, setselctbrand] = useState(null)
+    const [isSelected, setSelection] = useState(false);
 
-    const size = ['XS' , 'S' , 'M' , 'L' , 'XL'];
+
+    const size = ['XS', 'S', 'M', 'L', 'XL'];
 
     const selectSize = (size) => {
         setSelectedSize(size);
     };
 
-    
+
 
     const categories = ['All', 'Women', 'Men', 'Boys', 'Girls'];
 
     const selectCategory = (category) => {
         setselectedCategory(category);
     };
+
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchcolor())
+        dispatch(fetchbrand())
+    }, [])
+
+
+    const color = useSelector(state => state.color);
+    // console.log("lllllllllsllslslslsss", color.color);
+
+    const brand = useSelector(state => state.brand);
+    // console.log("lllllllllkkkkkkkkslsss", brand.brand);
 
     return (
         <View style={style.mainContainer}>
@@ -35,10 +55,6 @@ export default function Filter() {
                         translucent backgroundColor='white'
                     />
 
-                    {/* <View style={style.titlebar}>
-                        <MaterialIcons name='chevron-left' size={30} color='black'></MaterialIcons>
-                        <Text style={style.filtertext}>Filters</Text>
-                    </View> */}
 
                     <Text style={style.text}>Price range</Text>
                     <View style={style.viewstyle}>
@@ -46,7 +62,7 @@ export default function Filter() {
                             style={style.Slider}
                             step={1}
                             minimumValue={0}
-                            maximumValue={200}
+                            maximumValue={500}
                             minimumTrackTintColor="#DB3022"
                             maximumTrackTintColor="#d3d3d3"
                             thumbTintColor="#DB3022"
@@ -62,17 +78,17 @@ export default function Filter() {
 
                     <Text style={style.text}>Colors</Text>
                     <View style={style.circleview}>
-                        <TouchableOpacity style={style.circle1}></TouchableOpacity>
-                        <TouchableOpacity style={style.circle2}></TouchableOpacity>
-                        <TouchableOpacity style={style.circle3}></TouchableOpacity>
-                        <TouchableOpacity style={style.circle4}></TouchableOpacity>
-                        <TouchableOpacity style={style.circle5}></TouchableOpacity>
-                        <TouchableOpacity style={style.circle6}></TouchableOpacity>
+                        {
+                            color.color.map((v) => (
+                                <TouchableOpacity style={style.circle1}><Text>{v.name}</Text></TouchableOpacity>
+                            ))
+                        }
                     </View>
+
 
                     <Text style={style.text}>Sizes</Text>
                     <View style={style.sizeview}>
-                    {size.map((size) => (
+                        {size.map((size) => (
                             <TouchableOpacity
                                 key={size}
                                 style={[
@@ -91,7 +107,7 @@ export default function Filter() {
                                 </Text>
                             </TouchableOpacity>
                         ))}
-  
+
                     </View>
 
                     <Text style={style.text}>Category</Text>
@@ -125,49 +141,26 @@ export default function Filter() {
                             </View>
                             <MaterialIcons name='keyboard-arrow-right' size={30} style={style.righticon}></MaterialIcons>
                         </View>
+                        {
+                            brand.brand.map((v) => (
+                                <View>
+                                    <View style={style.brandfilter}>
+                                        <Text style={style.brandname}>{v.name}</Text>
+                                        <BouncyCheckbox
+                                            style={{ marginLeft: 100, marginBottom: 10 }}
+                                            size={25}
+                                            fillColor="black"
+                                            unFillColor="#FFFFFF"
+                                            text="CheckBox"
+                                            iconStyle={{ borderColor: "black" }}
+                                            innerIconStyle={{ borderWidth: 2 }}
+                                        />
+                                    </View>
 
-                        <View>
-                            <View style={style.brandfilter}>
-                                <Text style={style.brandname}>addidas</Text>
-                                <CheckBox style={style.CheckBox}></CheckBox>
-                            </View>
-                            <View style={style.brandfilter}>
-                                <Text style={style.brandname}>addidas Original</Text>
-                                <CheckBox style={style.CheckBox}></CheckBox>
-                            </View>
-                            <View style={style.brandfilter}>
-                                <Text style={style.brandname}>Blend</Text>
-                                <CheckBox style={style.CheckBox}></CheckBox>
-                            </View>
-                            <View style={style.brandfilter}>
-                                <Text style={style.brandname}>Boutique Moschino</Text>
-                                <CheckBox style={style.CheckBox}></CheckBox>
-                            </View>
-                            <View style={style.brandfilter}>
-                                <Text style={style.brandname}>Champion</Text>
-                                <CheckBox style={style.CheckBox}></CheckBox>
-                            </View>
-                            <View style={style.brandfilter}>
-                                <Text style={style.brandname}>Diesel</Text>
-                                <CheckBox style={style.CheckBox}></CheckBox>
-                            </View>
-                            <View style={style.brandfilter}>
-                                <Text style={style.brandname}>Jack & Jones</Text>
-                                <CheckBox style={style.CheckBox}></CheckBox>
-                            </View>
-                            <View style={style.brandfilter}>
-                                <Text style={style.brandname}>Naf Naf</Text>
-                                <CheckBox style={style.CheckBox}></CheckBox>
-                            </View>
-                            <View style={style.brandfilter}>
-                                <Text style={style.brandname}>Red Valentino</Text>
-                                <CheckBox style={style.CheckBox}></CheckBox>
-                            </View>
-                            <View style={style.brandfilter}>
-                                <Text style={style.brandname}>s.Oliver</Text>
-                                <CheckBox style={style.CheckBox}></CheckBox>
-                            </View>
-                        </View>
+                                </View>
+                            ))
+                        }
+
                     </View>
                 </ScrollView>
             </View>
@@ -233,6 +226,7 @@ const style = StyleSheet.create({
         width: horizontalScale(36),
         borderRadius: 30,
         backgroundColor: 'black'
+
     },
     circle2: {
         height: verticalScale(36),
@@ -365,7 +359,8 @@ const style = StyleSheet.create({
     mainContainer: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor:'white'
+        backgroundColor: 'white',
+        paddingTop: 50
     },
     bodyContainer: {
         flex: 10

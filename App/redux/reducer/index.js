@@ -4,6 +4,8 @@ import categorySlice from "../Slice/category.slice";
 import subcategorySlice from "../Slice/subcategory.slice";
 import productSlice from "../Slice/product.slice";
 import shoppingSlice from "../Slice/shopping.slice";
+import colorslice  from "../Slice/color.slice";
+import brandSlice from "../Slice/brand.slice";
 
 
 
@@ -12,5 +14,7 @@ export const rootReducer = combineReducers({
     categoryfire : categorySlice,
     subcategoryfire : subcategorySlice,
     productfire:productSlice,
-    shoppingfire:shoppingSlice
+    shoppingfire:shoppingSlice,
+    color : colorslice,
+    brand : brandSlice
 })
