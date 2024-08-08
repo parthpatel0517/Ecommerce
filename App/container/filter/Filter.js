@@ -10,8 +10,10 @@ import { fetchbrand } from '../../redux/Slice/brand.slice';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 
-export default function Filter() {
+export default function Filter({ route, navigation }) {
     const [price, setPrice] = useState(78);
+    const [colors , setColors] = useState('')
+    const [brands , setBrand] = useState([])
     const [selectedSize, setSelectedSize] = useState(null);
     const [selectedCategory, setselectedCategory] = useState(null);
     const [isSelected, setSelection] = useState(false);
@@ -41,10 +43,10 @@ export default function Filter() {
 
 
     const color = useSelector(state => state.color);
-    // console.log("lllllllllsllslslslsss", color.color);
-
+   
     const brand = useSelector(state => state.brand);
-    // console.log("lllllllllkkkkkkkkslsss", brand.brand);
+
+    console.log("skkksksksksksk",colors,price,brands);
 
     return (
         <View style={style.mainContainer}>
@@ -80,14 +82,17 @@ export default function Filter() {
                     <View style={style.circleview}>
                         {
                             color.color.map((v) => (
-                                <TouchableOpacity style={style.circle1}><Text>{v.name}</Text></TouchableOpacity>
+                                <TouchableOpacity 
+                                onPress={() => setColors(v.id)}
+                                style={[ style.circle,{ backgroundColor: v.name.toLowerCase()  }]}
+                                ></TouchableOpacity>
                             ))
                         }
                     </View>
 
 
-                    <Text style={style.text}>Sizes</Text>
-                    <View style={style.sizeview}>
+                {/* <Text style={style.text}>Sizes</Text> */}
+                    {/* <View style={style.sizeview}>
                         {size.map((size) => (
                             <TouchableOpacity
                                 key={size}
@@ -108,9 +113,9 @@ export default function Filter() {
                             </TouchableOpacity>
                         ))}
 
-                    </View>
+                    </View> */}
 
-                    <Text style={style.text}>Category</Text>
+                    {/* <Text style={style.text}>Category</Text>
                     <View style={style.categoryview}>
                         {categories.map((category) => (
                             <TouchableOpacity
@@ -131,7 +136,7 @@ export default function Filter() {
                                 </Text>
                             </TouchableOpacity>
                         ))}
-                    </View>
+                    </View> */}
 
                     <View>
                         <View style={style.brandview}>
@@ -151,9 +156,10 @@ export default function Filter() {
                                             size={25}
                                             fillColor="black"
                                             unFillColor="#FFFFFF"
-                                            text="CheckBox"
+                                            text={v.name}
                                             iconStyle={{ borderColor: "black" }}
                                             innerIconStyle={{ borderWidth: 2 }}
+                                            onPress={()=> setBrand((prev) => [...prev , v.name])}
                                         />
                                     </View>
 
@@ -168,7 +174,13 @@ export default function Filter() {
             <View style={style.applayview}>
                 <View style={style.buttonview}>
                     <TouchableOpacity style={style.discardbutton}><Text style={style.buttontext1}>Discard</Text></TouchableOpacity>
-                    <TouchableOpacity style={style.applybutton} ><Text style={style.buttontext2}>Apply</Text></TouchableOpacity>
+                    <TouchableOpacity style={style.applybutton} 
+                      onPress={() => navigation.navigate("shhoping", {
+                        price,
+                        colors,
+                        brands
+                      })}
+                    ><Text style={style.buttontext2}>Apply</Text></TouchableOpacity>
                 </View>
             </View>
         </View>
@@ -398,5 +410,14 @@ const style = StyleSheet.create({
     colorYellow: {
         color: 'black',
         fontSize: 20,
-    }
+    },
+    circle: {
+        height: verticalScale(36),
+        width: horizontalScale(36),
+        borderRadius: 30,
+        borderWidth:1,
+        justifyContent: 'center',
+        alignItems: 'center',
+
+    },
 });

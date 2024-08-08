@@ -45,17 +45,33 @@ export default function Shop({ route, navigation }) {
         dispatch(fetchcategory())
     }, [])
 
-    const ProductCard = ({ v }) => (
+    const ProductCard = ({ v, i }) => (
+        i === 0 ?
+            <View style={styles.allCategory}>
+                <TouchableOpacity
+                    style={styles.CategorisView}
+                    onPress={() => { setSelectCat('') }}
 
-        <TouchableOpacity
-            style={styles.CategorisView}
-            onPress={() => { setSelectCat(v.id) }}
-        >
-            <View style={selectCat === v.id ? styles.AfterClick : styles.Options}>
-                <Text style={styles.OptionsText}>{v.name}</Text>
+                >
+                    <View style={selectCat === '' ? styles.AfterClick : styles.Options}>
+                        <Text style={styles.OptionsText}>ALL</Text>
+                    </View>
+
+                </TouchableOpacity>
+            </View>
+            :
+            <View>        
+                <TouchableOpacity
+                style={styles.CategorisView}
+                onPress={() => { setSelectCat(v.id) }}
+            >
+                <View style={selectCat === v.id ? styles.AfterClick : styles.Options}>
+                    <Text style={styles.OptionsText}>{v.name}</Text>
+                </View>
+
+            </TouchableOpacity>
             </View>
 
-        </TouchableOpacity>
     )
     const ProductData = ({ v }) => (
 
@@ -123,13 +139,19 @@ export default function Shop({ route, navigation }) {
         );
     };
     const SesrchData = () => {
+
+        const finaldata = [...shopping.Productfire]
+
+        if(route?.params?.price != undefined){
+            finaldata= finaldata.filter((v)=> v.Price <= route?.params?.price )
+        }
         console.log("ssjjsjsjsjs", selectCat);
-        const Fdata = shopping.Productfire.filter((v) => (
+         finaldata = shopping.Productfire.filter((v) => (
             v.Productname.toLowerCase().includes(search.toLowerCase()) ||
             v.Description.toLowerCase().includes(search.toLowerCase()) ||
             v.Price.toString().includes(search)
         ))
-        const Sdata = Fdata.sort((a, b) => {
+         finaldata = finaldata.sort((a, b) => {
             if (sort === 'lh') {
                 return a.Price - b.Price
             } else if (sort === 'hl') {
@@ -142,12 +164,12 @@ export default function Shop({ route, navigation }) {
         })
 
         if (selectCat != '') {
-            const selData = Sdata.filter((v) => v.category_id === selectCat)
+            const selData = finaldata.filter((v) => v.category_id === selectCat)
 
             return selData
         }
 
-        return Sdata
+        return finaldata
 
     }
     const FinaleData = SesrchData()
@@ -160,22 +182,11 @@ export default function Shop({ route, navigation }) {
                 barStyle="dark-content"
             />
             <View style={{ backgroundColor: 'white', marginBottom: 25 }}>
-                <View style={styles.allCategory}>
-                    <TouchableOpacity
-                        style={styles.CategorisView}
-                        onPress={() => { setSelectCat('') }}
 
-                    >
-                        <View style={selectCat === '' ? styles.AfterClick : styles.Options}>
-                            <Text style={styles.OptionsText}>ALL</Text>
-                        </View>
-
-                    </TouchableOpacity>
-                </View>
 
                 <FlatList
                     data={categoryfire.categoryfire}
-                    renderItem={({ item }) => <ProductCard v={item} />}
+                    renderItem={({ item ,index }) => <ProductCard v={item} i={index}/>}
                     keyExtractor={(item, index) => String(index)}
                     horizontal={true}
                 />
@@ -268,11 +279,11 @@ const styles = StyleSheet.create({
     CategorisView: {
         paddingRight: horizontalScale(10),
         // flexDirection: 'row',
-        display:'flex'
+        display: 'flex'
     },
     allCategory: {
         // paddingRight: horizontalScale(10),
-        display:'flex'
+        display: 'flex'
         // marginVertical: 20
     },
     Options: {
