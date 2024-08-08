@@ -145,12 +145,14 @@ export default function Shop({ route, navigation }) {
         if(route?.params?.price != undefined){
             finaldata= finaldata.filter((v)=> v.Price <= route?.params?.price )
         }
-        console.log("ssjjsjsjsjs", selectCat);
-         finaldata = shopping.Productfire.filter((v) => (
+        // console.log("ssjjsjsjsjs", selectCat);
+         finaldata = finaldata.filter((v) => (
             v.Productname.toLowerCase().includes(search.toLowerCase()) ||
             v.Description.toLowerCase().includes(search.toLowerCase()) ||
             v.Price.toString().includes(search)
-        ))
+        ));
+
+        
          finaldata = finaldata.sort((a, b) => {
             if (sort === 'lh') {
                 return a.Price - b.Price
@@ -164,9 +166,9 @@ export default function Shop({ route, navigation }) {
         })
 
         if (selectCat != '') {
-            const selData = finaldata.filter((v) => v.category_id === selectCat)
+             finaldata = finaldata.filter((v) => v.category_id === selectCat)
 
-            return selData
+            return finaldata
         }
 
         return finaldata
