@@ -64,7 +64,7 @@ export default function Filter({ route, navigation }) {
                             style={style.Slider}
                             step={1}
                             minimumValue={0}
-                            maximumValue={500}
+                            maximumValue={900}
                             minimumTrackTintColor="#DB3022"
                             maximumTrackTintColor="#d3d3d3"
                             thumbTintColor="#DB3022"
@@ -84,7 +84,7 @@ export default function Filter({ route, navigation }) {
                             color.color.map((v) => (
                                 <TouchableOpacity 
                                 onPress={() => setColors(v.id)}
-                                style={[ style.circle,{ backgroundColor: v.name.toLowerCase()  }]}
+                                style={[ style.circle,{ backgroundColor: v.name.toLowerCase() , borderWidth : v.id === colors ? 4: 0 }]}
                                 ></TouchableOpacity>
                             ))
                         }
@@ -159,7 +159,7 @@ export default function Filter({ route, navigation }) {
                                             text={v.name}
                                             iconStyle={{ borderColor: "black" }}
                                             innerIconStyle={{ borderWidth: 2 }}
-                                            onPress={()=> setBrand((prev) => [...prev , v.name])}
+                                            onPress={()=> setBrand((prev) => [...prev , v.id])}
                                         />
                                     </View>
 

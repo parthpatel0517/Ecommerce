@@ -11,11 +11,12 @@ import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { useFocusEffect } from '@react-navigation/native';
 import { fetchcategory } from '../../redux/Slice/category.slice';
+import { fetchcolor } from '../../redux/Slice/color.slice';
+import { fetchbrand } from '../../redux/Slice/brand.slice';
 
 
 
 const items = [''];
-
 
 
 const YourOwnComponent = () => (
@@ -31,18 +32,23 @@ export default function Shop({ route, navigation }) {
     const [sort, setSort] = useState('')
     const [selectCat, setSelectCat] = useState('')
 
-    console.log("roooroororor", route);
+    console.log("roooroororojjjjjjjjjjjjr", route.params);
     const shopping = useSelector(state => state.productfire);
 
     const categoryfire = useSelector(state => state.categoryfire);
+    const color = useSelector(state => state.color);
+    const brand = useSelector(state => state.brand);
 
-    console.log("skskkskskskks", shopping);
+
+    console.log("skskkskskskks", color.color);
 
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getProducts())
         dispatch(fetchcategory())
+        dispatch(fetchcolor())
+        dispatch(fetchbrand())
     }, [])
 
     const ProductCard = ({ v, i }) => (
@@ -98,6 +104,9 @@ export default function Shop({ route, navigation }) {
                         <Text style={styles.mangoText}>{v.Productname}</Text>
                         <Text style={styles.tShirt}>{v.Productname}</Text>
                         <Text style={styles.price}>${v.Price}</Text>
+                        <Text style={styles.colorstyle}>Color : {color.color.find((v1) => v.color_id === v1.id)?.name}</Text>
+                        <Text style={styles.colorstyle}>Brand : {brand.brand.find((v1) => v.brand_id === v1.id)?.name}</Text>
+                        
                     </View>
 
                 </View>
@@ -140,20 +149,30 @@ export default function Shop({ route, navigation }) {
     };
     const SesrchData = () => {
 
-        const finaldata = [...shopping.Productfire]
+        let FilterData = [...shopping.Productfire]
 
         if(route?.params?.price != undefined){
-            finaldata= finaldata.filter((v)=> v.Price <= route?.params?.price )
+            FilterData= FilterData.filter((v)=> v.Price <= route?.params?.price)
+        } 
+        if(route?.params?.colors != undefined){
+            FilterData = FilterData.filter((v) => v.color_id === route?.params?.colors)
         }
-        // console.log("ssjjsjsjsjs", selectCat);
-         finaldata = finaldata.filter((v) => (
+        if(route?.params?.brand != undefined){
+            FilterData = FilterData.filter((v) => v.brand_id === route?.params?.brand.map((v)=> v))
+        }
+       
+
+
+        // console.log("ddkdkdkdkkkkkkkaalla",FilterData);
+      
+         FilterData = FilterData.filter((v) => (
             v.Productname.toLowerCase().includes(search.toLowerCase()) ||
             v.Description.toLowerCase().includes(search.toLowerCase()) ||
             v.Price.toString().includes(search)
         ));
 
         
-         finaldata = finaldata.sort((a, b) => {
+          FilterData.sort((a, b) => {
             if (sort === 'lh') {
                 return a.Price - b.Price
             } else if (sort === 'hl') {
@@ -166,12 +185,12 @@ export default function Shop({ route, navigation }) {
         })
 
         if (selectCat != '') {
-             finaldata = finaldata.filter((v) => v.category_id === selectCat)
+             FilterData = FilterData.filter((v) => v.category_id === selectCat)
 
-            return finaldata
+            return FilterData
         }
 
-        return finaldata
+        return FilterData
 
     }
     const FinaleData = SesrchData()
@@ -259,7 +278,7 @@ export default function Shop({ route, navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: horizontalScale(15),
+        paddingHorizontal: horizontalScale(10),
         backgroundColor: '#F9F9F9'
     },
     ArrowView: {
@@ -325,8 +344,8 @@ const styles = StyleSheet.create({
         marginLeft: horizontalScale(10)
     },
     productMainView: {
-        width: horizontalScale(170),
-        height: verticalScale(350),
+        width: horizontalScale(175),
+        height: verticalScale(450),
         marginBottom: verticalScale(40)
 
     },
@@ -361,7 +380,7 @@ const styles = StyleSheet.create({
     },
     mangoText: {
         color: '#9B9B9B',
-        fontSize: 15,
+        fontSize: 14,
         paddingHorizontal: horizontalScale(6),
         marginTop: verticalScale(6),
         fontFamily: 'Metropolis-SemiBold'
@@ -369,13 +388,13 @@ const styles = StyleSheet.create({
     tShirt: {
         color: 'black',
         fontFamily: 'Metropolis-SemiBold',
-        fontSize: moderateScale(18),
+        fontSize: moderateScale(20),
         paddingHorizontal: horizontalScale(6),
         marginTop: verticalScale(3)
     },
     price: {
         color: 'black',
-        fontSize: moderateScale(16),
+        fontSize: moderateScale(17),
         fontFamily: 'Metropolis-Medium',
         paddingHorizontal: horizontalScale(7),
         marginTop: verticalScale(4)
@@ -397,6 +416,13 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: 'black'
     },
+    colorstyle:{
+        color: 'black',
+        fontFamily: 'Metropolis-SemiBold',
+        fontSize: moderateScale(15),
+        paddingHorizontal: horizontalScale(6),
+        marginTop: verticalScale(3)
+    }
 
 
 })
