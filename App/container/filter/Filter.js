@@ -11,7 +11,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 
 export default function Filter({ route, navigation }) {
-    const [price, setPrice] = useState(78);
+    const [price, setPrice] = useState(0);
     const [colors , setColors] = useState('')
     const [brands , setBrand] = useState([])
     const [selectedSize, setSelectedSize] = useState(null);

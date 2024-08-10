@@ -151,19 +151,22 @@ export default function Shop({ route, navigation }) {
 
         let FilterData = [...shopping.Productfire]
 
-        if(route?.params?.price != undefined){
-            FilterData= FilterData.filter((v)=> v.Price <= route?.params?.price)
+        console.log("llslslslsslslslsl",route?.params?.colors);
+
+        if(parseInt(route?.params?.price) > 0 ){
+            FilterData= FilterData.filter((v)=> parseInt(v.Price) <= parseInt(route?.params?.price))
         } 
-        if(route?.params?.colors != undefined){
+        if(route?.params?.colors != '' && route?.params?.colors != undefined ){
             FilterData = FilterData.filter((v) => v.color_id === route?.params?.colors)
         }
-        if(route?.params?.brand != undefined){
-            FilterData = FilterData.filter((v) => v.brand_id === route?.params?.brand.map((v)=> v))
+        if(route?.params?.brands?.length > 0){
+            FilterData = FilterData.filter((v) => 
+            route?.params?.brands?.some((v1)=> v1 === v.brand_id))
         }
        
 
 
-        // console.log("ddkdkdkdkkkkkkkaalla",FilterData);
+        // // console.log("ddkdkdkdkkkkkkkaalla",FilterData);
       
          FilterData = FilterData.filter((v) => (
             v.Productname.toLowerCase().includes(search.toLowerCase()) ||
@@ -194,6 +197,7 @@ export default function Shop({ route, navigation }) {
 
     }
     const FinaleData = SesrchData()
+    console.log(FinaleData);
 
     return (
         <View style={styles.container}>
