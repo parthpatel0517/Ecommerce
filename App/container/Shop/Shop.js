@@ -217,7 +217,12 @@ export default function Shop({ route, navigation }) {
                 />
 
                 <View style={styles.FilterOptions}>
-                    <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.navigate("filter")}><MaterialIcons name="filter-list" size={30} color="black" /><Text style={styles.filterText}>Filters</Text></TouchableOpacity>
+                    <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.navigate("filter",{
+                        price :route?.params?.price,
+                        colors :route?.params?.colors,
+                        brand :route?.params?.brands,
+                    })}><MaterialIcons name="filter-list" size={30} color="black" />
+                    <Text style={styles.filterText}>Filters</Text></TouchableOpacity>
                     <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => refRBSheet.current[0].open()}><FontAwesome name="arrows-v" size={26} color="black" /><Text style={styles.filterText}>Price:lowest to high</Text></TouchableOpacity>
                     <TouchableOpacity><FontAwesome name="th-list" size={26} color="black" /></TouchableOpacity>
                 </View>

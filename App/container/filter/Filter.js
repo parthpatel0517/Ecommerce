@@ -11,14 +11,51 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 
 export default function Filter({ route, navigation }) {
-    const [price, setPrice] = useState(0);
-    const [colors , setColors] = useState('')
-    const [brands , setBrand] = useState([])
+    const [price, setPrice] = useState(route?.params?.price ? route?.params?.price : 0);
+    const [colors, setColors] = useState(route?.params?.colors ? route?.params?.colors : '')
+    const [brands, setBrand] = useState(route?.params?.brands ? route?.params?.brands : [])
     const [selectedSize, setSelectedSize] = useState(null);
     const [selectedCategory, setselectedCategory] = useState(null);
     const [isSelected, setSelection] = useState(false);
 
 
+    useEffect(() => {
+        dispatch(fetchcolor())
+        dispatch(fetchbrand())
+    }, [])
+
+
+    const color = useSelector(state => state.color);
+    const brand = useSelector(state => state.brand);
+
+    const [checkBoxes, setCheckBoxes] = useState(brand.brand);
+    
+    const handleCheckboxPress = (checked, id) => {
+        //   if (id === 0) {
+        //     setCheckBoxes(
+        //       checkBoxes.map(item => ({
+        //         ...item,
+        //         isChecked: checked,
+        //       })),
+        //     );
+        //     return;
+        //   }
+
+        setCheckBoxes(
+            checkBoxes.map(item =>
+                item.id === id ? { ...item, isChecked: checked } : item,
+            ),
+        );
+    };
+    const dispatch = useDispatch()
+
+    const fbrand = checkBoxes.map((v) => {
+        if (v?.isChecked || route.params?.brand?.includes(v.id)) {
+            return v.id
+        } else {
+            return ''
+        }
+    })
     const size = ['XS', 'S', 'M', 'L', 'XL'];
 
     const selectSize = (size) => {
@@ -34,19 +71,9 @@ export default function Filter({ route, navigation }) {
     };
 
 
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(fetchcolor())
-        dispatch(fetchbrand())
-    }, [])
 
 
-    const color = useSelector(state => state.color);
-   
-    const brand = useSelector(state => state.brand);
-
-    console.log("skkksksksksksk",colors,price,brands);
+    console.log("skkksksksksksk", colors, price, brands);
 
     return (
         <View style={style.mainContainer}>
@@ -82,16 +109,16 @@ export default function Filter({ route, navigation }) {
                     <View style={style.circleview}>
                         {
                             color.color.map((v) => (
-                                <TouchableOpacity 
-                                onPress={() => setColors(v.id)}
-                                style={[ style.circle,{ backgroundColor: v.name.toLowerCase() , borderWidth : v.id === colors ? 4: 0 }]}
+                                <TouchableOpacity
+                                    onPress={() => setColors(v.id)}
+                                    style={[style.circle, { backgroundColor: v.name.toLowerCase(), borderWidth: v.id === colors ? 4 : 0 }]}
                                 ></TouchableOpacity>
                             ))
                         }
                     </View>
 
 
-                {/* <Text style={style.text}>Sizes</Text> */}
+                    {/* <Text style={style.text}>Sizes</Text> */}
                     {/* <View style={style.sizeview}>
                         {size.map((size) => (
                             <TouchableOpacity
@@ -159,7 +186,8 @@ export default function Filter({ route, navigation }) {
                                             text={v.name}
                                             iconStyle={{ borderColor: "black" }}
                                             innerIconStyle={{ borderWidth: 2 }}
-                                            onPress={()=> setBrand((prev) => [...prev , v.id])}
+                                            onPress={(isChecked) => handleCheckboxPress(isChecked, v.id)}
+                                            isChecked={route.params?.brand?.includes(v.id) ? true : false}
                                         />
                                     </View>
 
@@ -174,12 +202,12 @@ export default function Filter({ route, navigation }) {
             <View style={style.applayview}>
                 <View style={style.buttonview}>
                     <TouchableOpacity style={style.discardbutton}><Text style={style.buttontext1}>Discard</Text></TouchableOpacity>
-                    <TouchableOpacity style={style.applybutton} 
-                      onPress={() => navigation.navigate("shhoping", {
-                        price,
-                        colors,
-                        brands
-                      })}
+                    <TouchableOpacity style={style.applybutton}
+                        onPress={() => navigation.navigate("shhoping", {
+                            price,
+                            colors,
+                            brands: fbrand
+                        })}
                     ><Text style={style.buttontext2}>Apply</Text></TouchableOpacity>
                 </View>
             </View>
@@ -415,7 +443,7 @@ const style = StyleSheet.create({
         height: verticalScale(36),
         width: horizontalScale(36),
         borderRadius: 30,
-        borderWidth:1,
+        borderWidth: 1,
         justifyContent: 'center',
         alignItems: 'center',
 
