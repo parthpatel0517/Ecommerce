@@ -32,7 +32,9 @@ export default function Shop({ route, navigation }) {
     const [sort, setSort] = useState('')
     const [selectCat, setSelectCat] = useState('')
 
-    console.log("roooroororojjjjjjjjjjjjr", route.params);
+    console.log("roooroororojjjjjjjjjjjjrsjsjsjsjsjsjsjsjsjsjsjsr", route?.params?.brands);
+
+
     const shopping = useSelector(state => state.productfire);
 
     const categoryfire = useSelector(state => state.categoryfire);
@@ -40,7 +42,7 @@ export default function Shop({ route, navigation }) {
     const brand = useSelector(state => state.brand);
 
 
-    console.log("skskkskskskks", color.color);
+    // console.log("skskkskskskks", color.color);
 
     const dispatch = useDispatch()
 
@@ -197,7 +199,7 @@ export default function Shop({ route, navigation }) {
 
     }
     const FinaleData = SesrchData()
-    console.log(FinaleData);
+    // console.log(FinaleData);
 
     return (
         <View style={styles.container}>
@@ -221,11 +223,13 @@ export default function Shop({ route, navigation }) {
                         price :route?.params?.price,
                         colors :route?.params?.colors,
                         brand :route?.params?.brands,
+                        query: route?.params?.checkBoxes
                     })}><MaterialIcons name="filter-list" size={30} color="black" />
                     <Text style={styles.filterText}>Filters</Text></TouchableOpacity>
                     <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => refRBSheet.current[0].open()}><FontAwesome name="arrows-v" size={26} color="black" /><Text style={styles.filterText}>Price:lowest to high</Text></TouchableOpacity>
                     <TouchableOpacity><FontAwesome name="th-list" size={26} color="black" /></TouchableOpacity>
                 </View>
+                
                 <View style={{ flex: 1 }}>
                     <FlatList
                         data={items}
