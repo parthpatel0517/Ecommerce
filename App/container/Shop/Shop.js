@@ -13,6 +13,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { fetchcategory } from '../../redux/Slice/category.slice';
 import { fetchcolor } from '../../redux/Slice/color.slice';
 import { fetchbrand } from '../../redux/Slice/brand.slice';
+import { googlefavourite } from '../../redux/Slice/favourite.slice';
 
 
 
@@ -31,8 +32,18 @@ export default function Shop({ route, navigation }) {
     const [search, setSearch] = useState('')
     const [sort, setSort] = useState('')
     const [selectCat, setSelectCat] = useState('')
+    // const [isFavorited, setIsFavorited] = useState(false);
 
-    console.log("roooroororojjjjjjjjjjjjrsjsjsjsjsjsjsjsjsjsjsjsr", route?.params?.brands);
+
+    useEffect(() => {
+        dispatch(getProducts())
+        dispatch(fetchcategory())
+        dispatch(fetchcolor())
+        dispatch(fetchbrand())
+        // dispatch(googlefavourite())
+    }, [])
+
+    
 
 
     const shopping = useSelector(state => state.productfire);
@@ -41,17 +52,14 @@ export default function Shop({ route, navigation }) {
     const color = useSelector(state => state.color);
     const brand = useSelector(state => state.brand);
 
+    console.log("roooroororojjjjjjjjjjjjrsjsjsjsjsjsjsjsjsjsjsjsr", shopping);
+
 
     // console.log("skskkskskskks", color.color);
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(getProducts())
-        dispatch(fetchcategory())
-        dispatch(fetchcolor())
-        dispatch(fetchbrand())
-    }, [])
+
 
     const ProductCard = ({ v, i }) => (
         i === 0 ?
@@ -84,6 +92,7 @@ export default function Shop({ route, navigation }) {
     const ProductData = ({ v }) => (
 
         <TouchableOpacity onPress={() => navigation.navigate("ProductCard", {
+            id: v.id
             // cat_id: route.params.cat_id,
             // subcate_id: route.params.subcate_id
         })}><View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -92,7 +101,11 @@ export default function Shop({ route, navigation }) {
                         <Image source={require('../../../assets/img/Dress1.jpg')} style={{ width: '100%', height: '100%', borderTopLeftRadius: 15, borderTopRightRadius: 15 }} />
                     </View>
                     <View>
-                        <TouchableOpacity style={{ zIndex: 999 }}><FontAwesome name="heart-o" size={20} color="black" style={styles.heart} /></TouchableOpacity>
+                        <TouchableOpacity 
+                        style={{ zIndex: 999 }}
+                        onPress={() => dispatch(googlefavourite(v.id))}
+
+                        ><FontAwesome name="heart-o" size={20} color="black" style={styles.heart} /></TouchableOpacity>
                     </View>
                     <View style={styles.productText}>
                         <View style={styles.iconview}>
@@ -105,7 +118,7 @@ export default function Shop({ route, navigation }) {
                         </View>
                         <Text style={styles.mangoText}>{v.Productname}</Text>
                         <Text style={styles.tShirt}>{v.Productname}</Text>
-                        <Text style={styles.price}>${v.Price}</Text>
+                        <Text style={styles.price}>${v.id}</Text>
                         <Text style={styles.colorstyle}>Color : {color.color.find((v1) => v.color_id === v1.id)?.name}</Text>
                         <Text style={styles.colorstyle}>Brand : {brand.brand.find((v1) => v.brand_id === v1.id)?.name}</Text>
                         
@@ -223,7 +236,7 @@ export default function Shop({ route, navigation }) {
                         price :route?.params?.price,
                         colors :route?.params?.colors,
                         brand :route?.params?.brands,
-                        query: route?.params?.checkBoxes
+                        // query: route?.params?.checkBoxes
                     })}><MaterialIcons name="filter-list" size={30} color="black" />
                     <Text style={styles.filterText}>Filters</Text></TouchableOpacity>
                     <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => refRBSheet.current[0].open()}><FontAwesome name="arrows-v" size={26} color="black" /><Text style={styles.filterText}>Price:lowest to high</Text></TouchableOpacity>

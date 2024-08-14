@@ -77,6 +77,7 @@ export default function shhoping({ route, navigation }) {
     const ProductData = ({ v }) => (
 
         <TouchableOpacity onPress={() => navigation.navigate("ProductCard", {
+            id: v.id,
             cat_id: route.params.cat_id,
             subcate_id: route.params.subcate_id
         })}><View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -98,7 +99,7 @@ export default function shhoping({ route, navigation }) {
                                 </View>
                                 <Text style={styles.mangoText}>{v.Productname}</Text>
                                 <Text style={styles.tShirt}>{v.Productname}</Text>
-                                <Text style={styles.price}>${v.Price}</Text>
+                                <Text style={styles.price}>${v.id}</Text>
                             </View>
 
                         </View>

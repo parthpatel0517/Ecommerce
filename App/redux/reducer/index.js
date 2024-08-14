@@ -6,6 +6,8 @@ import productSlice from "../Slice/product.slice";
 import shoppingSlice from "../Slice/shopping.slice";
 import colorslice  from "../Slice/color.slice";
 import brandSlice from "../Slice/brand.slice";
+import favouriteSlice from "../Slice/favourite.slice";
+
 
 
 
@@ -16,5 +18,6 @@ export const rootReducer = combineReducers({
     productfire:productSlice,
     shoppingfire:shoppingSlice,
     color : colorslice,
-    brand : brandSlice
+    brand : brandSlice,
+    favourite : favouriteSlice
 })

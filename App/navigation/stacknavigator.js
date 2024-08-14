@@ -507,6 +507,16 @@ export const Shoppingstack = () => {
           ),
         })}
       />
+        <Stack.Screen
+        name="favourite"
+        component={Favorites}
+        options={({ navigation }) => ({
+          title: 'Favorites',
+          headerLeft: () => (
+            <Customback navigation={navigation} />
+          ),
+        })}
+      />
 
     </Stack.Navigator>
   )

@@ -24,7 +24,7 @@ export const ShopbySub = createAsyncThunk(
 
                 querySnapshot.forEach(documentSnapshot => {
                     if ((documentSnapshot.data().category_id === data.cat_id) && (documentSnapshot.data().Subcategory_id === data.subcate_id)) {
-                        ShoppingData.push(documentSnapshot.data())
+                        ShoppingData.push({ id: documentSnapshot.id,...documentSnapshot.data()})
                     }
 
                 });

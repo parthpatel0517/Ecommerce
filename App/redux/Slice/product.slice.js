@@ -24,7 +24,7 @@ export const ProBySub = createAsyncThunk(
 
                 querySnapshot.forEach(documentSnapshot => {
                     if ((documentSnapshot.data().category_id === data.cat_id) && (documentSnapshot.data().Subcategory_id === data.subcate_id)) {
-                        ProdctData.push(documentSnapshot.data())
+                        ProdctData.push({ id: documentSnapshot.id,...documentSnapshot.data()})
                     }
 
                 });
@@ -48,7 +48,7 @@ export const getProducts = createAsyncThunk(
                 console.log('Total Product: ', querySnapshot.size);
 
                 querySnapshot.forEach(documentSnapshot => {
-                    products.push(documentSnapshot.data())
+                    products.push({ id: documentSnapshot.id,...documentSnapshot.data()})
                 });
 
             })
