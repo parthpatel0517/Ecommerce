@@ -46,11 +46,11 @@ const YourOwnComponent = () => (
 );
 
 export default function shhoping({ route, navigation }) {
-    useFocusEffect(
-        React.useCallback(() => {
-          return () => bottomSheetRef.current?.close()
-        }, [])
-      );
+    // useFocusEffect(
+    //     React.useCallback(() => {
+    //       return () => bottomSheetRef.current?.close()
+    //     }, [])
+    //   );
 
     const refRBSheet = useRef([]);
     const [search, setSearch] = useState('')
@@ -99,7 +99,7 @@ export default function shhoping({ route, navigation }) {
                                 </View>
                                 <Text style={styles.mangoText}>{v.Productname}</Text>
                                 <Text style={styles.tShirt}>{v.Productname}</Text>
-                                <Text style={styles.price}>${v.id}</Text>
+                                <Text style={styles.price}>${v.Price}</Text>
                             </View>
 
                         </View>
@@ -141,6 +141,7 @@ export default function shhoping({ route, navigation }) {
         );
     };
     const SesrchData = () => {
+
         console.log("ssjjsjsjsjs", sort);
         const Fdata = shopping.Shoppingfire.filter((v) => (
             v.Productname.toLowerCase().includes(search.toLowerCase()) ||

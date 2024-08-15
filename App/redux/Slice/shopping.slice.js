@@ -35,7 +35,38 @@ export const ShopbySub = createAsyncThunk(
 
     }
 )
+export const getShopping = createAsyncThunk(
+    'Shoppingfire/getShopping',
+    async () => {
+        console.log("okokokokokokokokokokokokokokokokokok");
+        const shooping = [];
+        await firestore()
+            .collection('Product')
+            .get()
+            .then(querySnapshot => {
+                console.log('Total Product: ', querySnapshot.size);
 
+                querySnapshot.forEach(documentSnapshot => {
+                    shooping.push({ id: documentSnapshot.id,...documentSnapshot.data()})
+                });
+
+            })
+        console.log("dkkdkdkdkdkkddkdkddkddkkddkdkdkdkdk", shooping);
+        return shooping
+
+    }
+)
+
+// export const productslice = createSlice({
+//     name: 'product',
+//     initialState: initialState,
+//     extraReducers: (builder) => {
+//         builder.addCase(ProBySub.fulfilled, (state, action) => {
+//             state.Productfire = action.payload
+//         })
+     
+//     }
+// })
 
 
 export const shoppingslice = createSlice({
@@ -43,6 +74,10 @@ export const shoppingslice = createSlice({
     initialState: initialState,
     extraReducers: (builder) => {
         builder.addCase(ShopbySub.fulfilled, (state, action) => {
+            state.Shoppingfire = action.payload
+        })
+        builder.addCase(getShopping.fulfilled, (state, action) => {
+            console.log("in productttttttttttt", action);
             state.Shoppingfire = action.payload
         })
         

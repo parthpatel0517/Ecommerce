@@ -5,8 +5,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics'
 import Collapsible from 'react-native-collapsible';
 import { useDispatch, useSelector } from 'react-redux';
-import { ProBySub, getProducts } from '../../redux/Slice/product.slice';
-import { ShopbySub } from '../../redux/Slice/shopping.slice';
+// import { ProBySub, getProducts } from '../../redux/Slice/product.slice';
+import { ShopbySub, getShopping } from '../../redux/Slice/shopping.slice';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { useFocusEffect } from '@react-navigation/native';
@@ -36,7 +36,9 @@ export default function Shop({ route, navigation }) {
 
 
     useEffect(() => {
-        dispatch(getProducts())
+        // dispatch(getProducts())
+
+        dispatch(getShopping())
         dispatch(fetchcategory())
         dispatch(fetchcolor())
         dispatch(fetchbrand())
@@ -46,7 +48,7 @@ export default function Shop({ route, navigation }) {
     
 
 
-    const shopping = useSelector(state => state.productfire);
+    const shopping = useSelector(state => state.shoppingfire);
 
     const categoryfire = useSelector(state => state.categoryfire);
     const color = useSelector(state => state.color);
@@ -118,7 +120,7 @@ export default function Shop({ route, navigation }) {
                         </View>
                         <Text style={styles.mangoText}>{v.Productname}</Text>
                         <Text style={styles.tShirt}>{v.Productname}</Text>
-                        <Text style={styles.price}>${v.id}</Text>
+                        <Text style={styles.price}>${v.Price}</Text>
                         <Text style={styles.colorstyle}>Color : {color.color.find((v1) => v.color_id === v1.id)?.name}</Text>
                         <Text style={styles.colorstyle}>Brand : {brand.brand.find((v1) => v.brand_id === v1.id)?.name}</Text>
                         
@@ -164,7 +166,7 @@ export default function Shop({ route, navigation }) {
     };
     const SesrchData = () => {
 
-        let FilterData = [...shopping.Productfire]
+        let FilterData = [...shopping.Shoppingfire]
 
         console.log("llslslslsslslslsl",route?.params?.colors);
 
