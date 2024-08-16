@@ -13,7 +13,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { fetchcategory } from '../../redux/Slice/category.slice';
 import { fetchcolor } from '../../redux/Slice/color.slice';
 import { fetchbrand } from '../../redux/Slice/brand.slice';
-import { googlefavourite } from '../../redux/Slice/favourite.slice';
+import { tooglefavourite } from '../../redux/Slice/favourite.slice';
 
 
 
@@ -32,6 +32,7 @@ export default function Shop({ route, navigation }) {
     const [search, setSearch] = useState('')
     const [sort, setSort] = useState('')
     const [selectCat, setSelectCat] = useState('')
+    const [favcolor, setFavcolor] = useState(false)
     // const [isFavorited, setIsFavorited] = useState(false);
 
 
@@ -42,7 +43,7 @@ export default function Shop({ route, navigation }) {
         dispatch(fetchcategory())
         dispatch(fetchcolor())
         dispatch(fetchbrand())
-        // dispatch(googlefavourite())
+        // dispatch(tooglefavourite())
     }, [])
 
     
@@ -53,8 +54,9 @@ export default function Shop({ route, navigation }) {
     const categoryfire = useSelector(state => state.categoryfire);
     const color = useSelector(state => state.color);
     const brand = useSelector(state => state.brand);
+    const favourite = useSelector(state => state.favourite)
 
-    console.log("roooroororojjjjjjjjjjjjrsjsjsjsjsjsjsjsjsjsjsjsr", shopping);
+    console.log("roooroororojjjjjjjjjjjjrsjsjsjsjsjsjsjsjsjsjsjsr", favourite);
 
 
     // console.log("skskkskskskks", color.color);
@@ -105,9 +107,14 @@ export default function Shop({ route, navigation }) {
                     <View>
                         <TouchableOpacity 
                         style={{ zIndex: 999 }}
-                        onPress={() => dispatch(googlefavourite(v.id))}
+                        onPress={() => {dispatch(tooglefavourite(v.id))}}
 
-                        ><FontAwesome name="heart-o" size={20} color="black" style={styles.heart} /></TouchableOpacity>
+                        ><FontAwesome
+                         name={favourite.favourites.some((v1)=> v1.pid === v.id) ? 'heart' : 'heart-o'} 
+                         size={20} 
+                         color="red"
+                          style={styles.heart}
+                           /></TouchableOpacity>
                     </View>
                     <View style={styles.productText}>
                         <View style={styles.iconview}>

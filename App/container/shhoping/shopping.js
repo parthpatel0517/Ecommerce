@@ -50,7 +50,7 @@ export default function shhoping({ route, navigation }) {
     //     React.useCallback(() => {
     //       return () => bottomSheetRef.current?.close()
     //     }, [])
-    //   );
+    //   );`
 
     const refRBSheet = useRef([]);
     const [search, setSearch] = useState('')
