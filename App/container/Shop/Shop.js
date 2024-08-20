@@ -13,7 +13,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import { fetchcategory } from '../../redux/Slice/category.slice';
 import { fetchcolor } from '../../redux/Slice/color.slice';
 import { fetchbrand } from '../../redux/Slice/brand.slice';
-import { tooglefavourite } from '../../redux/Slice/favourite.slice';
+import { getFavourite, tooglefavourite } from '../../redux/Slice/favourite.slice';
+import { getProducts } from '../../redux/Slice/product.slice';
 
 
 
@@ -37,24 +38,23 @@ export default function Shop({ route, navigation }) {
 
 
     useEffect(() => {
-        // dispatch(getProducts())
-
-        dispatch(getShopping())
+        dispatch(getProducts())
+        // dispatch(getShopping())
         dispatch(fetchcategory())
         dispatch(fetchcolor())
         dispatch(fetchbrand())
         // dispatch(tooglefavourite())
+        dispatch(getFavourite())
     }, [])
 
-    
 
-
-    const shopping = useSelector(state => state.shoppingfire);
-
+    const shopping = useSelector(state => state.productfire);
     const categoryfire = useSelector(state => state.categoryfire);
     const color = useSelector(state => state.color);
     const brand = useSelector(state => state.brand);
-    const favourite = useSelector(state => state.favourite)
+     const favourite = useSelector(state => state.favourite)
+
+    
 
     console.log("roooroororojjjjjjjjjjjjrsjsjsjsjsjsjsjsjsjsjsjsr", favourite);
 
@@ -62,7 +62,6 @@ export default function Shop({ route, navigation }) {
     // console.log("skskkskskskks", color.color);
 
     const dispatch = useDispatch()
-
 
 
     const ProductCard = ({ v, i }) => (
@@ -80,16 +79,16 @@ export default function Shop({ route, navigation }) {
                 </TouchableOpacity>
             </View>
             :
-            <View>        
+            <View>
                 <TouchableOpacity
-                style={styles.CategorisView}
-                onPress={() => { setSelectCat(v.id) }}
-            >
-                <View style={selectCat === v.id ? styles.AfterClick : styles.Options}>
-                    <Text style={styles.OptionsText}>{v.name}</Text>
-                </View>
+                    style={styles.CategorisView}
+                    onPress={() => { setSelectCat(v.id) }}
+                >
+                    <View style={selectCat === v.id ? styles.AfterClick : styles.Options}>
+                        <Text style={styles.OptionsText}>{v.name}</Text>
+                    </View>
 
-            </TouchableOpacity>
+                </TouchableOpacity>
             </View>
 
     )
@@ -105,16 +104,15 @@ export default function Shop({ route, navigation }) {
                         <Image source={require('../../../assets/img/Dress1.jpg')} style={{ width: '100%', height: '100%', borderTopLeftRadius: 15, borderTopRightRadius: 15 }} />
                     </View>
                     <View>
-                        <TouchableOpacity 
-                        style={{ zIndex: 999 }}
-                        onPress={() => {dispatch(tooglefavourite(v.id))}}
-
+                        <TouchableOpacity
+                            style={{ zIndex: 999 }}
+                            onPress={() => { { dispatch(tooglefavourite(v.id)) }}}
                         ><FontAwesome
-                         name={favourite.favourites.some((v1)=> v1.pid === v.id) ? 'heart' : 'heart-o'} 
-                         size={20} 
-                         color="red"
-                          style={styles.heart}
-                           /></TouchableOpacity>
+                                name={favourite.favourites.some((v1) => v1.pid === v.id) ? 'heart' : 'heart-o'}
+                                size={20}
+                                color="red"
+                                style={styles.heart}
+                            /></TouchableOpacity>
                     </View>
                     <View style={styles.productText}>
                         <View style={styles.iconview}>
@@ -130,11 +128,12 @@ export default function Shop({ route, navigation }) {
                         <Text style={styles.price}>${v.Price}</Text>
                         <Text style={styles.colorstyle}>Color : {color.color.find((v1) => v.color_id === v1.id)?.name}</Text>
                         <Text style={styles.colorstyle}>Brand : {brand.brand.find((v1) => v.brand_id === v1.id)?.name}</Text>
-                        
+
                     </View>
 
                 </View>
             </View>
+            
         </TouchableOpacity>
     )
 
@@ -173,33 +172,33 @@ export default function Shop({ route, navigation }) {
     };
     const SesrchData = () => {
 
-        let FilterData = [...shopping.Shoppingfire]
+        let FilterData = [...shopping.Productfire]
 
-        console.log("llslslslsslslslsl",route?.params?.colors);
+        console.log("llslslslsslslslsl", route?.params?.colors);
 
-        if(parseInt(route?.params?.price) > 0 ){
-            FilterData= FilterData.filter((v)=> parseInt(v.Price) <= parseInt(route?.params?.price))
-        } 
-        if(route?.params?.colors != '' && route?.params?.colors != undefined ){
+        if (parseInt(route?.params?.price) > 0) {
+            FilterData = FilterData.filter((v) => parseInt(v.Price) <= parseInt(route?.params?.price))
+        }
+        if (route?.params?.colors != '' && route?.params?.colors != undefined) {
             FilterData = FilterData.filter((v) => v.color_id === route?.params?.colors)
         }
-        if(route?.params?.brands?.length > 0){
-            FilterData = FilterData.filter((v) => 
-            route?.params?.brands?.some((v1)=> v1 === v.brand_id))
+        if (route?.params?.brands?.length > 0) {
+            FilterData = FilterData.filter((v) =>
+                route?.params?.brands?.some((v1) => v1 === v.brand_id))
         }
-       
+
 
 
         // // console.log("ddkdkdkdkkkkkkkaalla",FilterData);
-      
-         FilterData = FilterData.filter((v) => (
+
+        FilterData = FilterData.filter((v) => (
             v.Productname.toLowerCase().includes(search.toLowerCase()) ||
             v.Description.toLowerCase().includes(search.toLowerCase()) ||
             v.Price.toString().includes(search)
         ));
 
-        
-          FilterData.sort((a, b) => {
+
+        FilterData.sort((a, b) => {
             if (sort === 'lh') {
                 return a.Price - b.Price
             } else if (sort === 'hl') {
@@ -212,7 +211,7 @@ export default function Shop({ route, navigation }) {
         })
 
         if (selectCat != '') {
-             FilterData = FilterData.filter((v) => v.category_id === selectCat)
+            FilterData = FilterData.filter((v) => v.category_id === selectCat)
 
             return FilterData
         }
@@ -235,23 +234,23 @@ export default function Shop({ route, navigation }) {
 
                 <FlatList
                     data={categoryfire.categoryfire}
-                    renderItem={({ item ,index }) => <ProductCard v={item} i={index}/>}
+                    renderItem={({ item, index }) => <ProductCard v={item} i={index} />}
                     keyExtractor={(item, index) => String(index)}
                     horizontal={true}
                 />
 
                 <View style={styles.FilterOptions}>
-                    <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.navigate("filter",{
-                        price :route?.params?.price,
-                        colors :route?.params?.colors,
-                        brand :route?.params?.brands,
+                    <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.navigate("filter", {
+                        price: route?.params?.price,
+                        colors: route?.params?.colors,
+                        brand: route?.params?.brands,
                         // query: route?.params?.checkBoxes
                     })}><MaterialIcons name="filter-list" size={30} color="black" />
-                    <Text style={styles.filterText}>Filters</Text></TouchableOpacity>
+                        <Text style={styles.filterText}>Filters</Text></TouchableOpacity>
                     <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => refRBSheet.current[0].open()}><FontAwesome name="arrows-v" size={26} color="black" /><Text style={styles.filterText}>Price:lowest to high</Text></TouchableOpacity>
                     <TouchableOpacity><FontAwesome name="th-list" size={26} color="black" /></TouchableOpacity>
                 </View>
-                
+
                 <View style={{ flex: 1 }}>
                     <FlatList
                         data={items}
@@ -397,7 +396,6 @@ const styles = StyleSheet.create({
         borderRadius: moderateScale(20),
         padding: horizontalScale(10),
         padding: verticalScale(10),
-
     },
     productText: {
         width: '100%',
@@ -451,7 +449,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: 'black'
     },
-    colorstyle:{
+    colorstyle: {
         color: 'black',
         fontFamily: 'Metropolis-SemiBold',
         fontSize: moderateScale(15),

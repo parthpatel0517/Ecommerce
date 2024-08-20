@@ -63,13 +63,38 @@ export const tooglefavourite = createAsyncThunk(
     }
 )
 
+export const getFavourite = createAsyncThunk(
+    'favourites/getFavourite',
+    async () => {
+        console.log("okokokokokokokokokokokokokokokokokok");
+        const favdata = [];
+        await firestore()
+            .collection('Fav')
+            .get()
+            .then(querySnapshot => {
+                console.log('Total Product: ', querySnapshot.size);
+
+                querySnapshot.forEach(documentSnapshot => {
+                    favdata.push({ id: documentSnapshot.id,...documentSnapshot.data()})
+                });
+
+            })
+        console.log("dkkdkdkdkdkkddkdkddkddkkddkdkdkdkdk", favdata);
+        return favdata
+
+    }
+)
 
 
 export const favouriteSlice = createSlice({
-    name: 'shopping',
+    name: 'Favourite',
     initialState: initialState,
     extraReducers: (builder) => {
         builder.addCase(tooglefavourite.fulfilled, (state, action) => {
+            state.favourites = action.payload
+        })
+        builder.addCase(getFavourite.fulfilled, (state, action) => {
+            console.log("in productttttttttttt", action);
             state.favourites = action.payload
         })
 

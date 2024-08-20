@@ -1,10 +1,14 @@
 import { View, Text, ScrollView, StatusBar, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { useDispatch, useSelector } from 'react-redux';
+import { getShopping } from '../../redux/Slice/shopping.slice';
+import { getFavourite, tooglefavourite } from '../../redux/Slice/favourite.slice';
+import { getProducts } from '../../redux/Slice/product.slice';
 
 const data = [
   {
@@ -72,6 +76,26 @@ const data2 = [
   }
 ]
 export default function Favorites({ route, navigation }) {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    // dispatch(getShopping())
+    dispatch(getProducts())
+    dispatch(getFavourite())
+  }, [])
+
+  const getfavourite = useSelector(state => state.favourite)
+  const getshopping = useSelector(state => state.productfire);
+
+  console.log("sksksksksk", getshopping);
+
+  const fav = getshopping.Productfire.filter((v)=>{
+    if(getfavourite.favourites.some((v1) => v1.pid === v.id)){
+      return v;
+    }
+  })
+
+  console.log("lllllllslslsllaalalalalalalalalalaalal",fav);
 
   const ProductCard = ({ v }) => (
 
@@ -82,15 +106,15 @@ export default function Favorites({ route, navigation }) {
   );
   const NewProductCard = ({ v }) => (
     <TouchableOpacity style={styles.olldeta} onPress={() => navigation.navigate("ProductCard")}>
-      <Image source={v.image} style={styles.img} />
+      <Image source={require('../../../assets/img/Dress1.jpg')} style={styles.img} />
       <View style={styles.pullovertext}>
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text style={styles.protext2}>{v.title}</Text>
-          <TouchableOpacity><Fontisto name="close-a" size={18} color="#B9B9B9" /></TouchableOpacity>
+          <Text style={styles.protext2}>{v.Description}</Text>
+          <TouchableOpacity onPress={() => dispatch(tooglefavourite(v.id))}><Fontisto name="close-a" size={18} color="#B9B9B9" /></TouchableOpacity>
         </View>
 
-        <Text style={styles.protext}>{v.subtitle}</Text>
+        <Text style={styles.protext}>{v.Productname}</Text>
 
         <View style={styles.Color}>
           <Text style={styles.Colortext}>color:<Text style={styles.colorsize}>{v.color}</Text></Text>
@@ -98,7 +122,7 @@ export default function Favorites({ route, navigation }) {
         </View>
 
         <View style={styles.iconview}>
-          <View><Text style={styles.price}>{v.price}$</Text></View>
+          <View><Text style={styles.price}>{v.Price}$</Text></View>
 
 
           <View style={styles.star}>
@@ -110,14 +134,14 @@ export default function Favorites({ route, navigation }) {
             <Text style={styles.starrating}>({v.ratting})</Text>
 
 
-      
+
           </View>
           <View>
-              <TouchableOpacity style={styles.shoppingcard}>
+            <TouchableOpacity style={styles.shoppingcard}>
 
-                <Fontisto name="shopping-bag" size={18} color="#F9F9F9" />
-              </TouchableOpacity>
-            </View>
+              <Fontisto name="shopping-bag" size={18} color="#F9F9F9" />
+            </TouchableOpacity>
+          </View>
 
 
         </View>
@@ -130,7 +154,7 @@ export default function Favorites({ route, navigation }) {
       <StatusBar
         animated={true}
         backgroundColor={'transparent'}
-        
+
       />
       {/* <TouchableOpacity style={{ paddingBottom: 25 }}>
         <Fontisto style={styles.FontAwesomeicon} name="search" size={22} color="black" />
@@ -151,7 +175,7 @@ export default function Favorites({ route, navigation }) {
       </View>
 
       <FlatList
-        data={data2}
+        data={fav}
         renderItem={({ item }) => <NewProductCard v={item} />}
         keyExtractor={item => item.id}
       // horizontal={true}
@@ -220,7 +244,8 @@ const styles = StyleSheet.create({
   },
   protext: {
     color: 'black',
-    fontSize: moderateScale(20),
+    fontSize: moderateScale(19),
+    marginTop:verticalScale(5),
     fontFamily: 'Metropolis-Bold',
   },
   protext2: {

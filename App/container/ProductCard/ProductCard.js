@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics';
 import Collapsible from 'react-native-collapsible';
 import { useDispatch, useSelector } from 'react-redux';
-import { ProBySub } from '../../redux/Slice/product.slice';
+import { ProBySub, getProducts } from '../../redux/Slice/product.slice';
 import { ShopbySub } from '../../redux/Slice/shopping.slice';
 
 const Data = [
@@ -47,15 +47,21 @@ const Data = [
 export default function ProductCard({ route, navigation }) {
     console.log("amitttttttttttttttttttttt",route);
     
-    const shopping = useSelector(state => state.shoppingfire);
-    console.log("skskkskskskks", shopping.Shoppingfire);
+    const product = useSelector(state => state.productfire);
+    console.log("skskkskskskks", product.Productfire);
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(ShopbySub({ cat_id: route.params.cat_id, subcate_id: route.params.subcate_id }))
+    // useEffect(() => {
+    //     dispatch(ShopbySub({ cat_id: route.params.cat_id, subcate_id: route.params.subcate_id }))
+
+    // }, [])
+        useEffect(() => {
+        dispatch(getProducts())
 
     }, [])
+
+    
 
     console.log("route.params.cat_id", route.params.cat_id);
     console.log("route.params.subcate_id", route.params.subcate_id);
@@ -148,7 +154,7 @@ export default function ProductCard({ route, navigation }) {
                             <TouchableOpacity><FontAwesome name="heart-o" size={20} color="black" style={styles.heart} /></TouchableOpacity>
                         </View>
                     </View>
-                      {shopping.Shoppingfire.map((v)=>(
+                      {product.Productfire.map((v)=>(
                          <View>
                          <View style={styles.HandMView}>
                                 <View>
