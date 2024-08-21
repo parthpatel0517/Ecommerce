@@ -14,6 +14,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import React from 'react';
 import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics';
+import { useSelector } from 'react-redux';
 
 const data = [
   {
@@ -43,6 +44,11 @@ const data = [
 ];
 
 export default function My_Bag({ route, navigation }) {
+
+  const cart = useSelector(state => state.cart);
+
+  console.log("slsksksksksksksksksksksksksksklalalal",cart);
+
   const DataCity = ({v}) => (
     <TouchableOpacity onPress={() => navigation.navigate("ProductCard")}>
       <View style={{paddingHorizontal: 26, marginVertical: 15}}>
@@ -139,7 +145,8 @@ export default function My_Bag({ route, navigation }) {
         <FlatList
           data={data}
           renderItem={({item}) => <DataCity v={item} />}
-          keyExtractor={item => item.id}
+          scrollEnabled={false}
+          keyExtractor={(item,index) => String(index)}
         />
 
         <View style={Styles.totalamount}>

@@ -8,6 +8,7 @@ import Collapsible from 'react-native-collapsible';
 import { useDispatch, useSelector } from 'react-redux';
 import { ProBySub, getProducts } from '../../redux/Slice/product.slice';
 import { ShopbySub } from '../../redux/Slice/shopping.slice';
+import { addtocart } from '../../redux/Slice/cart.slice';
 
 const Data = [
     {
@@ -49,6 +50,13 @@ export default function ProductCard({ route, navigation }) {
     
     const product = useSelector(state => state.productfire);
     console.log("skskkskskskks", product.Productfire);
+
+    const  filterData = product.Productfire.find((v)=> v.id === route.params?.id);
+
+    console.log("filterDatafilterDatafilterDatafilterData",filterData);
+
+
+
 
     const dispatch = useDispatch()
 
@@ -117,6 +125,12 @@ export default function ProductCard({ route, navigation }) {
 
 
     )
+    
+
+    const handlecart=(id) => {
+        dispatch(addtocart(id))
+        navigation.navigate("My_Bag")
+    }
     return (
         <View style = { styles.mainContainer } >
               <View style={styles.bodyContainer}>
@@ -154,11 +168,11 @@ export default function ProductCard({ route, navigation }) {
                             <TouchableOpacity><FontAwesome name="heart-o" size={20} color="black" style={styles.heart} /></TouchableOpacity>
                         </View>
                     </View>
-                      {product.Productfire.map((v)=>(
+                      {/* {product.Productfire.map((v)=>( */}
                          <View>
                          <View style={styles.HandMView}>
                                 <View>
-                                    <Text style={styles.HAndM}>{v.Productname}</Text>
+                                    <Text style={styles.HAndM}>{filterData.Productname}</Text>
                                     <Text style={styles.ShortDress}>Short black dress</Text>
                                  <View style={styles.iconview}>
                                             <FontAwesome name="star" size={13} style={{ color: '#FFBA49', marginRight: 2, marginTop: 2 }} />
@@ -170,18 +184,18 @@ export default function ProductCard({ route, navigation }) {
                                 </View>
                                     </View>
                          <View>
-                            <Text style={styles.HANdMPrice}>${v.Price}</Text>
+                            <Text style={styles.HANdMPrice}>${filterData.Price}</Text>
                             </View>   
                              </View>
                              <View style={styles.TextsView}>
-                             <Text style={styles.Texts}> {v.Description}
+                             <Text style={styles.Texts}> {filterData.Description}
         
                              </Text>
                          </View>
                          </View>
             
-                      ))
-                      }
+                      {/* ))
+                      } */}
                                    
                     
                     <TouchableOpacity
@@ -261,12 +275,12 @@ export default function ProductCard({ route, navigation }) {
                     
                 </ScrollView>
             </View>
-            <TouchableOpacity style={styles.ButtonView} onPress={() => navigation.navigate("My_Bag")}>
+            <TouchableOpacity style={styles.ButtonView} onPress={() =>handlecart(filterData.id) }>
                 <View style={styles.ButtonUnderView}>
                     <Text style={styles.AddCart}>ADD TO CART</Text>
                 </View>
             </TouchableOpacity>
-        </View>
+        </View> 
 
 )}
 const styles = StyleSheet.create({
