@@ -14,7 +14,8 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import React from 'react';
 import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { DecQty, IncQty } from '../../redux/Slice/cart.slice';
 
 const data = [
   {
@@ -45,9 +46,29 @@ const data = [
 
 export default function My_Bag({ route, navigation }) {
 
-  const cart = useSelector(state => state.cart);
+  const dispatch = useDispatch()
 
+  const cart = useSelector(state => state.cart)
   console.log("slsksksksksksksksksksksksksksklalalal",cart);
+
+
+  const product = useSelector(state => state.productfire);
+
+  const bagdata = cart.cart.map((v)=>{
+    const c = product.Productfire.find((v1)=> v1.id=== v.pid)
+    if(c){
+     let dataff = {...v , ...c}
+     return dataff
+    }
+  })
+
+  const handleInc = (id) =>{
+    dispatch(IncQty(id))
+  }
+  const handleDec = (id) =>{
+    dispatch(DecQty(id))
+  }
+  const totalAmount = bagdata.reduce((sum, item) => sum + item.Price * item.qty, 0);
 
   const DataCity = ({v}) => (
     <TouchableOpacity onPress={() => navigation.navigate("ProductCard")}>
@@ -55,8 +76,9 @@ export default function My_Bag({ route, navigation }) {
         <View style={Styles.img_main_view}>
           <View>
             <Image
+
               style={Styles.img}
-              source={v.image}
+              source={require('../../../assets/img/Dress1.jpg')}
             />
           </View>
           <View style={{padding: 4, marginHorizontal: 10}}>
@@ -67,7 +89,7 @@ export default function My_Bag({ route, navigation }) {
                   fontFamily: 'Metropolis-Bold',
                   color: '#222222',
                 }}>
-                {v.title}
+                {v.Productname}
               </Text>
               <View style={Styles.dotsminihead}>
                 <TouchableOpacity>
@@ -91,7 +113,9 @@ export default function My_Bag({ route, navigation }) {
             </View>
 
             <View style={{flexDirection: 'row', columnGap: 6, marginTop: 20}}>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => handleDec(v.id)}
+              >
                 <Text style={Styles.textTouchableminus}>
                   <View style={{alignContent: 'center'}}>
                     <Feather name="minus" size={25} color="#9B9B9B" />
@@ -99,9 +123,11 @@ export default function My_Bag({ route, navigation }) {
                 </Text>
               </TouchableOpacity>
 
-              <Text style={{marginTop: 15, color: '#222222'}}>1</Text>
+              <Text style={{marginTop: 15, color: '#222222'}}>{v.qty}</Text>
 
-              <TouchableOpacity>
+              <TouchableOpacity 
+                onPress={() => handleInc(v.id)}
+              >
                 <Text style={Styles.textTouchablePlus}>
                   <View>
                     <Feather name="plus" size={25} color="#9B9B9B" />
@@ -118,7 +144,7 @@ export default function My_Bag({ route, navigation }) {
                     fontFamily: 'Metropolis-Bold',
                     fontSize: 19,
                   }}>
-                  {v.price}$
+                  {v.Price * v.qty}$
                 </Text>
               </View>
             </View>
@@ -143,7 +169,7 @@ export default function My_Bag({ route, navigation }) {
         </View> */}
 
         <FlatList
-          data={data}
+          data={bagdata}
           renderItem={({item}) => <DataCity v={item} />}
           scrollEnabled={false}
           keyExtractor={(item,index) => String(index)}
@@ -151,7 +177,7 @@ export default function My_Bag({ route, navigation }) {
 
         <View style={Styles.totalamount}>
           <Text style={Styles.totalamountText}>Total Amount:</Text>
-          <Text style={Styles.Text}>124$</Text>
+          <Text style={Styles.Text}>{totalAmount}$</Text>
         </View>
 
         <View style={Styles.checkoutBtn}>
