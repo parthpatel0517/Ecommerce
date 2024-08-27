@@ -12,10 +12,10 @@ import {
 import Feather from 'react-native-vector-icons/Feather';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics';
 import { useDispatch, useSelector } from 'react-redux';
-import { DecQty, IncQty } from '../../redux/Slice/cart.slice';
+import { DecQty, IncQty, getcart } from '../../redux/Slice/cart.slice';
 
 const data = [
   {
@@ -48,31 +48,36 @@ export default function My_Bag({ route, navigation }) {
 
   const dispatch = useDispatch()
 
+
+  useEffect(() => {
+    dispatch(getcart())
+  }, [])
+
   const cart = useSelector(state => state.cart)
-  console.log("slsksksksksksksksksksksksksksklalalal",cart);
+  console.log("slsksksksksksksksksksksksksksklalalal", cart);
 
 
   const product = useSelector(state => state.productfire);
 
-  const bagdata = cart.cart.map((v)=>{
-    const c = product.Productfire.find((v1)=> v1.id=== v.pid)
-    if(c){
-     let dataff = {...v , ...c}
-     return dataff
+  const bagdata = cart.cart.map((v) => {
+    const c = product.Productfire.find((v1) => v1.id === v.pid)
+    if (c) {
+      let dataff = { ...v, ...c }
+      return dataff
     }
   })
 
-  const handleInc = (id) =>{
+  const handleInc = (id) => {
     dispatch(IncQty(id))
   }
-  const handleDec = (id) =>{
+  const handleDec = (id) => {
     dispatch(DecQty(id))
   }
   const totalAmount = bagdata.reduce((sum, item) => sum + item.Price * item.qty, 0);
 
-  const DataCity = ({v}) => (
+  const DataCity = ({ v }) => (
     <TouchableOpacity onPress={() => navigation.navigate("ProductCard")}>
-      <View style={{paddingHorizontal: 26, marginVertical: 15}}>
+      <View style={{ paddingHorizontal: 26, marginVertical: 15 }}>
         <View style={Styles.img_main_view}>
           <View>
             <Image
@@ -81,7 +86,7 @@ export default function My_Bag({ route, navigation }) {
               source={require('../../../assets/img/Dress1.jpg')}
             />
           </View>
-          <View style={{padding: 4, marginHorizontal: 10}}>
+          <View style={{ padding: 4, marginHorizontal: 10 }}>
             <View style={Styles.dotshead}>
               <Text
                 style={{
@@ -102,30 +107,30 @@ export default function My_Bag({ route, navigation }) {
               </View>
             </View>
             <View style={Styles.img_data_view}>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Text style={Styles.color}>Color:</Text>
                 <Text style={Styles.black}>{v.color}</Text>
               </View>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Text style={Styles.size}>Size:</Text>
                 <Text style={Styles.L}>{v.size}</Text>
               </View>
             </View>
 
-            <View style={{flexDirection: 'row', columnGap: 6, marginTop: 20}}>
+            <View style={{ flexDirection: 'row', columnGap: 6, marginTop: 20 }}>
               <TouchableOpacity
                 onPress={() => handleDec(v.id)}
               >
                 <Text style={Styles.textTouchableminus}>
-                  <View style={{alignContent: 'center'}}>
+                  <View style={{ alignContent: 'center' }}>
                     <Feather name="minus" size={25} color="#9B9B9B" />
                   </View>
                 </Text>
               </TouchableOpacity>
 
-              <Text style={{marginTop: 15, color: '#222222'}}>{v.qty}</Text>
+              <Text style={{ marginTop: 15, color: '#222222' }}>{v.qty}</Text>
 
-              <TouchableOpacity 
+              <TouchableOpacity
                 onPress={() => handleInc(v.id)}
               >
                 <Text style={Styles.textTouchablePlus}>
@@ -170,9 +175,9 @@ export default function My_Bag({ route, navigation }) {
 
         <FlatList
           data={bagdata}
-          renderItem={({item}) => <DataCity v={item} />}
+          renderItem={({ item }) => <DataCity v={item} />}
           scrollEnabled={false}
-          keyExtractor={(item,index) => String(index)}
+          keyExtractor={(item, index) => String(index)}
         />
 
         <View style={Styles.totalamount}>
@@ -234,7 +239,7 @@ const Styles = StyleSheet.create({
   },
   L: {
     color: '#222222',
-    fontSize:  moderateScale(15),
+    fontSize: moderateScale(15),
   },
   textTouchablePlus: {
     padding: horizontalScale(10),
@@ -260,11 +265,11 @@ const Styles = StyleSheet.create({
   },
   dotshead: {
     flexDirection: 'row',
-    justifyContent:'space-between',
-    alignItems:'center',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   dotsminihead: {
-    marginRight:horizontalScale(10),
+    marginRight: horizontalScale(10),
     marginTop: verticalScale(8),
   },
   dotsminihead3: {
