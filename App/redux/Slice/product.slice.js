@@ -52,7 +52,7 @@ export const getProducts = createAsyncThunk(
                 });
 
             })
-        console.log("dkkdkdkdkdkkddkdkddkddkkddkdkdkdkdk", products);
+        // console.log("dkkdkdkdkdkkddkdkddkddkkddkdkdkdkdk", products);
         return products
 
     }
@@ -66,7 +66,7 @@ export const productslice = createSlice({
             state.Productfire = action.payload
         })
         builder.addCase(getProducts.fulfilled, (state, action) => {
-            console.log("in productttttttttttt", action);
+            // console.log("in productttttttttttt", action);
             state.Productfire = action.payload
         })
     }

@@ -94,7 +94,7 @@ export const favouriteSlice = createSlice({
             state.favourites = action.payload
         })
         builder.addCase(getFavourite.fulfilled, (state, action) => {
-            console.log("in productttttttttttt", action);
+            // console.log("in productttttttttttt", action);
             state.favourites = action.payload
         })
 

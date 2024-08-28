@@ -15,7 +15,9 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import React, { useEffect } from 'react';
 import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics';
 import { useDispatch, useSelector } from 'react-redux';
-import { DecQty, IncQty, getcart } from '../../redux/Slice/cart.slice';
+import { DecQty, IncQty, getcart, incrementQty } from '../../redux/Slice/cart.slice';
+import { getProducts } from '../../redux/Slice/product.slice';
+import { increment } from '@react-native-firebase/firestore';
 
 const data = [
   {
@@ -50,30 +52,28 @@ export default function My_Bag({ route, navigation }) {
 
 
   useEffect(() => {
-    dispatch(getcart())
+    dispatch(getProducts())
+    dispatch(getcart('parth'))
   }, [])
 
   const cart = useSelector(state => state.cart)
-  console.log("slsksksksksksksksksksksksksksklalalal", cart);
-
-
   const product = useSelector(state => state.productfire);
 
-  const bagdata = cart.cart.map((v) => {
+  const bagdata = cart?.cart[0]?.cart.map((v) => {
     const c = product.Productfire.find((v1) => v1.id === v.pid)
     if (c) {
       let dataff = { ...v, ...c }
       return dataff
     }
   })
-
+  console.log("bagdatabagdatabagdatabagdatabagdatabagdatabagdata",bagdata);
   const handleInc = (id) => {
-    dispatch(IncQty(id))
+    dispatch(incrementQty({id,uid:'parth'}))
   }
-  const handleDec = (id) => {
-    dispatch(DecQty(id))
-  }
-  const totalAmount = bagdata.reduce((sum, item) => sum + item.Price * item.qty, 0);
+  // const handleDec = (id) => {
+  //   dispatch(DecQty(id))
+  // }
+  // const totalAmount = bagdata.reduce((sum, item) => sum + item.Price * item.qty, 0);
 
   const DataCity = ({ v }) => (
     <TouchableOpacity onPress={() => navigation.navigate("ProductCard")}>
@@ -94,7 +94,7 @@ export default function My_Bag({ route, navigation }) {
                   fontFamily: 'Metropolis-Bold',
                   color: '#222222',
                 }}>
-                {v.Productname}
+                {v?.Productname}
               </Text>
               <View style={Styles.dotsminihead}>
                 <TouchableOpacity>
@@ -109,17 +109,17 @@ export default function My_Bag({ route, navigation }) {
             <View style={Styles.img_data_view}>
               <View style={{ flexDirection: 'row' }}>
                 <Text style={Styles.color}>Color:</Text>
-                <Text style={Styles.black}>{v.color}</Text>
+                <Text style={Styles.black}>{v?.color}</Text>
               </View>
               <View style={{ flexDirection: 'row' }}>
                 <Text style={Styles.size}>Size:</Text>
-                <Text style={Styles.L}>{v.size}</Text>
+                <Text style={Styles.L}>{v?.size}</Text>
               </View>
             </View>
 
             <View style={{ flexDirection: 'row', columnGap: 6, marginTop: 20 }}>
               <TouchableOpacity
-                onPress={() => handleDec(v.id)}
+                // onPress={() => handleDec(v.id)}
               >
                 <Text style={Styles.textTouchableminus}>
                   <View style={{ alignContent: 'center' }}>
@@ -128,7 +128,7 @@ export default function My_Bag({ route, navigation }) {
                 </Text>
               </TouchableOpacity>
 
-              <Text style={{ marginTop: 15, color: '#222222' }}>{v.qty}</Text>
+              <Text style={{ marginTop: 15, color: '#222222' }}>{v?.qty}</Text>
 
               <TouchableOpacity
                 onPress={() => handleInc(v.id)}
@@ -149,7 +149,7 @@ export default function My_Bag({ route, navigation }) {
                     fontFamily: 'Metropolis-Bold',
                     fontSize: 19,
                   }}>
-                  {v.Price * v.qty}$
+                  {v?.Price * v?.qty}$
                 </Text>
               </View>
             </View>
@@ -182,7 +182,7 @@ export default function My_Bag({ route, navigation }) {
 
         <View style={Styles.totalamount}>
           <Text style={Styles.totalamountText}>Total Amount:</Text>
-          <Text style={Styles.Text}>{totalAmount}$</Text>
+          <Text style={Styles.Text}>0$</Text>
         </View>
 
         <View style={Styles.checkoutBtn}>
