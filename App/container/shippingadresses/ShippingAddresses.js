@@ -62,10 +62,11 @@ export default function ShippingAddresses({ route, navigation }) {
                 keyExtractor={item => item.id}
             />
             <View style={styles.btnView}>
-                 <TouchableOpacity style={styles.addButton}>
+                 <TouchableOpacity style={styles.addButton}  onPress={() => navigation.navigate("AddShipingAddress")}>
                 <MaterialCommunityIcons name="plus-circle" size={35} color="black" />
             </TouchableOpacity>
             </View>
+            
             <View>
                 <TouchableOpacity style={styles.placeorder}  onPress={() => navigation.navigate("Success")}>
                     <Text  style={styles.AddCart}>Place your order</Text>

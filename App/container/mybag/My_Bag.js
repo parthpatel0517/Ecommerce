@@ -12,10 +12,11 @@ import {
 import Feather from 'react-native-vector-icons/Feather';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, { useEffect } from 'react';
 import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics';
 import { useDispatch, useSelector } from 'react-redux';
-import { DecQty, IncQty, getcart, incrementQty } from '../../redux/Slice/cart.slice';
+import { DecQty, IncQty, decrementQty, deletedata, getcart, incrementQty } from '../../redux/Slice/cart.slice';
 import { getProducts } from '../../redux/Slice/product.slice';
 import { increment } from '@react-native-firebase/firestore';
 
@@ -65,14 +66,17 @@ export default function My_Bag({ route, navigation }) {
       let dataff = { ...v, ...c }
       return dataff
     }
-  })
+  }).sort((a,b) => a.Productname.localeCompare(b.Productname))
   console.log("bagdatabagdatabagdatabagdatabagdatabagdatabagdata",bagdata);
   const handleInc = (id) => {
     dispatch(incrementQty({id,uid:'parth'}))
   }
-  // const handleDec = (id) => {
-  //   dispatch(DecQty(id))
-  // }
+  const handleDec = (id) => {
+    dispatch(decrementQty({id,uid:'parth'}))
+  }
+  const hanledelet = (id) => {
+    dispatch(deletedata({id,uid:'parth'}))
+  }
   // const totalAmount = bagdata.reduce((sum, item) => sum + item.Price * item.qty, 0);
 
   const DataCity = ({ v }) => (
@@ -97,9 +101,11 @@ export default function My_Bag({ route, navigation }) {
                 {v?.Productname}
               </Text>
               <View style={Styles.dotsminihead}>
-                <TouchableOpacity>
-                  <Entypo
-                    name="dots-three-vertical"
+                <TouchableOpacity
+                  onPress={() => hanledelet(v.id)}
+                >
+                  <MaterialCommunityIcons
+                    name="window-close"
                     size={23}
                     color="#9B9B9B"
                   />
@@ -119,7 +125,7 @@ export default function My_Bag({ route, navigation }) {
 
             <View style={{ flexDirection: 'row', columnGap: 6, marginTop: 20 }}>
               <TouchableOpacity
-                // onPress={() => handleDec(v.id)}
+                onPress={() => handleDec(v.id)}
               >
                 <Text style={Styles.textTouchableminus}>
                   <View style={{ alignContent: 'center' }}>
@@ -186,7 +192,7 @@ export default function My_Bag({ route, navigation }) {
         </View>
 
         <View style={Styles.checkoutBtn}>
-          <TouchableOpacity onPress={() => navigation.navigate("AddShipingAddress")}>
+          <TouchableOpacity onPress={() => navigation.navigate("ShippingAddresses")}>
             <Text style={Styles.checkoutText}>Check out</Text>
           </TouchableOpacity>
         </View>
