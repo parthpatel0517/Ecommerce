@@ -1,9 +1,58 @@
 import { View, Text, ScrollView, StatusBar, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useFormik } from 'formik';
+import { date, object, string } from 'yup';
+import { addshhipadress } from '../../redux/Slice/addshipingadress.slice';
+import { useDispatch } from 'react-redux';
 
 export default function AddShipingAddress({ route, navigation }) {
+
+    const dispatch = useDispatch()
+  
+    // const addship = useSelector(state => state.brands);
+    // console.log("skskskkskskskkkkllllllllklklklk",brand.brand);
+
+    useEffect(() => {
+       
+    }, [])
+
+    const handleSumbit1=(data)=>{
+        dispatch(addshhipadress({...data, uid:'parth'}))
+    }
+
+
+    let userSchema = object({
+        full_name: string().required("Enter producte Full_name").matches(/^[a-zA-Z ]+$/, "enter valid Full_name"),
+        address: string().required("enter your discretion"),
+        city: string().required("selecte your City"),
+        state: string().required("selecte your State "),
+        zip_code: string().required("Please enter Zip Code").matches(/^(\d*([.,](?=\d{3}))?\d+)+((?!\2)[.,]\d\d)?$/, "enter Zip_Code"),
+        country: string().required("selecte your category Country"),
+    });
+
+    const formik = useFormik({
+        initialValues: {
+            full_name: '',
+            address:'',
+            city:'',
+            state:'',
+            zip_code:'',
+            country:''
+        },
+        validationSchema: userSchema,
+        onSubmit: (values, { resetForm }) => {
+            console.log(values);
+            handleSumbit1(values)
+            // resetForm();
+            
+        },
+        
+    });
+
+    const { handleChange, errors, values, handleSubmit, handleBlur, touched, setValues } = formik
+
     return (
         <ScrollView style={styles.container}>
             <StatusBar
@@ -20,47 +69,73 @@ export default function AddShipingAddress({ route, navigation }) {
                     style={styles.input}
                     placeholder='Full name'
                     placeholderTextColor='#9B9B9B'
+                    onChangeText={handleChange('full_name')}
+                    onBlur={handleBlur("full_name")}
+                    value={values.full_name}
                 />
+                  <Text style={{ color: 'red',size:20 }}>{errors.full_name ? errors.full_name : ''}</Text>
                 <TextInput
                     style={styles.input}
                     placeholder='Adrress'
                     autoCapitalize="none"
                     placeholderTextColor='#9B9B9B'
+                    onChangeText={handleChange('address')}
+                    onBlur={handleBlur("address")}
+                    value={values.address}
                 />
+                  <Text style={{ color: 'red',size:20 }}>{errors.address ? errors.address : ''}</Text>
                 <TextInput
                     style={styles.input}
                     placeholder='City'
                     autoCapitalize="none"
                     placeholderTextColor='#9B9B9B'
+                    onChangeText={handleChange('city')}
+                    onBlur={handleBlur("city")}
+                    value={values.city}
                 />
+                  <Text style={{ color: 'red' ,size:20}}>{errors.city ? errors.city : ''}</Text>
                 <TextInput
                     style={styles.input}
                     placeholder='State/Province/Region'
                     autoCapitalize="none"
                     placeholderTextColor='#9B9B9B'
+                    onChangeText={handleChange('state')}
+                    onBlur={handleBlur("state")}
+                    value={values.state}
                 />
+                  <Text style={{ color: 'red',size:20 }}>{errors.state ? errors.state : ''}</Text>
                 <TextInput
                     style={styles.input}
                     placeholder='Zip Code (Postal Code)'
                     autoCapitalize="none"
                     placeholderTextColor='#9B9B9B'
+                    onChangeText={handleChange('zip_code')}
+                    onBlur={handleBlur("zip_code")}
+                    value={values.zip_code}
                 />
+                  <Text style={{ color: 'red',size:20 }}>{errors.zip_code ? errors.zip_code : ''}</Text>
                 <View style={styles.countryView}>
                     <TextInput
                         style={styles.input}
                         placeholder='Country'
                         autoCapitalize="none"
                         placeholderTextColor='#9B9B9B'
+                        onChangeText={handleChange('country')}
+                        onBlur={handleBlur("country")}
+                    value={values.country}
                     />
+                    
                     <MaterialIcons name="keyboard-arrow-right" size={25} color="black" style={styles.Arrow} />
 
                 </View>
+                <Text style={{ color: 'red',size:20 }}>{errors.country ? errors.country : ''}</Text>
             </View>
-            <TouchableOpacity style={styles.ButtonView} onPress={() => navigation.navigate("ShippingAddresses")}><View style={styles.ButtonUnderView}>
+            <TouchableOpacity style={styles.ButtonView} onPress={handleSubmit}><View style={styles.ButtonUnderView}>
                 <Text style={styles.AddCart}>SAVE ADDRESS</Text>
             </View>
             </TouchableOpacity>
         </ScrollView>
+        // {navigation.navigate("ShippingAddresses"),
     )
 }
 
@@ -96,7 +171,7 @@ const styles = StyleSheet.create({
         marginVertical: verticalScale(10),
         paddingVertical: verticalScale(20),
         paddingLeft: horizontalScale(10),
-        color: 'white',
+        color: 'black',
         borderRadius: moderateScale(5),
         fontSize: moderateScale(18),
         fontWeight: '500',

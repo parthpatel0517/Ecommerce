@@ -8,6 +8,8 @@ import colorslice  from "../Slice/color.slice";
 import brandSlice from "../Slice/brand.slice";
 import favouriteSlice from "../Slice/favourite.slice";
 import cartSlice from "../Slice/cart.slice";
+import ShippingAddresses from "../../container/shippingadresses/ShippingAddresses";
+import addshipingadressSlice from "../Slice/addshipingadress.slice";
 
 
 
@@ -21,5 +23,6 @@ export const rootReducer = combineReducers({
     color : colorslice,
     brand : brandSlice,
     favourite : favouriteSlice,
-    cart : cartSlice
+    cart : cartSlice,
+    addshipadrress : addshipingadressSlice
 })
