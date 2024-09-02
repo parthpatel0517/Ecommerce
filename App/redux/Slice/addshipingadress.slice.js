@@ -12,56 +12,76 @@ const initialState = {
 export const addshhipadress = createAsyncThunk(
     'adsshipadrress/addshhipadress',
     async (data) => {
-    try {
-        const AddShippingData = []
+        try {
+            const AddShippingData = []
 
-        const userRefrence = await firestore().collection('AddShippingAddress').doc(data.uid);
-        const userDoc = await userRefrence.get();
+            const userRefrence = await firestore().collection('AddShippingAddress').doc(data.uid);
+            const userDoc = await userRefrence.get();
 
-        console.log("userDocuserDoc",userDoc.exists);
+            console.log("userDocuserDoc", userDoc.exists);
 
-        if(userDoc.exists){
-           await userRefrence.update(
-               {
-                   addrress: firebase.firestore.FieldValue.arrayUnion(
-                      data
-                   )
-               }
-           );
-           console.log("dkskalallaalallalalaal");
-        } else{
-           await userRefrence.set({
-            addrress:[data]
-           })
-           console.log("pqppqpqppqpqpqpqpqqp");
+            try {
+                if (userDoc.exists) {
+                    await userRefrence.update(
+                        {
+                            addrress: firebase.firestore.FieldValue.arrayUnion(
+                                data
+                            )
+                        }
+                    );
+                } else {
+                    await userRefrence.set({
+                        addrress: [data]
+                    })
+                }
+
+                const getaddshipdata = [];
+                await firestore()
+                    .collection('AddShippingAddress')
+                    .doc(data.uid)
+                    .get()
+                    .then(documentSnapshot => {
+                        if (documentSnapshot.exists) {
+                            getaddshipdata.push({ id: documentSnapshot.id, ...documentSnapshot.data() })
+
+                        }
+                    });
+
+                return getaddshipdata;
+            } catch (error) {
+                console.log("Eroroooaoaooeeeo", error);
+            }
+
+        } catch (error) {
+            console.log("erorroorororor", error);
         }
-        return AddShippingData
-    } catch (error) {
-        console.log("erorroorororor",error);
-    }
-        
+
     }
 
 );
 
 export const getaddshipadreess = createAsyncThunk(
     'adsshipadrress/getaddshipadreess',
-    async () => {
-
-
+    async (id) => {
         try {
             const getaddshipdata = [];
-            await firestore()
-                .collection('AddShhipingadrress')
-                .get()
-                .then(querySnapshot => {
 
-                    querySnapshot.forEach(documentSnapshot => {
+            try {
+                await firestore()
+                    .collection('AddShippingAddress')
+                    .doc(id)
+                    .get()
+                    .then(documentSnapshot => {
+                        if (documentSnapshot.exists) {
+                            getaddshipdata.push({ id: documentSnapshot.id, ...documentSnapshot.data() })
 
-                        getaddshipdata.push({ id: documentSnapshot.id, ...documentSnapshot.data() });
+                        }
                     });
-                });
+            } catch (error) {
+                console.log("eoeoellslslsldsl", error);
+            }
 
+            // console.log("getaddshipdatagetaddshipdata", getaddshipdata);
             return getaddshipdata;
 
         } catch (error) {
@@ -71,12 +91,54 @@ export const getaddshipadreess = createAsyncThunk(
 )
 
 
+export const deleteadrress = createAsyncThunk(
+    'adsshipadrress/deleteadrress',
+    async (data) => {
+        console.log("sssssowowpwpwqppqpqpqpq", data);
+        const userRefrence = await firestore().collection('AddShippingAddress').doc(data.uid);
+
+        try {
+
+          
+            await userRefrence.update(
+                {
+                    addrress: firebase.firestore.FieldValue.arrayRemove(
+                        data
+                    )
+                }
+            );
+            const getaddshipdata = [];
+            await firestore()
+                .collection('AddShippingAddress')
+                .doc(data.uid)
+                .get()
+                .then(documentSnapshot => {
+                    if (documentSnapshot.exists) {
+                        getaddshipdata.push({ id: documentSnapshot.id, ...documentSnapshot.data() })
+
+                    }
+                });
+
+            return getaddshipdata;
+        } catch (error) {
+            console.log("alallalallllskskkwowpqosks",error);
+        }
+
+    }
+)
+
+
 const addshipadrressSlice = createSlice({
     name: 'adsshipadrress',
     initialState,
     extraReducers: (builder) => {
-        builder
         builder.addCase(addshhipadress.fulfilled, (state, action) => {
+            state.adsshipadrress = action.payload
+        })
+        builder.addCase(getaddshipadreess.fulfilled, (state, action) => {
+            state.adsshipadrress = action.payload
+        })
+        builder.addCase(deleteadrress.fulfilled, (state, action) => {
             state.adsshipadrress = action.payload
         })
     }

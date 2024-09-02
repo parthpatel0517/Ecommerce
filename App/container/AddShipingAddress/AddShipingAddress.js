@@ -19,7 +19,8 @@ export default function AddShipingAddress({ route, navigation }) {
     }, [])
 
     const handleSumbit1=(data)=>{
-        dispatch(addshhipadress({...data, uid:'parth'}))
+        dispatch(addshhipadress({...data, uid:'parth'})),
+        navigation.navigate("ShippingAddresses")
     }
 
 
@@ -135,7 +136,7 @@ export default function AddShipingAddress({ route, navigation }) {
             </View>
             </TouchableOpacity>
         </ScrollView>
-        // {navigation.navigate("ShippingAddresses"),
+        
     )
 }
 

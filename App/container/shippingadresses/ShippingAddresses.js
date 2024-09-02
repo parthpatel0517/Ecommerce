@@ -1,8 +1,10 @@
 import { View, Text, TouchableOpacity, ScrollView, StatusBar, StyleSheet, FlatList } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { horizontalScale, moderateScale } from '../../../assets/Metrics/Metrics';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteadrress, getaddshipadreess } from '../../redux/Slice/addshipingadress.slice';
 
 const useaddresses = [
     {
@@ -29,11 +31,33 @@ const useaddresses = [
 ];
 
 export default function ShippingAddresses({ route, navigation }) {
+
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        dispatch(getaddshipadreess('parth'))
+    },[])
+
+    const shipadrress = useSelector(state => state.addshipadrress);
+    console.log('shipadrress' ,shipadrress?.adsshipadrress?.[0]?.addrress)
+
+    const shipflat =  shipadrress?.adsshipadrress?.[0]?.addrress
+      
+    const handeldete = (data) => {
+        console.log("psspsppspspspssspdps",data);
+        dispatch(deleteadrress(data))
+    }
+    
+
+    // const adreesssship = 
     const ShippingAddresses = ({ v }) => (
         <View style={styles.olldeta}>
-            <Text style={styles.addtext1}>{v.name}</Text>
-            <Text style={styles.addtext}>{v.Addresses}</Text>
-            <Text style={styles.addtext}>{v.area} {v.state}</Text>
+            <Text style={styles.addtext1}>Full_name:- {v.full_name}</Text>
+            <Text style={styles.addtext}>Address:- {v.address}</Text>
+            <Text style={styles.addtext}>Zip_Code:- {v.zip_code}</Text>
+            <Text style={styles.addtext}>Country:- {v.country}</Text>
+            <Text style={styles.addtext}>City:- {v.city}</Text>
+            <Text style={styles.addtext}>State:- {v.state}</Text>
 
             <TouchableOpacity style={styles.UseShipping}>
                 <FontAwesome name="check-square" size={25} color="black" />
@@ -41,7 +65,11 @@ export default function ShippingAddresses({ route, navigation }) {
             </TouchableOpacity>
             <View style={styles.ViewEdit}>
                 <TouchableOpacity><Text style={styles.ViewEdittext}>Edit</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => handeldete(v)}><Text style={styles.ViewEdittext}>Delete</Text></TouchableOpacity>
             </View>
+            {/* <View style={styles.ViewEdit}> */}
+              
+            {/* </View> */}
         </View>
     );
 
@@ -57,7 +85,7 @@ export default function ShippingAddresses({ route, navigation }) {
             </View> */}
 
             <FlatList
-                data={useaddresses}
+                data={shipflat}
                 renderItem={({ item }) => <ShippingAddresses v={item} />}
                 keyExtractor={item => item.id}
             />
@@ -102,7 +130,7 @@ const styles = StyleSheet.create({
     },
     olldeta: {
         padding: 15,
-        height: 135,
+        // height: 15,
         marginTop: 20,
         backgroundColor: '#FFFFFF',
         borderRadius: horizontalScale(5),
@@ -110,8 +138,10 @@ const styles = StyleSheet.create({
         position: 'relative'
     },
     addtext: {
+        fontSize:16,
         color: 'black',
         paddingBottom: 4,
+        // fontWeight:500
     },
     addtext1: {
         color: 'black',
@@ -128,6 +158,8 @@ const styles = StyleSheet.create({
         paddingTop: 4,
     },
     ViewEdit: {
+        columnGap:40,
+        flexDirection:'row',
         position: 'absolute',
         padding: 10,
         right: 10,
