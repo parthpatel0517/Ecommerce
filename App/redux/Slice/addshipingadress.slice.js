@@ -90,7 +90,6 @@ export const getaddshipadreess = createAsyncThunk(
     },
 )
 
-
 export const deleteadrress = createAsyncThunk(
     'adsshipadrress/deleteadrress',
     async (data) => {
@@ -99,7 +98,7 @@ export const deleteadrress = createAsyncThunk(
 
         try {
 
-          
+
             await userRefrence.update(
                 {
                     addrress: firebase.firestore.FieldValue.arrayRemove(
@@ -121,10 +120,60 @@ export const deleteadrress = createAsyncThunk(
 
             return getaddshipdata;
         } catch (error) {
-            console.log("alallalallllskskkwowpqosks",error);
+            console.log("alallalallllskskkwowpqosks", error);
         }
 
     }
+)
+
+export const updateaddrress = createAsyncThunk(
+    'adsshipadrress/addadrress',
+    async (data) => {
+        console.log("sssssowowpwpwqppqpqpqpq", data);
+
+        try {
+            const userRefrence = await firestore().collection('AddShippingAddress').doc(data.oldData.uid);
+
+            try {
+                await userRefrence.update(
+                    {
+                        addrress: firebase.firestore.FieldValue.arrayRemove(
+                            data.oldData
+                        )
+                    }
+                );
+
+                await userRefrence.update(
+                    {
+                        addrress: firebase.firestore.FieldValue.arrayUnion(
+                            data.newData
+                        )
+                    }
+                );
+                console.log("ksksksksssjksjsdjjdjdjdjdjkdjkdjdjkdjsdj");
+            } catch (error) {
+                console.log("dlspkxscdfjdoijhihufhfiu", error);
+            }
+
+            const getaddshipdata = [];
+            await firestore()
+                .collection('AddShippingAddress')
+                .doc(data.oldData.uid)
+                .get()
+                .then(documentSnapshot => {
+                    if (documentSnapshot.exists) {
+                        getaddshipdata.push({ id: documentSnapshot.id, ...documentSnapshot.data() })
+
+                    }
+                });
+
+            return getaddshipdata;
+        } catch (error) {
+            console.log("alallalallllskskkwowpqosks", error);
+        }
+
+    }
+
 )
 
 
@@ -139,6 +188,9 @@ const addshipadrressSlice = createSlice({
             state.adsshipadrress = action.payload
         })
         builder.addCase(deleteadrress.fulfilled, (state, action) => {
+            state.adsshipadrress = action.payload
+        })
+        builder.addCase(updateaddrress.fulfilled, (state, action) => {
             state.adsshipadrress = action.payload
         })
     }

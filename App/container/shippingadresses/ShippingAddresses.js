@@ -1,10 +1,13 @@
 import { View, Text, TouchableOpacity, ScrollView, StatusBar, StyleSheet, FlatList } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { horizontalScale, moderateScale } from '../../../assets/Metrics/Metrics';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteadrress, getaddshipadreess } from '../../redux/Slice/addshipingadress.slice';
+import BouncyCheckbox from "react-native-bouncy-checkbox";
+// import { RadioButton } from 'react-native-paper';
+import RadioGroup, {RadioButtonProps} from 'react-native-radio-buttons-group';
 
 const useaddresses = [
     {
@@ -31,23 +34,40 @@ const useaddresses = [
 ];
 
 export default function ShippingAddresses({ route, navigation }) {
+    // const [checked, setChecked] = React.useState('first');
+
+
+
+    const radioButtons = useMemo(() => ([
+        {
+            id: '1', // acts as primary key, should be unique and non-empty string
+            label: 'Option 1',
+            value: 'option1'
+        },
+    ]), []);
+    const [selectedId, setSelectedId] = useState();
 
     const dispatch = useDispatch();
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getaddshipadreess('parth'))
-    },[])
+    }, [])
 
     const shipadrress = useSelector(state => state.addshipadrress);
-    console.log('shipadrress' ,shipadrress?.adsshipadrress?.[0]?.addrress)
+    console.log('shipadrress', shipadrress?.adsshipadrress?.[0]?.addrress)
 
-    const shipflat =  shipadrress?.adsshipadrress?.[0]?.addrress
-      
+    const shipflat = shipadrress?.adsshipadrress?.[0]?.addrress
+
     const handeldete = (data) => {
-        console.log("psspsppspspspssspdps",data);
+        console.log("psspsppspspspssspdps", data);
         dispatch(deleteadrress(data))
     }
-    
+
+    const handelEdit = (data) => {
+        navigation.navigate("AddShipingAddress", data)
+    }
+
+
 
     // const adreesssship = 
     const ShippingAddresses = ({ v }) => (
@@ -60,15 +80,32 @@ export default function ShippingAddresses({ route, navigation }) {
             <Text style={styles.addtext}>State:- {v.state}</Text>
 
             <TouchableOpacity style={styles.UseShipping}>
-                <FontAwesome name="check-square" size={25} color="black" />
+                {/* <BouncyCheckbox
+                    size={25}
+                    fillColor="black"
+                    unFillColor="#FFFFFF"
+                    text={v.name}
+                    iconStyle={{ borderColor: "black" }}
+                    innerIconStyle={{ borderWidth: 2 }}
+                /> */}
+                {/* <RadioButton
+                    value="first"
+                    status={checked === 'first' ? 'checked' : 'unchecked'}
+                    onPress={() => setChecked('first')}
+                /> */}
+                <RadioGroup
+                    radioButtons={radioButtons}
+                    onPress={setSelectedId}
+                    selectedId={selectedId}
+                />
                 <Text style={styles.checkicontext}>Use as the shipping address</Text>
             </TouchableOpacity>
             <View style={styles.ViewEdit}>
-                <TouchableOpacity><Text style={styles.ViewEdittext}>Edit</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => handelEdit(v)}><Text style={styles.ViewEdittext}>Edit</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => handeldete(v)}><Text style={styles.ViewEdittext}>Delete</Text></TouchableOpacity>
             </View>
             {/* <View style={styles.ViewEdit}> */}
-              
+
             {/* </View> */}
         </View>
     );
@@ -90,17 +127,17 @@ export default function ShippingAddresses({ route, navigation }) {
                 keyExtractor={item => item.id}
             />
             <View style={styles.btnView}>
-                 <TouchableOpacity style={styles.addButton}  onPress={() => navigation.navigate("AddShipingAddress")}>
-                <MaterialCommunityIcons name="plus-circle" size={35} color="black" />
-            </TouchableOpacity>
-            </View>
-            
-            <View>
-                <TouchableOpacity style={styles.placeorder}  onPress={() => navigation.navigate("Success")}>
-                    <Text  style={styles.AddCart}>Place your order</Text>
+                <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate("AddShipingAddress")}>
+                    <MaterialCommunityIcons name="plus-circle" size={35} color="black" />
                 </TouchableOpacity>
             </View>
-           
+
+            <View>
+                <TouchableOpacity style={styles.placeorder} onPress={() => navigation.navigate("Success")}>
+                    <Text style={styles.AddCart}>Place your order</Text>
+                </TouchableOpacity>
+            </View>
+
         </ScrollView>
     );
 }
@@ -138,7 +175,7 @@ const styles = StyleSheet.create({
         position: 'relative'
     },
     addtext: {
-        fontSize:16,
+        fontSize: 16,
         color: 'black',
         paddingBottom: 4,
         // fontWeight:500
@@ -154,12 +191,14 @@ const styles = StyleSheet.create({
         paddingTop: 15
     },
     checkicontext: {
+        marginLeft:-60,
+        marginTop:5,
         color: 'black',
         paddingTop: 4,
     },
     ViewEdit: {
-        columnGap:40,
-        flexDirection:'row',
+        columnGap: 40,
+        flexDirection: 'row',
         position: 'absolute',
         padding: 10,
         right: 10,
@@ -169,11 +208,11 @@ const styles = StyleSheet.create({
         paddingTop: 4,
     },
     addButton: {
-        paddingTop:16
+        paddingTop: 16
     },
-    btnView:{
-        flexDirection:'row',
-        justifyContent:'flex-end'
+    btnView: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end'
     },
     AddCart: {
         color: 'black',
@@ -181,14 +220,14 @@ const styles = StyleSheet.create({
         fontSize: moderateScale(17),
         margin: 'auto'
     },
-    placeorder:{
-      backgroundColor:'red',
-      width:300,
-      margin:'auto',
-      padding:10,
-      borderRadius:20,
-      marginTop:90,
-      borderWidth:1,
-      borderColor:'black'
+    placeorder: {
+        backgroundColor: 'red',
+        width: 300,
+        margin: 'auto',
+        padding: 10,
+        borderRadius: 20,
+        marginTop: 90,
+        borderWidth: 1,
+        borderColor: 'black'
     }
 });

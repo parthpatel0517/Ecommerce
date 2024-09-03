@@ -4,10 +4,11 @@ import { horizontalScale, moderateScale, verticalScale } from '../../../assets/M
 import React, { useEffect } from 'react'
 import { useFormik } from 'formik';
 import { date, object, string } from 'yup';
-import { addshhipadress } from '../../redux/Slice/addshipingadress.slice';
+import { addshhipadress, updateaddrress } from '../../redux/Slice/addshipingadress.slice';
 import { useDispatch } from 'react-redux';
 
 export default function AddShipingAddress({ route, navigation }) {
+    console.log("routeieoepoakakslosdspc",route);
 
     const dispatch = useDispatch()
   
@@ -15,11 +16,18 @@ export default function AddShipingAddress({ route, navigation }) {
     // console.log("skskskkskskskkkkllllllllklklklk",brand.brand);
 
     useEffect(() => {
-       
-    }, [])
+        if(route.params){
+            setValues(route.params)
+        }
+    }, [route.params])
 
     const handleSumbit1=(data)=>{
-        dispatch(addshhipadress({...data, uid:'parth'})),
+        if(route.params){
+            dispatch(updateaddrress({newData : {...data, uid:'parth'} , oldData : route.params}))
+        } else{
+            dispatch(addshhipadress({...data, uid:'parth'}))
+        }
+     
         navigation.navigate("ShippingAddresses")
     }
 
@@ -72,7 +80,7 @@ export default function AddShipingAddress({ route, navigation }) {
                     placeholderTextColor='#9B9B9B'
                     onChangeText={handleChange('full_name')}
                     onBlur={handleBlur("full_name")}
-                    value={values.full_name}
+                    value={values?.full_name}
                 />
                   <Text style={{ color: 'red',size:20 }}>{errors.full_name ? errors.full_name : ''}</Text>
                 <TextInput
@@ -82,7 +90,7 @@ export default function AddShipingAddress({ route, navigation }) {
                     placeholderTextColor='#9B9B9B'
                     onChangeText={handleChange('address')}
                     onBlur={handleBlur("address")}
-                    value={values.address}
+                    value={values?.address}
                 />
                   <Text style={{ color: 'red',size:20 }}>{errors.address ? errors.address : ''}</Text>
                 <TextInput
@@ -92,7 +100,7 @@ export default function AddShipingAddress({ route, navigation }) {
                     placeholderTextColor='#9B9B9B'
                     onChangeText={handleChange('city')}
                     onBlur={handleBlur("city")}
-                    value={values.city}
+                    value={values?.city}
                 />
                   <Text style={{ color: 'red' ,size:20}}>{errors.city ? errors.city : ''}</Text>
                 <TextInput
@@ -112,7 +120,7 @@ export default function AddShipingAddress({ route, navigation }) {
                     placeholderTextColor='#9B9B9B'
                     onChangeText={handleChange('zip_code')}
                     onBlur={handleBlur("zip_code")}
-                    value={values.zip_code}
+                    value={values?.zip_code}
                 />
                   <Text style={{ color: 'red',size:20 }}>{errors.zip_code ? errors.zip_code : ''}</Text>
                 <View style={styles.countryView}>
@@ -123,7 +131,7 @@ export default function AddShipingAddress({ route, navigation }) {
                         placeholderTextColor='#9B9B9B'
                         onChangeText={handleChange('country')}
                         onBlur={handleBlur("country")}
-                    value={values.country}
+                    value={values?.country}
                     />
                     
                     <MaterialIcons name="keyboard-arrow-right" size={25} color="black" style={styles.Arrow} />
@@ -132,7 +140,7 @@ export default function AddShipingAddress({ route, navigation }) {
                 <Text style={{ color: 'red',size:20 }}>{errors.country ? errors.country : ''}</Text>
             </View>
             <TouchableOpacity style={styles.ButtonView} onPress={handleSubmit}><View style={styles.ButtonUnderView}>
-                <Text style={styles.AddCart}>SAVE ADDRESS</Text>
+                <Text style={styles.AddCart}>{route.params ? "Update Address" : "Add Address"}</Text>
             </View>
             </TouchableOpacity>
         </ScrollView>
