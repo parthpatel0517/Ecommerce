@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteadrress, getaddshipadreess } from '../../redux/Slice/addshipingadress.slice';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 // import { RadioButton } from 'react-native-paper';
-import RadioGroup, {RadioButtonProps} from 'react-native-radio-buttons-group';
+import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 
 const useaddresses = [
     {
@@ -36,15 +36,6 @@ const useaddresses = [
 export default function ShippingAddresses({ route, navigation }) {
     // const [checked, setChecked] = React.useState('first');
 
-
-
-    const radioButtons = useMemo(() => ([
-        {
-            id: '1', // acts as primary key, should be unique and non-empty string
-            label: 'Option 1',
-            value: 'option1'
-        },
-    ]), []);
     const [selectedId, setSelectedId] = useState();
 
     const dispatch = useDispatch();
@@ -57,6 +48,43 @@ export default function ShippingAddresses({ route, navigation }) {
     console.log('shipadrress', shipadrress?.adsshipadrress?.[0]?.addrress)
 
     const shipflat = shipadrress?.adsshipadrress?.[0]?.addrress
+
+    console.log("");
+
+
+
+    const radioButtons = useMemo(() => {
+        console.log(shipflat);
+        if (shipflat) {
+            const Rdata = shipflat?.map((v, i) => {
+                return {
+                    id: i,
+                    label: (
+                        // <View style={styles.olldeta}>
+                        <View style={styles.olldeta}>
+                            <Text style={styles.addtext1}>Full_name:- {v.full_name}</Text>
+                            <Text style={styles.addtext}>Address:- {v.address}</Text>
+                            <Text style={styles.addtext}>Zip_Code:- {v.zip_code}</Text>
+                            <Text style={styles.addtext}>Country:- {v.country}</Text>
+                            <Text style={styles.addtext}>City:- {v.city}</Text>
+                            <Text style={styles.addtext}>State:- {v.state}</Text>
+                            <View style={styles.ViewEdit}>
+                                <TouchableOpacity onPress={() => handelEdit(v)}><Text style={styles.ViewEdittext}>Edit</Text></TouchableOpacity>
+                                <TouchableOpacity onPress={() => handeldete(v)}><Text style={styles.ViewEdittext}>Delete</Text></TouchableOpacity>
+                            </View>
+                        </View>
+
+                    ),
+                    value: v.uid
+                }
+            })
+            return Rdata
+        }
+        return []
+    }, [shipadrress?.adsshipadrress]);
+    console.log("oopdpddppdspsdppdspsdpdsp", radioButtons);
+
+
 
     const handeldete = (data) => {
         console.log("psspsppspspspssspdps", data);
@@ -93,11 +121,7 @@ export default function ShippingAddresses({ route, navigation }) {
                     status={checked === 'first' ? 'checked' : 'unchecked'}
                     onPress={() => setChecked('first')}
                 /> */}
-                <RadioGroup
-                    radioButtons={radioButtons}
-                    onPress={setSelectedId}
-                    selectedId={selectedId}
-                />
+
                 <Text style={styles.checkicontext}>Use as the shipping address</Text>
             </TouchableOpacity>
             <View style={styles.ViewEdit}>
@@ -120,11 +144,16 @@ export default function ShippingAddresses({ route, navigation }) {
                     <Text style={styles.Ordertext2}>Shipping Addresses</Text>
                 </View>
             </View> */}
-
+            {/* 
             <FlatList
                 data={shipflat}
                 renderItem={({ item }) => <ShippingAddresses v={item} />}
                 keyExtractor={item => item.id}
+            /> */}
+            <RadioGroup
+                radioButtons={radioButtons}
+                onPress={setSelectedId}
+                selectedId={selectedId}
             />
             <View style={styles.btnView}>
                 <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate("AddShipingAddress")}>
@@ -145,7 +174,7 @@ export default function ShippingAddresses({ route, navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F5F5F5',
+        backgroundColor: "white",
         paddingHorizontal: horizontalScale(19),
         paddingTop: horizontalScale(13),
     },
@@ -166,13 +195,15 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     olldeta: {
+        width:'90%',
         padding: 15,
         // height: 15,
         marginTop: 20,
         backgroundColor: '#FFFFFF',
         borderRadius: horizontalScale(5),
         elevation: 2,
-        position: 'relative'
+        position: 'relative',
+        marginLeft:20
     },
     addtext: {
         fontSize: 16,
@@ -191,8 +222,8 @@ const styles = StyleSheet.create({
         paddingTop: 15
     },
     checkicontext: {
-        marginLeft:-60,
-        marginTop:5,
+        marginLeft: -60,
+        marginTop: 5,
         color: 'black',
         paddingTop: 4,
     },
@@ -229,5 +260,9 @@ const styles = StyleSheet.create({
         marginTop: 90,
         borderWidth: 1,
         borderColor: 'black'
+    },
+    namestyle: {
+        color: 'black',
+        backgroundColor: 'red'
     }
 });
