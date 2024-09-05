@@ -20,6 +20,8 @@ import { horizontalScale, moderateScale, verticalScale } from "../../assets/Metr
 import Rating from "../container/rating/Rating";
 import Filter from "../container/filter/Filter";
 import Shop from "../container/Shop/Shop";
+import Signup from "../container/Signup/Signup";
+import Login from "../container/Login/Login";
 
 const Stack = createStackNavigator();
 
@@ -410,6 +412,26 @@ export const Profilestack = () => {
         component={Rating}
         options={({ navigation }) => ({
           title: 'Rating',
+          headerLeft: () => (
+            <Customback navigation={navigation} />
+          ),
+        })}
+      />
+       <Stack.Screen
+        name="Signup"
+        component={Signup}
+        options={({ navigation }) => ({
+          title: 'Signup',
+          headerLeft: () => (
+            <Customback navigation={navigation} />
+          ),
+        })}
+      />
+          <Stack.Screen
+        name="Login"
+        component={Login}
+        options={({ navigation }) => ({
+          title: 'Login',
           headerLeft: () => (
             <Customback navigation={navigation} />
           ),

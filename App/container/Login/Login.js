@@ -3,8 +3,38 @@ import React from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Foundation from 'react-native-vector-icons/Foundation';
+import { object, string } from 'yup';
+import { useDispatch } from 'react-redux';
+import { useFormik } from 'formik';
+import { Loginwithemail, signupwithemail } from '../../redux/Slice/auth.slice';
 
 export default function Login() {
+
+  let LoginSchema = object({
+    email: string().email().required(),
+    password: string().required()
+  });
+
+  const dispatch = useDispatch()
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: ''
+    },
+    validationSchema: LoginSchema,
+    onSubmit: (values, { resetForm }) => {
+      console.log(values);
+      dispatch(Loginwithemail(values))
+      // handleSumbit1(values)
+      // resetForm();
+
+    },
+
+  });
+
+  const { handleChange, errors, values, handleSubmit, handleBlur, touched, setValues } = formik
+
   return (
     <View style={styles.container}>
 
@@ -14,21 +44,31 @@ export default function Login() {
         barStyle="dark-content"
       />
 
-      <Text style={{ marginLeft: -13,marginBottom:20 }}><MaterialIcons name="keyboard-arrow-left" size={50} color="black" /></Text>
-      <Text style={{ fontFamily: 'Metropolis-Bold', fontSize: 34, color: 'black', marginBottom: 50 }}>Login </Text>
+      {/* <Text style={{ marginLeft: -13,marginBottom:20 }}><MaterialIcons name="keyboard-arrow-left" size={50} color="black" /></Text> */}
+      {/* <Text style={{ fontFamily: 'Metropolis-Bold', fontSize: 34, color: 'black', marginBottom: 50 }}>Login </Text> */}
       <View>
         <TextInput
+          name="email"
           style={styles.input}
           placeholder='Email'
           autoCapitalize="none"
           placeholderTextColor='#9B9B9B'
+          onChangeText={handleChange('email')}
+          onBlur={handleBlur("email")}
+          value={values?.email}
         />
+        <Text style={{ color: 'red', size: 20 }}>{errors.email && touched.email ? errors.email : ''}</Text>
         <TextInput
+          name="password"
           style={styles.input}
           placeholder='Password'
           autoCapitalize="none"
           placeholderTextColor='#9B9B9B'
+          onChangeText={handleChange('password')}
+          onBlur={handleBlur("password")}
+          value={values?.password}
         />
+        <Text style={{ color: 'red', size: 20 }}>{errors.password && touched.password ? errors.password : ''}</Text>
         <View style={{ flexDirection: 'row', marginLeft: 210, alignItems: 'center', marginTop: 13 }}>
           <Text style={{ color: 'black', fontSize: 14 }}>Forgot your Password?</Text>
           <Text><MaterialIcons name="arrow-right-alt" size={35} color="red" /></Text>
@@ -44,60 +84,62 @@ export default function Login() {
           fontWeight: '500',
           alignItems: 'center',
           marginTop: 30
-        }}><Text style={{ color: 'white', fontSize: 19, fontFamily: 'Metropolis-Medium' }}>Login</Text></TouchableOpacity>
+        }}
+        onPress={handleSubmit}
+        ><Text style={{ color: 'white', fontSize: 19, fontFamily: 'Metropolis-Medium' }}>Login</Text></TouchableOpacity>
       </View>
       <Text style={{
         color: '#222222',
         textAlign: 'center',
         marginTop: 199,
-        marginLeft:20,
+        marginLeft: 20,
         fontSize: 18
       }}>Or sign up with social account</Text>
 
       <View style={{
         flex: 1,
         flexDirection: 'row',
-        width:'100%',
-        justifyContent:'space-between',
-        paddingHorizontal:70,
-        marginTop:30
+        width: '100%',
+        justifyContent: 'space-between',
+        paddingHorizontal: 70,
+        marginTop: 30
 
       }}>
 
 
-       <TouchableOpacity   style={{
-          marginTop:5,
-         shadowColor: 'rgba(.4,.4,.4, .4)', // IOS
-         shadowOffset: { height: 1, width: 1 }, // IOS
-         shadowOpacity: 1, // IOS
-         shadowRadius: 1, //IOS
-         backgroundColor: '#fff',
-         elevation: 2, // Android
-         height: 80,
-         marginLeft:30,
-         marginTop:1,
-         width: 80,
-         borderRadius: 15,
-         justifyContent: 'center',
-         alignItems: 'center',
-         flexDirection: 'row',
-        }}><Image source={require('../../../assets/img/search_copy.png')} style={{width:39,height:39}} />
-     </TouchableOpacity> 
         <TouchableOpacity style={{
-             shadowColor: 'rgba(0,0,0, .4)', // IOS
-             shadowOffset: { height: 1, width: 1 }, // IOS
-             shadowOpacity: 1, // IOS
-             shadowRadius: 1, //IOS,
-             backgroundColor: '#fff',
-             elevation: 2, // Android
-             height: 80,
-             marginTop:2,
-             borderRadius: 15,
-             width: 80,
-             justifyContent: 'center',
-             alignItems: 'center',
-             flexDirection: 'row',
-        }}><Foundation name="social-facebook" size={50} color="#3B5998"/></TouchableOpacity>
+          marginTop: 5,
+          shadowColor: 'rgba(.4,.4,.4, .4)', // IOS
+          shadowOffset: { height: 1, width: 1 }, // IOS
+          shadowOpacity: 1, // IOS
+          shadowRadius: 1, //IOS
+          backgroundColor: '#fff',
+          elevation: 2, // Android
+          height: 80,
+          marginLeft: 30,
+          marginTop: 1,
+          width: 80,
+          borderRadius: 15,
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'row',
+        }}><Image source={require('../../../assets/img/search_copy.png')} style={{ width: 39, height: 39 }} />
+        </TouchableOpacity>
+        <TouchableOpacity style={{
+          shadowColor: 'rgba(0,0,0, .4)', // IOS
+          shadowOffset: { height: 1, width: 1 }, // IOS
+          shadowOpacity: 1, // IOS
+          shadowRadius: 1, //IOS,
+          backgroundColor: '#fff',
+          elevation: 2, // Android
+          height: 80,
+          marginTop: 2,
+          borderRadius: 15,
+          width: 80,
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'row',
+        }}><Foundation name="social-facebook" size={50} color="#3B5998" /></TouchableOpacity>
 
 
       </View>

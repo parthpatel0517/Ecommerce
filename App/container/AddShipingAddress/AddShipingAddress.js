@@ -82,7 +82,7 @@ export default function AddShipingAddress({ route, navigation }) {
                     onBlur={handleBlur("full_name")}
                     value={values?.full_name}
                 />
-                  <Text style={{ color: 'red',size:20 }}>{errors.full_name ? errors.full_name : ''}</Text>
+                  <Text style={{ color: 'red',size:20 }}>{errors.full_name && touched.full_name ? errors.full_name : ''}</Text>
                 <TextInput
                     style={styles.input}
                     placeholder='Adrress'
@@ -92,7 +92,7 @@ export default function AddShipingAddress({ route, navigation }) {
                     onBlur={handleBlur("address")}
                     value={values?.address}
                 />
-                  <Text style={{ color: 'red',size:20 }}>{errors.address ? errors.address : ''}</Text>
+                  <Text style={{ color: 'red',size:20 }}>{errors.address && touched.address? errors.address : ''}</Text>
                 <TextInput
                     style={styles.input}
                     placeholder='City'
@@ -102,7 +102,7 @@ export default function AddShipingAddress({ route, navigation }) {
                     onBlur={handleBlur("city")}
                     value={values?.city}
                 />
-                  <Text style={{ color: 'red' ,size:20}}>{errors.city ? errors.city : ''}</Text>
+                  <Text style={{ color: 'red' ,size:20}}>{errors.city && touched.city? errors.city : ''}</Text>
                 <TextInput
                     style={styles.input}
                     placeholder='State/Province/Region'
@@ -112,7 +112,7 @@ export default function AddShipingAddress({ route, navigation }) {
                     onBlur={handleBlur("state")}
                     value={values.state}
                 />
-                  <Text style={{ color: 'red',size:20 }}>{errors.state ? errors.state : ''}</Text>
+                  <Text style={{ color: 'red',size:20 }}>{errors.state && touched.state? errors.state : ''}</Text>
                 <TextInput
                     style={styles.input}
                     placeholder='Zip Code (Postal Code)'
@@ -122,7 +122,7 @@ export default function AddShipingAddress({ route, navigation }) {
                     onBlur={handleBlur("zip_code")}
                     value={values?.zip_code}
                 />
-                  <Text style={{ color: 'red',size:20 }}>{errors.zip_code ? errors.zip_code : ''}</Text>
+                  <Text style={{ color: 'red',size:20 }}>{errors.zip_code && touched.zip_code? errors.zip_code : ''}</Text>
                 <View style={styles.countryView}>
                     <TextInput
                         style={styles.input}
@@ -137,7 +137,7 @@ export default function AddShipingAddress({ route, navigation }) {
                     <MaterialIcons name="keyboard-arrow-right" size={25} color="black" style={styles.Arrow} />
 
                 </View>
-                <Text style={{ color: 'red',size:20 }}>{errors.country ? errors.country : ''}</Text>
+                <Text style={{ color: 'red',size:20 }}>{errors.country && touched.country? errors.country : ''}</Text>
             </View>
             <TouchableOpacity style={styles.ButtonView} onPress={handleSubmit}><View style={styles.ButtonUnderView}>
                 <Text style={styles.AddCart}>{route.params ? "Update Address" : "Add Address"}</Text>

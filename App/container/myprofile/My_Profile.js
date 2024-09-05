@@ -139,7 +139,7 @@ export default function My_Orders({ route, navigation }) {
             </View>
 
             <View>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
                 <MaterialIcons
                   name="keyboard-arrow-right"
                   size={30}
