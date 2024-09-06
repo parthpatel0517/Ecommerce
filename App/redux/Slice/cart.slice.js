@@ -103,7 +103,6 @@ export const getcart = createAsyncThunk(
             console.log("eoeoeomc nckskss", error);
         }
     }
-
 )
 
 export const incrementQty = createAsyncThunk(

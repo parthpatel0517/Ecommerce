@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     paddingVertical: 20,
     paddingLeft: 10,
-    color: 'white',
+    color: 'black',
     borderRadius: 5,
     fontSize: 18,
     fontWeight: '500',

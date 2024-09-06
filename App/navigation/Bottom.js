@@ -42,6 +42,7 @@ export default function Bottom() {
         tabBarInactiveTintColor: 'gray',
       })}
     >
+      
       <Tab.Screen options={{
         headerShown: false,
         tabBarLabel: 'Home',
@@ -76,3 +77,4 @@ export default function Bottom() {
     </Tab.Navigator>
   )
 }
+
