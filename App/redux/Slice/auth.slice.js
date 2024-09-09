@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import firestore from '@react-native-firebase/firestore';
 
 
+
 const initialState = {
     isLoading: false,
     auth: null,
@@ -77,7 +78,7 @@ export const Loginwithemail = createAsyncThunk(
                     } else {
                         console.log('User account login Failed!');
                     }
-                    return UserData
+                   
 
                 })
                 .catch(error => {
@@ -91,10 +92,29 @@ export const Loginwithemail = createAsyncThunk(
 
                     console.error(error);
                 });
+               return UserData
         } catch (error) {
             console.log("errrrrkkrkrkkrk",error);
         }
+
+    
     }
+)
+
+export const SignOut = createAsyncThunk(
+    'auth/signOut',
+    async () => {
+        try {
+           await auth()
+            .signOut()
+            .then(() => console.log('User signed out!')); 
+            await AsyncStorage.clear()
+            return null
+        } catch (error) {
+            console.log("oepepepepepepeppepep",error);
+        }
+    }
+
 )
 
 
@@ -106,6 +126,10 @@ const authSlice = createSlice({
             state.auth =  action.payload
           })
           builder.addCase(Loginwithemail.fulfilled, (state, action) => {
+            // console.log("actionsskskskskskskskksksksk",action.payload);
+            state.auth =  action.payload
+          })
+          builder.addCase(SignOut.fulfilled, (state, action) => {
             console.log("actionsskskskskskskskksksksk",action.payload);
             state.auth =  action.payload
           })

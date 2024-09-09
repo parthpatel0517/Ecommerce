@@ -182,7 +182,7 @@ export default function HomePage({ route, navigation }) {
         />
 
       </View>
-      {category.categoryfire.map((v, i) => {
+      {/* {category.categoryfire.map((v, i) => {
         return (
 
           <View>
@@ -224,7 +224,7 @@ export default function HomePage({ route, navigation }) {
             }
           </View>
         )
-      })}
+      })} */}
     </ScrollView>
   )
 }

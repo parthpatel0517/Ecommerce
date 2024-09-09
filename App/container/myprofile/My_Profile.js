@@ -17,8 +17,21 @@ import {
   verticalScale,
 } from '../../../assets/Metrics/Metrics';
 import ShippingAddresses from '../shippingadresses/ShippingAddresses';
+import { useDispatch } from 'react-redux';
+import { SignOut } from '../../redux/Slice/auth.slice';
+
+
+
 
 export default function My_Orders({ route, navigation }) {
+
+  const dispatch = useDispatch()
+
+
+  const handleSignOut = () => {
+    dispatch(SignOut())
+    navigation.navigate("Signup")
+  }
   return (
     <ScrollView>
       <StatusBar backgroundColor="#fff" barStyle="dark-content" />
@@ -133,19 +146,19 @@ export default function My_Orders({ route, navigation }) {
           </TouchableOpacity>
 
           <View style={Styles.dataHead}>
-            <View>
-              <Text style={Styles.data1}>Settings</Text>
+          <TouchableOpacity onPress={() => handleSignOut()}>
+              <Text style={Styles.data1}>Sign Out </Text>
               <Text style={Styles.data2}>Notifications, password</Text>
-            </View>
+            </TouchableOpacity>
 
             <View>
-              <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
+              {/* <TouchableOpacity onPress={() => navigation.navigate("Signup")}> */}
                 <MaterialIcons
                   name="keyboard-arrow-right"
                   size={30}
                   color="#9B9B9B"
                 />
-              </TouchableOpacity>
+              {/* </TouchableOpacity> */}
             </View>
           </View>
         </View>

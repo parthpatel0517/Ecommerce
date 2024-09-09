@@ -21,35 +21,20 @@ import Bottom from './App/navigation/Bottom';
 import 'react-native-gesture-handler';
 import Success from './App/container/success/Success';
 import BottomSheet from './App/container/bottomsheet/Bottomsheet';
+import { PersistGate } from 'redux-persist/integration/react';
 
 
 export default function App() {
-  const store = configurestore()
+  const { store, persistor } = configurestore()
   return (
     <Provider store={store} >
-    <NavigationContainer>
-    {/* // <View style={{backgroundColor:'#ffffff',height:'100%'}}> */}
-    {/* <Signup></Signup> */}
-    {/* <Login></Login> */}
-    {/* <Forgot_pass></Forgot_pass> */}
-    {/* <HomePage /> */}
-    {/* <Rating/> */}
-    {/* <Womens_top/> */}
-    {/* <OrderDetails/> */}
-    {/* <ShippingAddresses/> */}
-    {/* <SubCategories2></SubCategories2> */}
-    <Bottom></Bottom>
-    {/* <BottomSheet/> */}
-    {/* <Success></Success> */}
-    {/* <FavoritesPage></FavoritesPage> */}
-    {/* <FavoritesPage></FavoritesPage> */}
-   {/* <ProductCard></ProductCard> */}
-   {/* <AddShipingAddress></AddShipingAddress> */}
-    {/* <Counter></Counter> */}
-    {/* <Filter></Filter> */}
-    {/* <OrderDetails/> */}
-    {/* // </View> */}
-    </NavigationContainer>
+      <PersistGate loading={null} persistor={persistor}>
+
+        <NavigationContainer>
+          <Bottom></Bottom>
+        </NavigationContainer>
+      </PersistGate>
+
     </Provider>
   )
 }
