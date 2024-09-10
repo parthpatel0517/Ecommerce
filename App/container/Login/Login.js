@@ -6,16 +6,25 @@ import Foundation from 'react-native-vector-icons/Foundation';
 import { object, string } from 'yup';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
-import { Loginwithemail, signupwithemail } from '../../redux/Slice/auth.slice';
+import { Loginwithemail, googleLogin, signupwithemail } from '../../redux/Slice/auth.slice';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 export default function Login() {
+  const dispatch = useDispatch()
+
+  const handlegoogleLogin = () => {
+    dispatch(googleLogin())
+  }
+
+  GoogleSignin.configure({
+    webClientId: '806180168566-rr78amum2tsr6aquu5hs557mbo36upl6.apps.googleusercontent.com',
+  });
 
   let LoginSchema = object({
     email: string().email().required(),
     password: string().required()
   });
 
-  const dispatch = useDispatch()
 
   const formik = useFormik({
     initialValues: {
@@ -123,7 +132,9 @@ export default function Login() {
           justifyContent: 'center',
           alignItems: 'center',
           flexDirection: 'row',
-        }}><Image source={require('../../../assets/img/search_copy.png')} style={{ width: 39, height: 39 }} />
+        }}
+          onPress={() => handlegoogleLogin()}
+        ><Image source={require('../../../assets/img/search_copy.png')} style={{ width: 39, height: 39 }} />
         </TouchableOpacity>
         <TouchableOpacity style={{
           shadowColor: 'rgba(0,0,0, .4)', // IOS

@@ -74,9 +74,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.ecommerce"
+    namespace "com.ecommerce05kp"
     defaultConfig {
-        applicationId "com.ecommerce"
+        applicationId "com.ecommerce05kp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
