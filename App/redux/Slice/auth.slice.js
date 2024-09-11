@@ -2,6 +2,8 @@ import auth from '@react-native-firebase/auth';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import firestore from '@react-native-firebase/firestore';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
+
 
 
 
@@ -126,23 +128,50 @@ export const googleLogin = createAsyncThunk(
             await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
             // Get the users ID token
             const userInfo = await GoogleSignin.signIn()
-            console.log("sosossoosos",userInfo);
+            console.log("sosossoosos", userInfo);
 
-            
+
             const { idToken } = await GoogleSignin.getTokens();
-            console.log("sdsssdsddsdssssddsdssds",idToken);
+            console.log("sdsssdsddsdssssddsdssds", idToken);
             // Create a Google credential with the token
             const googleCredential = await auth.GoogleAuthProvider.credential(idToken);
 
             // Sign-in the user with the credential
-            const  x = await auth().signInWithCredential(googleCredential);
+            const x = await auth().signInWithCredential(googleCredential);
             return x
         } catch (error) {
-            console.log("errorrrrrr",error);
+            console.log("errorrrrrr", error);
         }
     }
 )
 
+export const FacebookLogin = createAsyncThunk(
+    'auth/facebookLogin',
+    async () => {
+        try {
+            const result = await LoginManager.logInWithPermissions(['public_profile', 'email'])
+
+            if (result.isCancelled) {
+                throw 'User cancelled the login process';
+            }
+
+            // Once signed in, get the users AccessToken
+            const data = await AccessToken.getCurrentAccessToken();
+
+            if (!data) {
+                throw 'Something went wrong obtaining access token';
+            }
+
+            // Create a Firebase credential with the AccessToken
+            const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+
+            // Sign-in the user with the credential
+            return auth().signInWithCredential(facebookCredential);
+        } catch (error) {
+            console.log("sssisosososos",error);
+        }
+    }
+)
 
 const authSlice = createSlice({
     name: 'auth',
@@ -160,6 +189,10 @@ const authSlice = createSlice({
             state.auth = action.payload
         })
         builder.addCase(googleLogin.fulfilled, (state, action) => {
+            // console.log("actionsskskskskskskskksksksk", action.payload);
+            state.auth = action.payload
+        })
+        builder.addCase(FacebookLogin.fulfilled, (state, action) => {
             console.log("actionsskskskskskskskksksksk", action.payload);
             state.auth = action.payload
         })

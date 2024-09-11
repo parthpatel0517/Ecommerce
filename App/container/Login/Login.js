@@ -6,7 +6,7 @@ import Foundation from 'react-native-vector-icons/Foundation';
 import { object, string } from 'yup';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
-import { Loginwithemail, googleLogin, signupwithemail } from '../../redux/Slice/auth.slice';
+import { FacebookLogin, Loginwithemail, googleLogin, signupwithemail } from '../../redux/Slice/auth.slice';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 export default function Login() {
@@ -14,6 +14,9 @@ export default function Login() {
 
   const handlegoogleLogin = () => {
     dispatch(googleLogin())
+  }
+  const handleFacbookLogin = () => {
+    dispatch(FacebookLogin())
   }
 
   GoogleSignin.configure({
@@ -150,7 +153,9 @@ export default function Login() {
           justifyContent: 'center',
           alignItems: 'center',
           flexDirection: 'row',
-        }}><Foundation name="social-facebook" size={50} color="#3B5998" /></TouchableOpacity>
+        }}
+        onPress={() => handleFacbookLogin()}
+        ><Foundation name="social-facebook" size={50} color="#3B5998" /></TouchableOpacity>
 
 
       </View>
