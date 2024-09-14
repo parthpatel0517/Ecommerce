@@ -22,6 +22,7 @@ import Filter from "../container/filter/Filter";
 import Shop from "../container/Shop/Shop";
 import Signup from "../container/Signup/Signup";
 import Login from "../container/Login/Login";
+import Loginwithnumber from "../container/PhonenoLogin/Loginwithnumber";
 
 const Stack = createStackNavigator();
 
@@ -437,6 +438,7 @@ export const Profilestack = () => {
           ),
         })}
       />
+          
     </Stack.Navigator>
   )
 }

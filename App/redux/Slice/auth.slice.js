@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import firestore from '@react-native-firebase/firestore';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 
@@ -10,7 +11,8 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 const initialState = {
     isLoading: false,
     auth: null,
-    error: null
+    error: null,
+    confirmation:null
 }
 
 
@@ -159,16 +161,52 @@ export const FacebookLogin = createAsyncThunk(
 
             if (!data) {
                 throw 'Something went wrong obtaining access token';
-            }         
+            }
             const facebookCredential = await auth.FacebookAuthProvider.credential(data.accessToken);
+
+            console.log("fffrrrrrrrrrrrrrr", facebookCredential);
 
             const x = await auth().signInWithCredential(facebookCredential);
 
             console.log("ffffffff", x);
             return x
         } catch (error) {
-            console.log("sssisosososos",error);
+            console.log("sssisosososos", error);
         }
+    }
+)
+
+export const PhoneSignIn = createAsyncThunk(
+    'auth/PhoneSignIn',
+    async (data) => {
+        try {
+            console.log("phone", data.phoneno);
+
+            const confirmation = await auth().signInWithPhoneNumber(data.phoneno);
+            // confirmation(confirmation);
+            console.log("slslslslssowojcjbdcjskdcv",confirmation);
+
+            return confirmation
+        } catch (error) {
+            console.log("error", error);
+        }
+
+    }
+)
+export const GETOTP = createAsyncThunk(
+    'auth/GETOTP',
+    async (data) => {
+        try {
+            console.log("phone", data.code);
+            const datar = await data.confirm.confirm(data.code);
+
+            console.log("dddddddd", datar);
+
+            return datar
+        } catch (error) {
+            console.log("errorffggg", error);
+        }
+
     }
 )
 
@@ -194,6 +232,14 @@ const authSlice = createSlice({
         builder.addCase(FacebookLogin.fulfilled, (state, action) => {
             console.log("actionsskskskskskskskksksksk", action.payload);
             state.auth = action.payload
+        })
+        builder.addCase(PhoneSignIn.fulfilled, (state, action) => {
+            // console.log("phone action",action.payload);
+            state.confirmation = action.payload;
+        })
+        builder.addCase(GETOTP.fulfilled, (state, action) => {
+            // console.log("phone action",action.payload);
+            state.auth = action.payload;
         })
     }
 })

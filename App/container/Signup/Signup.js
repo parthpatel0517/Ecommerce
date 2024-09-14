@@ -106,7 +106,7 @@ export default function Signup({ route, navigation }) {
       <Text style={{
         color: '#222222',
         textAlign: 'center',
-        marginTop: 165,
+        marginTop: 100,
         marginHorizontal: 'auto',
         fontSize: moderateScale(15)
       }}>Or sign up with social account</Text>
@@ -155,9 +155,13 @@ export default function Signup({ route, navigation }) {
           alignItems: 'center',
           flexDirection: 'row',
         }}><Foundation name="social-facebook" size={50} color="#3B5998" /></TouchableOpacity>
-
-
       </View>
+
+      <TouchableOpacity onPress={() => navigation.navigate("Loginwithnumber")} style={{ flexDirection: 'row', marginHorizontal: 'auto', alignItems: 'center', marginBottom: verticalScale(85) ,marginLeft:110}}>
+          <Text style={{ color: 'black', fontSize: moderateScale(14) }}>Login with Phone number</Text>
+          <Text><MaterialIcons name="arrow-right-alt" size={35} color="red" /></Text>
+        </TouchableOpacity>
+
     </View>
 
 

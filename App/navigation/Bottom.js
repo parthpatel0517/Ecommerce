@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 import Login from '../container/Login/Login';
 import { createStackNavigator } from '@react-navigation/stack';
 import { TouchableOpacity } from 'react-native';
+import Loginwithnumber from '../container/PhonenoLogin/Loginwithnumber';
 
 
 const Tab = createBottomTabNavigator();
@@ -86,6 +87,8 @@ export default function Bottom() {
 
         }} name="shoppingTab" component={Shoppingstack} />
 
+       
+
         <Tab.Screen options={{
           headerShown: false,
           tabBarLabel: 'Profile',
@@ -120,6 +123,16 @@ export default function Bottom() {
           component={Login}
           options={({ navigation }) => ({
             title: 'Login',
+            headerLeft: () => (
+              <Customback navigation={navigation} />
+            ),
+          })}
+        />
+         <Stack.Screen
+          name="Loginwithnumber"
+          component={Loginwithnumber}
+          options={({ navigation }) => ({
+            title: 'Phone Number',
             headerLeft: () => (
               <Customback navigation={navigation} />
             ),
