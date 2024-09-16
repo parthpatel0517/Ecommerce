@@ -18,7 +18,7 @@ export default function Counter() {
 
     const category = useSelector(state => state.categoryfire);
 
-    console.log("sjdjdjdjjdjjd",category);
+    // console.log("sjdjdjdjjdjjd",category);
 
     const handalInc = ()=>{
         dispatch(increment())

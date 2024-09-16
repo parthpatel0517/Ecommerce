@@ -87,7 +87,7 @@ export default function HomePage({ route, navigation }) {
 
   const category = useSelector(state => state.categoryfire);
 
-  console.log("sjdjdjdjjdjjd", category);
+  // console.log("sjdjdjdjjdjjd", category);
   const ProductCard = ({ v }) => (
     <TouchableOpacity style={{ marginHorizontal: 10 }} onPress={() => navigation.navigate("ProductCard")}>
 

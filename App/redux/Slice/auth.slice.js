@@ -5,16 +5,12 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 import AsyncStorage from '@react-native-community/async-storage';
 
-
-
-
 const initialState = {
     isLoading: false,
     auth: null,
     error: null,
-    confirmation:null
+    confirmation: null
 }
-
 
 export const signupwithemail = createAsyncThunk(
     'auth/signupWithEmail',
@@ -27,14 +23,14 @@ export const signupwithemail = createAsyncThunk(
                     await user.sendEmailVerification()
                     console.log('User account created & signed in!');
 
-
                     await firestore()
                         .collection('Users')
                         .doc(user.uid)
                         .set({
                             name: data.name,
                             email: data.email,
-                            emailVerification: false
+                            emailVerification: false,
+                            loginType: 'Google'
                         })
                         .then(() => {
                             console.log('User added!');
@@ -56,6 +52,7 @@ export const signupwithemail = createAsyncThunk(
         }
     }
 )
+
 export const Loginwithemail = createAsyncThunk(
     'auth/Loginwithemail',
     async (data) => {
@@ -113,6 +110,9 @@ export const SignOut = createAsyncThunk(
             await auth()
                 .signOut()
                 .then(() => console.log('User signed out!'));
+
+                await GoogleSignin.revokeAccess()
+                
             await AsyncStorage.clear()
             return null
         } catch (error) {
@@ -122,25 +122,44 @@ export const SignOut = createAsyncThunk(
 
 )
 
-
 export const googleLogin = createAsyncThunk(
     'auth/googleLogin',
     async () => {
         try {
             await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-            // Get the users ID token
-            const userInfo = await GoogleSignin.signIn()
-            console.log("sosossoosos", userInfo);
 
+            const userInfo = await GoogleSignin.signIn()
+            // console.log("sosossoosos", userInfo);
 
             const { idToken } = await GoogleSignin.getTokens();
-            console.log("sdsssdsddsdssssddsdssds", idToken);
-            // Create a Google credential with the token
+            // console.log("sdsssdsddsdssssddsdssds", idToken);
+
             const googleCredential = await auth.GoogleAuthProvider.credential(idToken);
 
             // Sign-in the user with the credential
             const x = await auth().signInWithCredential(googleCredential);
-            return x
+            // console.log("ldldldldldllddkdkdkdkdk", x.user);
+
+            await firestore()
+                .collection('Users')
+                .doc(x.user.uid)
+                .set({
+                    name: x.user.displayName,
+                    email: x.user.email,
+                    emailVerification: x.user.emailVerified,
+                    loginType: 'Google'
+                })
+                .then(() => {
+                    console.log('User added!');
+                });
+
+            return {
+                name: x.user.displayName,
+                email: x.user.email,
+                emailVerification: x.user.emailVerified,
+                loginType: 'Google',
+                uid: x.user.uid
+            }
         } catch (error) {
             console.log("errorrrrrr", error);
         }
@@ -164,12 +183,32 @@ export const FacebookLogin = createAsyncThunk(
             }
             const facebookCredential = await auth.FacebookAuthProvider.credential(data.accessToken);
 
-            console.log("fffrrrrrrrrrrrrrr", facebookCredential);
+            // console.log("fffrrrrrrrrrrrrrr", facebookCredential);
 
             const x = await auth().signInWithCredential(facebookCredential);
 
-            console.log("ffffffff", x);
-            return x
+            console.log("ldldldldldllddkdkdkdkdk", x);
+
+            await firestore()
+                .collection('Users')
+                .doc(x.user.uid)
+                .set({
+                    name: x.user.displayName,
+                    email: x.user.email,
+                    emailVerification: true,
+                    loginType: 'Facebook'
+                })
+                .then(() => {
+                    console.log('User added!');
+                });
+
+            return {
+                name: x.user.displayName,
+                email: x.user.email,
+                emailVerification: true,
+                loginType: 'Facebook',
+                uid: x.user.uid
+            }
         } catch (error) {
             console.log("sssisosososos", error);
         }
@@ -184,7 +223,7 @@ export const PhoneSignIn = createAsyncThunk(
 
             const confirmation = await auth().signInWithPhoneNumber(data.phoneno);
             // confirmation(confirmation);
-            console.log("slslslslssowojcjbdcjskdcv",confirmation);
+            console.log("slslslslssowojcjbdcjskdcv", confirmation);
 
             return confirmation
         } catch (error) {
@@ -193,14 +232,33 @@ export const PhoneSignIn = createAsyncThunk(
 
     }
 )
+
 export const GETOTP = createAsyncThunk(
     'auth/GETOTP',
     async (data) => {
         try {
             console.log("phone", data.code);
             const datar = await data.confirm.confirm(data.code);
-
             console.log("dddddddd", datar);
+
+            await firestore()
+                .collection('Users')
+                .doc(datar.user.uid)
+                .set({
+                    phonenumber:  datar.user.phoneNumber,
+                    emailVerification: true,
+                    loginType: 'Phone Number'
+                })
+                .then(() => {
+                    console.log('User added!');
+                });
+
+            return {
+                phonenumber:  datar.user.phoneNumber,
+                emailVerification: true,
+                loginType: 'Phone Number',
+                uid:  datar.user.uid
+            }
 
             return datar
         } catch (error) {

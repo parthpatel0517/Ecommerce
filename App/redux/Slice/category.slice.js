@@ -16,7 +16,7 @@ export const fetchcategory = createAsyncThunk(
                 .collection('Category')
                 .get()
                 .then(querySnapshot => {
-                    console.log('Total Category: ', querySnapshot.size);
+                    // console.log('Total Category: ', querySnapshot.size);
 
                     querySnapshot.forEach(documentSnapshot => {
                         categoryData.push({ id: documentSnapshot.id, ...documentSnapshot.data() });

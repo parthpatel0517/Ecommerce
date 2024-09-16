@@ -17,7 +17,7 @@ export const tooglefavourite = createAsyncThunk(
             .collection('Fav')
             .get()
             .then(querySnapshot => {
-                console.log('Total Category: ', querySnapshot.size);
+                // console.log('Total Category: ', querySnapshot.size);
 
                 querySnapshot.forEach(documentSnapshot => {
                     favData.push({ id: documentSnapshot.id, ...documentSnapshot.data() });
