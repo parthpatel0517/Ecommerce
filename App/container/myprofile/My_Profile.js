@@ -45,7 +45,7 @@ export default function My_Orders({ route, navigation }) {
 
         {/* <Text style={Styles.myProfile}>My Profile</Text> */}
 
-        <View style={Styles.profileHead}>
+        <TouchableOpacity style={Styles.profileHead} onPress={() => navigation.navigate("Profilevisit")}>
           <Image
             style={Styles.Profileimg}
             source={require('../../../assets/img/Dress1.jpg')}
@@ -57,7 +57,7 @@ export default function My_Orders({ route, navigation }) {
               matildabrown@mail.com
             </Text>
           </View>
-        </View>
+        </TouchableOpacity>
 
         <View style={Styles.datamain}>
           <TouchableOpacity  onPress={() => navigation.navigate("My_Profile")} style={Styles.dataHead}>

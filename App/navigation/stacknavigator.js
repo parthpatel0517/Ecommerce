@@ -23,6 +23,7 @@ import Shop from "../container/Shop/Shop";
 import Signup from "../container/Signup/Signup";
 import Login from "../container/Login/Login";
 import Loginwithnumber from "../container/PhonenoLogin/Loginwithnumber";
+import Profilevisit from "../container/ProfileVisit/Profilevisit";
 
 const Stack = createStackNavigator();
 
@@ -72,7 +73,7 @@ export const Favoritestack = () => {
               onPress={() => navigation.goBack()}
               title="Info"
               color="#fff"
-              style={{marginRight:10}}
+              style={{ marginRight: 10 }}
             ><MaterialIcons name="search" size={30} color="black" /></TouchableOpacity>
           ),
         })}
@@ -168,10 +169,10 @@ export const Homestack = () => {
         },
       }}>
       <Stack.Screen
-         options={{
+        options={{
           headerShown: false,
         }}
-         name="HomePage" component={HomePage}
+        name="HomePage" component={HomePage}
       />
 
       <Stack.Screen
@@ -187,12 +188,12 @@ export const Homestack = () => {
               onPress={() => navigation.goBack()}
               title="Info"
               color="#fff"
-              style={{marginRight:10}}
+              style={{ marginRight: 10 }}
             ><MaterialIcons name="share" size={30} color="black" /></TouchableOpacity>
           ),
         })}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="shhoping"
         component={shhoping}
         options={({ navigation }) => ({
@@ -253,7 +254,7 @@ export const Homestack = () => {
               onPress={() => navigation.goBack()}
               title="Info"
               color="#fff"
-              style={{marginRight:10}}
+              style={{ marginRight: 10 }}
             ><MaterialIcons name="search" size={30} color="black" /></TouchableOpacity>
           ),
         })}
@@ -291,7 +292,7 @@ export const Mybagstack = () => {
               onPress={() => navigation.goBack()}
               title="Info"
               color="#fff"
-              style={{marginRight:10}}
+              style={{ marginRight: 10 }}
             ><MaterialIcons name="search" size={30} color="black" /></TouchableOpacity>
           ),
         })}
@@ -310,7 +311,7 @@ export const Mybagstack = () => {
               onPress={() => navigation.goBack()}
               title="Info"
               color="#fff"
-              style={{marginRight:10}}
+              style={{ marginRight: 10 }}
             ><MaterialIcons name="share" size={30} color="black" /></TouchableOpacity>
           ),
         })}
@@ -373,7 +374,7 @@ export const Profilestack = () => {
               onPress={() => navigation.goBack()}
               title="Info"
               color="#fff"
-                 style={{marginRight:10}}
+              style={{ marginRight: 10 }}
             ><MaterialIcons name="search" size={30} color="black" /></TouchableOpacity>
           ),
         })}
@@ -418,7 +419,7 @@ export const Profilestack = () => {
           ),
         })}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Signup"
         component={Signup}
         options={({ navigation }) => ({
@@ -428,7 +429,7 @@ export const Profilestack = () => {
           ),
         })}
       />
-          <Stack.Screen
+      <Stack.Screen
         name="Login"
         component={Login}
         options={({ navigation }) => ({
@@ -438,7 +439,17 @@ export const Profilestack = () => {
           ),
         })}
       />
-          
+
+      <Stack.Screen
+        name="Profilevisit"
+        component={Profilevisit}
+        options={({ navigation }) => ({
+          title: 'Profilevisit',
+          headerLeft: () => (
+            <Customback navigation={navigation} />
+          ),
+        })}
+      />
     </Stack.Navigator>
   )
 }
@@ -531,7 +542,7 @@ export const Shoppingstack = () => {
           ),
         })}
       />
-        <Stack.Screen
+      <Stack.Screen
         name="favourite"
         component={Favorites}
         options={({ navigation }) => ({
