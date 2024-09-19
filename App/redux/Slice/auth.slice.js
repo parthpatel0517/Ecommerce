@@ -4,6 +4,8 @@ import firestore from '@react-native-firebase/firestore';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 import AsyncStorage from '@react-native-community/async-storage';
+import storage from '@react-native-firebase/storage';
+
 
 const initialState = {
     isLoading: false,
@@ -267,6 +269,34 @@ export const GETOTP = createAsyncThunk(
 
     }
 )
+
+export const storephoto = createAsyncThunk(
+    'auth/storephoto',
+    async (data) => {
+
+        console.log("datadatadatatdattdadtaa",data.path);
+
+        const arr = data.split("/");
+
+        console.log("sksksjksddsjsdsdsddssd", arr[arr.length - 1]);
+
+        const Rno = Math.floor(Math.random() * 100000);
+
+        const filename = Rno + arr[arr.length - 1]
+
+        const reference = await storage().ref('/users/' + filename);
+
+        // console.log("sssssssssss",reference);
+
+        const task =await reference.putFile(data);
+
+        const url = await storage().ref('/users/' + filename).getDownloadURL();
+
+        console.log("urlurlurlurlurl",url);
+
+    }
+)
+
 
 const authSlice = createSlice({
     name: 'auth',

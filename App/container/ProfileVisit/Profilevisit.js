@@ -1,5 +1,5 @@
 import { View, StyleSheet, TouchableOpacity, Text, FlatList, TextInput } from 'react-native'
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
@@ -7,13 +7,47 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Feather from 'react-native-vector-icons/Feather';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import { horizontalScale, moderateScale } from '../../../assets/Metrics/Metrics';
+import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics';
 import ImagePicker from 'react-native-image-crop-picker';
+import { useDispatch, useSelector } from 'react-redux';
+import { storephoto } from '../../redux/Slice/auth.slice';
+import { object, string } from 'yup';
+import { useFormik } from 'formik';
 
 
 const items = [('')];
 
 export default function Profilevisit() {
+
+    const [image, setImage] = useState([])
+
+    let signuSchema = object({
+        name: string().required('Enter your name'),
+        about: string().required('Enter your About'),
+        phonenumber: string().required('Enter your Phone number'),
+    });
+
+    const formik = useFormik({
+        initialValues: {
+            name: '',
+            about: '',
+            phonenumber: ''
+        },
+        validationSchema: signuSchema,
+        onSubmit: (values, { resetForm }) => {
+            console.log("sjssnscjdjdjjjfjfkfjjdf",values);
+            resetForm()
+            dispatch(storephoto({ ...values, path: image.path, uid: auth.auth.uid }))
+        },
+    });
+
+    const { handleChange, errors, values, handleSubmit, handleBlur, touched, setValues } = formik
+
+    const auth = useSelector(state => state.auth);
+
+    // console.log('sdjsdjdjkdsdsjdsjdjddjdjs', auth);
+
+    const dispatch = useDispatch()
 
     const refRBSheet = useRef([]);
     const refVBSheet = useRef([]);
@@ -23,21 +57,25 @@ export default function Profilevisit() {
             width: 300,
             height: 400,
             cropping: true,
-          }).then(image => {
-            console.log(image.path);
-          });
+        }).then(image => {
+            // console.log("mksdsssdsdndlsknalsknd",image);
+            setImage(image.path)
+        });
+
+
     }
 
-    const handleGallery  = () => {
+    const handleGallery = () => {
         ImagePicker.openPicker({
             width: 300,
             height: 400,
             cropping: true
-          }).then(image => {
+        }).then(image => {
             console.log(image.path);
-          });
+            dispatch(storephoto(image.path))
+        });
     }
-  
+
 
     const renderItem = ({ item, index, refRBSheet }) => {
         return (
@@ -50,7 +88,7 @@ export default function Profilevisit() {
                                 <View style={{ flexDirection: 'row' }}>
                                     <View style={{ marginTop: 10, marginLeft: 10 }}>
                                         <TouchableOpacity
-                                        onPress={() => refRBSheet.current[0]?.close()}
+                                            onPress={() => refRBSheet.current[0]?.close()}
                                         ><Fontisto name="close-a" size={15} color="#A9AEB1" /></TouchableOpacity>
                                     </View>
                                     <View style={{ marginLeft: 80 }}>
@@ -106,12 +144,17 @@ export default function Profilevisit() {
                         <View style={{ width: '10%', justifyContent: 'center' }}><TouchableOpacity><FontAwesome name="user" size={23} color="gray" /></TouchableOpacity></View>
                         <View style={{ width: '85%' }}>
                             <TextInput
+                                name="name"
+                                value={auth.auth?.name}
                                 style={styles.input}
                                 placeholder='Name'
                                 autoCapitalize="none"
                                 placeholderTextColor='#9B9B9B'
+                                onChangeText={handleChange('name')}
+                                onBlur={handleBlur("name")}
                             ></TextInput>
                         </View>
+
                         <View style={{ width: '10%' }}>
                             <TouchableOpacity onPress={() => refVBSheet.current[0]?.open()}>
                                 {/* <MaterialIcons name="edit" size={23} color="#DB3022" /> */}
@@ -119,36 +162,49 @@ export default function Profilevisit() {
                         </View>
                     </View>
                 </TouchableOpacity>
+                <Text style={{ color: 'red', size: 20 }}>{errors.name && touched.name ? errors.name : ''}</Text>
                 <View style={{ width: '90%', borderWidth: 0.3, marginLeft: 48, backgroundColor: 'black' }}></View>
                 <TouchableOpacity>
                     <View style={styles.Profilebody}>
                         <View style={{ width: '10%', justifyContent: 'center' }}><TouchableOpacity><EvilIcons name="exclamation" size={26} color="gray" /></TouchableOpacity></View>
                         <View style={{ width: '85%' }}>
                             <TextInput
-                               style={styles.input}
+                                name="about"
+                                value={auth.auth?.about}
+                                style={styles.input}
                                 placeholder='About'
                                 autoCapitalize="none"
                                 placeholderTextColor='#9B9B9B'
+                                onChangeText={handleChange('about')}
+                                onBlur={handleBlur("about")}
                             ></TextInput>
                         </View>
-                        {/* <View style={{ width: '10%' }}><TouchableOpacity><MaterialIcons name="edit" size={23} color="#DB3022" /></TouchableOpacity></View> */}
+
                     </View>
+
                 </TouchableOpacity>
+                <Text style={{ color: 'red', size: 20 }}>{errors.about && touched.about ? errors.about : ''}</Text>
                 <View style={{ width: '90%', borderWidth: 0.3, marginLeft: 48, backgroundColor: 'black' }}></View>
                 <TouchableOpacity>
                     <View style={styles.Profilebody}>
                         <View style={{ width: '10%', justifyContent: 'center' }}><TouchableOpacity><MaterialIcons name="phone" size={23} color="gray" /></TouchableOpacity></View>
                         <View style={{ width: '85%', }}>
                             <TextInput
-                               style={styles.input}
+                                name="phonenumber"
+                                value={auth.auth?.phone}
+                                style={styles.input}
                                 placeholder='Phone'
                                 autoCapitalize="none"
                                 placeholderTextColor='#9B9B9B'
+                                onChangeText={handleChange('phonenumber')}
+                                onBlur={handleBlur("phonenumber")}
                             ></TextInput>
                         </View>
+
                         {/* <View style={{ width: '10%' }}><TouchableOpacity><MaterialIcons name="edit" size={23} color="#DB3022" /></TouchableOpacity></View> */}
                     </View>
                 </TouchableOpacity>
+                <Text style={{ color: 'red', size: 20 }}>{errors.phonenumber && touched.phonenumber ? errors.phonenumber : ''}</Text>
                 <View style={{ width: '90%', borderWidth: 0.3, marginLeft: 48, backgroundColor: 'black' }}></View>
 
                 <View style={{ flex: 1 }} >
@@ -158,7 +214,15 @@ export default function Profilevisit() {
                         keyExtractor={(item, index) => index.toString()}
                     />
                 </View>
+
+
             </View>
+            <View>
+                <TouchableOpacity style={styles.checkbutton} onPress={handleSubmit}>
+                    <Text style={styles.CheckText}>Submit</Text>
+                </TouchableOpacity>
+            </View>
+
         </View >
     )
 }
@@ -256,5 +320,21 @@ const styles = StyleSheet.create({
         color: 'black',
         fontSize: moderateScale(15),
         fontWeight: '600',
+    },
+    checkbutton: {
+        width: verticalScale(200),
+        backgroundColor: '#DB3022',
+        height: verticalScale(50),
+        alignItems: 'center',
+        padding: 15,
+        borderRadius: moderateScale(50),
+        margin: 'auto',
+        marginTop: 100
+
+    },
+    CheckText: {
+        color: 'white',
+        fontSize: moderateScale(18),
+        fontFamily: 'Metropolis-Medium'
     },
 })
