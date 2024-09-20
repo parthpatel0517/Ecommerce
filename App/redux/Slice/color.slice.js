@@ -24,7 +24,7 @@ export const fetchcolor = createAsyncThunk(
 
                 });
 
-            console.log("actionnnnnn", colorData);
+            // console.log("actionnnnnn", colorData);
             return colorData
         } catch (error) {
             console.log(error);

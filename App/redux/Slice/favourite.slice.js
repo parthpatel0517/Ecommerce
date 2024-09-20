@@ -25,7 +25,7 @@ export const tooglefavourite = createAsyncThunk(
 
             });
 
-        console.log("actionnnnnn", favData);
+        // console.log("actionnnnnn", favData);
         //  return favData
 
         const alvfav = favData.find((v) => v.pid === id)

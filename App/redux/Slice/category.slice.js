@@ -24,7 +24,7 @@ export const fetchcategory = createAsyncThunk(
 
                 });
 
-            console.log("actionnnnnn", categoryData);
+            // console.log("actionnnnnn", categoryData);
             return categoryData
         } catch (error) {
             console.log(error);

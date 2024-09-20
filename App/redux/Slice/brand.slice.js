@@ -24,7 +24,7 @@ export const fetchbrand = createAsyncThunk(
 
                 });
 
-            console.log("actionnnnnn", brandData);
+            // console.log("actionnnnnn", brandData);
             return brandData
         } catch (error) {
             console.log(error);

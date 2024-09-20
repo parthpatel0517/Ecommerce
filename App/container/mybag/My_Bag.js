@@ -67,7 +67,7 @@ export default function My_Bag({ route, navigation }) {
       return dataff
     }
   }).sort((a,b) => a.Productname.localeCompare(b.Productname))
-  console.log("bagdatabagdatabagdatabagdatabagdatabagdatabagdata",bagdata);
+  // console.log("bagdatabagdatabagdatabagdatabagdatabagdatabagdata",bagdata);
   const handleInc = (id) => {
     dispatch(incrementQty({id,uid:'parth'}))
   }

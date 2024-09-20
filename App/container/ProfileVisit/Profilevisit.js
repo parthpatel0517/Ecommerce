@@ -1,4 +1,4 @@
-import { View, StyleSheet, TouchableOpacity, Text, FlatList, TextInput } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Text, FlatList, TextInput, Image } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -19,7 +19,7 @@ const items = [('')];
 
 export default function Profilevisit() {
 
-    const [image, setImage] = useState([])
+    const [image, setImage] = useState('')
 
     let signuSchema = object({
         name: string().required('Enter your name'),
@@ -35,9 +35,9 @@ export default function Profilevisit() {
         },
         validationSchema: signuSchema,
         onSubmit: (values, { resetForm }) => {
-            console.log("sjssnscjdjdjjjfjfkfjjdf",values);
+            console.log("sjssnscjdjdjjjfjfkfjjdf", values);
             resetForm()
-            dispatch(storephoto({ ...values, path: image.path, uid: auth.auth.uid }))
+            dispatch(storephoto({ ...values, path: image, uid: auth.auth.uid }))
         },
     });
 
@@ -72,7 +72,8 @@ export default function Profilevisit() {
             cropping: true
         }).then(image => {
             console.log(image.path);
-            dispatch(storephoto(image.path))
+            setImage(image.path)
+            // dispatch(storephoto(image.path))
         });
     }
 
@@ -129,7 +130,14 @@ export default function Profilevisit() {
         <View style={{ flex: 1, backgroundColor: 'white' }}>
             <View style={styles.profileView}>
                 <TouchableOpacity style={styles.profilecircle} onPress={() => refRBSheet.current[0]?.open()}>
-                    <FontAwesome name="user" size={100} color="#A9AEB1" />
+
+                    {
+                        auth.auth?.url ? 
+                            <Image style={styles.profilecircle} source={{ uri: auth.auth?.url }} />
+                            :
+                            <FontAwesome name="user" size={100} color="#A9AEB1" />
+                    }
+
                 </TouchableOpacity>
                 <View style={styles.cameracircle}>
                     <TouchableOpacity onPress={() => refRBSheet.current[0]?.open()}>
@@ -191,7 +199,7 @@ export default function Profilevisit() {
                         <View style={{ width: '85%', }}>
                             <TextInput
                                 name="phonenumber"
-                                value={auth.auth?.phone}
+                                value={auth.auth?.phonenumber}
                                 style={styles.input}
                                 placeholder='Phone'
                                 autoCapitalize="none"

@@ -113,8 +113,8 @@ export const SignOut = createAsyncThunk(
                 .signOut()
                 .then(() => console.log('User signed out!'));
 
-                await GoogleSignin.revokeAccess()
-                
+            await GoogleSignin.revokeAccess()
+
             await AsyncStorage.clear()
             return null
         } catch (error) {
@@ -247,7 +247,7 @@ export const GETOTP = createAsyncThunk(
                 .collection('Users')
                 .doc(datar.user.uid)
                 .set({
-                    phonenumber:  datar.user.phoneNumber,
+                    phonenumber: datar.user.phoneNumber,
                     emailVerification: true,
                     loginType: 'Phone Number'
                 })
@@ -256,10 +256,10 @@ export const GETOTP = createAsyncThunk(
                 });
 
             return {
-                phonenumber:  datar.user.phoneNumber,
+                phonenumber: datar.user.phoneNumber,
                 emailVerification: true,
                 loginType: 'Phone Number',
-                uid:  datar.user.uid
+                uid: datar.user.uid
             }
 
             return datar
@@ -272,11 +272,13 @@ export const GETOTP = createAsyncThunk(
 
 export const storephoto = createAsyncThunk(
     'auth/storephoto',
-    async (data) => {
+    async (data , {getState}) => {
 
-        console.log("datadatadatatdattdadtaa",data.path);
+        const {auth} = getState()
 
-        const arr = data.split("/");
+        console.log("datadatadatatdattdadtaa", data);
+
+        const arr = data.path.split("/");
 
         console.log("sksksjksddsjsdsdsddssd", arr[arr.length - 1]);
 
@@ -288,11 +290,30 @@ export const storephoto = createAsyncThunk(
 
         // console.log("sssssssssss",reference);
 
-        const task =await reference.putFile(data);
+        const task = await reference.putFile(data.path);
 
         const url = await storage().ref('/users/' + filename).getDownloadURL();
 
-        console.log("urlurlurlurlurl",url);
+        console.log("urlurlurlurlurl", url);
+
+        await firestore()
+            .collection('Users')
+            .doc(auth.auth?.uid)
+            .update({
+                url: url,
+                about :  data.about,
+                phonenumber:  data.phonenumber,
+            })
+            .then(() => {
+                console.log('User updated!');
+            });
+
+            return {
+                ...auth.auth,
+                url: url,
+                about :  data.about,
+                phonenumber:  data.phonenumber,
+            }
 
     }
 )
@@ -318,7 +339,7 @@ const authSlice = createSlice({
             state.auth = action.payload
         })
         builder.addCase(FacebookLogin.fulfilled, (state, action) => {
-            console.log("actionsskskskskskskskksksksk", action.payload);
+            // console.log("actionsskskskskskskskksksksk", action.payload);
             state.auth = action.payload
         })
         builder.addCase(PhoneSignIn.fulfilled, (state, action) => {
@@ -327,6 +348,10 @@ const authSlice = createSlice({
         })
         builder.addCase(GETOTP.fulfilled, (state, action) => {
             // console.log("phone action",action.payload);
+            state.auth = action.payload;
+        })
+        builder.addCase(storephoto.fulfilled, (state, action) => {
+            console.log("phoneaction",action.payload);
             state.auth = action.payload;
         })
     }

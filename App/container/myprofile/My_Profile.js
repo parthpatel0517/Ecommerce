@@ -17,13 +17,16 @@ import {
   verticalScale,
 } from '../../../assets/Metrics/Metrics';
 import ShippingAddresses from '../shippingadresses/ShippingAddresses';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SignOut } from '../../redux/Slice/auth.slice';
 
 
 
 
 export default function My_Orders({ route, navigation }) {
+
+  const auth = useSelector(state => state.auth);
+  
 
   const dispatch = useDispatch()
 
@@ -48,13 +51,13 @@ export default function My_Orders({ route, navigation }) {
         <TouchableOpacity style={Styles.profileHead} onPress={() => navigation.navigate("Profilevisit")}>
           <Image
             style={Styles.Profileimg}
-            source={require('../../../assets/img/Dress1.jpg')}
+            source={{uri : auth.auth?.url}}
           />
 
           <View style={Styles.matildabrownTextMAin}>
-            <Text style={Styles.matildabrownText}>Matilda Brown</Text>
+            <Text style={Styles.matildabrownText}>{auth.auth?.name}</Text>
             <Text style={Styles.matildabrowngmailText}>
-              matildabrown@mail.com
+            {auth.auth?.email}
             </Text>
           </View>
         </TouchableOpacity>
