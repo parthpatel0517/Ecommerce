@@ -272,52 +272,105 @@ export const GETOTP = createAsyncThunk(
 
 export const storephoto = createAsyncThunk(
     'auth/storephoto',
-    async (data , {getState}) => {
+    async (data, { getState }) => {
 
-        const {auth} = getState()
+        const { auth } = getState();
 
-        console.log("datadatadatatdattdadtaa", data);
 
-        const arr = data.path.split("/");
+        if (data.url === '') {
+            console.log("gggg");
 
-        console.log("sksksjksddsjsdsdsddssd", arr[arr.length - 1]);
-
-        const Rno = Math.floor(Math.random() * 100000);
-
-        const filename = Rno + arr[arr.length - 1]
-
-        const reference = await storage().ref('/users/' + filename);
-
-        // console.log("sssssssssss",reference);
-
-        const task = await reference.putFile(data.path);
-
-        const url = await storage().ref('/users/' + filename).getDownloadURL();
-
-        console.log("urlurlurlurlurl", url);
-
-        await firestore()
-            .collection('Users')
-            .doc(auth.auth?.uid)
-            .update({
-                url: url,
-                about :  data.about,
-                phonenumber:  data.phonenumber,
-            })
-            .then(() => {
-                console.log('User updated!');
-            });
-
-            return {
-                ...auth.auth,
-                url: url,
-                about :  data.about,
-                phonenumber:  data.phonenumber,
+            try {
+                await firestore()
+                    .collection('Users')
+                    .doc(auth.auth.uid)
+                    .update({
+                        url: data.url,
+                        About: data.About,
+                        Phone: data.Phone
+                    })
+                    .then(() => {
+                        console.log('User updated!');
+                    });
+                return {
+                    ...auth.auth,
+                    url: data.url,
+                    About: data.About,
+                    Phone: data.Phone
+                }
+            } catch (error) {
+                console.log("skdjjkdsdjjdsds", error);
             }
+        } else {
+            let check = data.url.split("/")[0];
 
+            if (check === 'https') {
+                await firestore()
+                    .collection('Users')
+                    .doc(auth.auth.uid)
+                    .update({
+                        url: url,
+                        About: data.About,
+                        Phone: data.Phone
+                    })
+                    .then(() => {
+                        console.log('User updated!');
+                    });
+                return {
+                    ...auth.auth,
+                    url: url,
+                    About: data.About,
+                    Phone: data.Phone
+                }
+            } else {
+                const rNo = Math.floor(Math.random() * 10000);
+
+                const fileName = rNo + arr[arr.length - 1];
+
+                const reference = await storage().ref('/users/' + fileName);
+
+                const task = await reference.putFile(data.path);
+
+                const url = await storage().ref('/users/' + fileName).getDownloadURL();
+
+                await firestore()
+                    .collection('Users')
+                    .doc(auth.auth.uid)
+                    .update({
+                        url: url,
+                        About: data.About,
+                        Phone: data.Phone,
+                        imgName: fileName
+                    })
+                    .then(() => {
+                        console.log('User updated!');
+                    });
+                return {
+                    ...auth.auth,
+                    url: url,
+                    About: data.About,
+                    Phone: data.Phone,
+                    imgName: fileName
+                }
+            }
+        }
     }
 )
 
+export const getuserdata = createAsyncThunk(
+    'user/getuserdata',
+    async (_, { getState }) => {
+        // console.log("sjndsjnnjsddjns",data);
+        try {
+            const { auth } = getState();
+            const userDoc = await firestore().collection('Users').doc(auth.auth.uid).get();
+            console.log("usedsjnsjjsdds",userDoc.data());
+            return userDoc.data()
+        } catch (error) {
+            console.error("Error", error);
+        }
+    }
+)
 
 const authSlice = createSlice({
     name: 'auth',
@@ -351,7 +404,11 @@ const authSlice = createSlice({
             state.auth = action.payload;
         })
         builder.addCase(storephoto.fulfilled, (state, action) => {
-            console.log("phoneaction",action.payload);
+            console.log("phoneaction", action.payload);
+            state.auth = action.payload;
+        })
+        builder.addCase(getuserdata.fulfilled, (state, action) => {
+            console.log("phoneaction", action.payload);
             state.auth = action.payload;
         })
     }

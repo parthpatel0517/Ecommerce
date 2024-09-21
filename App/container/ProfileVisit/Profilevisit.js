@@ -10,44 +10,61 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics';
 import ImagePicker from 'react-native-image-crop-picker';
 import { useDispatch, useSelector } from 'react-redux';
-import { storephoto } from '../../redux/Slice/auth.slice';
+import { getuserdata, storephoto } from '../../redux/Slice/auth.slice';
 import { object, string } from 'yup';
 import { useFormik } from 'formik';
 
 
 const items = [('')];
 
+
+
 export default function Profilevisit() {
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getuserdata())
+    }, [])
 
     const [image, setImage] = useState('')
+    const auth = useSelector(state => state.auth);
+
+    useEffect(() => {
+        if (auth.auth) {
+            setValues(auth.auth)
+        }
+    }, [auth.auth])
+
 
     let signuSchema = object({
         name: string().required('Enter your name'),
-        about: string().required('Enter your About'),
-        phonenumber: string().required('Enter your Phone number'),
+        About: string().required('Enter your About'),
+        Phone: string().required('Enter your Phone number'),
     });
 
     const formik = useFormik({
         initialValues: {
-            name: '',
-            about: '',
-            phonenumber: ''
+            name: auth.auth?.name || '',
+            About: auth.auth?.About || '',
+            Phone: auth.auth?.Phone || ''
         },
         validationSchema: signuSchema,
         onSubmit: (values, { resetForm }) => {
             console.log("sjssnscjdjdjjjfjfkfjjdf", values);
-            resetForm()
-            dispatch(storephoto({ ...values, path: image, uid: auth.auth.uid }))
+            // resetForm()
+            let urlData = ''
+
+            if (image === '') {
+                if (auth.auth?.url) {
+                    urlData = auth.auth?.url
+                }
+            } else {
+                urlData = image
+            }
+            dispatch(storephoto({ ...values, url: urlData, uid: auth.auth.uid }))
         },
     });
 
     const { handleChange, errors, values, handleSubmit, handleBlur, touched, setValues } = formik
-
-    const auth = useSelector(state => state.auth);
-
-    // console.log('sdjsdjdjkdsdsjdsjdjddjdjs', auth);
-
-    const dispatch = useDispatch()
 
     const refRBSheet = useRef([]);
     const refVBSheet = useRef([]);
@@ -132,7 +149,7 @@ export default function Profilevisit() {
                 <TouchableOpacity style={styles.profilecircle} onPress={() => refRBSheet.current[0]?.open()}>
 
                     {
-                        auth.auth?.url ? 
+                        auth.auth?.url ?
                             <Image style={styles.profilecircle} source={{ uri: auth.auth?.url }} />
                             :
                             <FontAwesome name="user" size={100} color="#A9AEB1" />
@@ -177,42 +194,42 @@ export default function Profilevisit() {
                         <View style={{ width: '10%', justifyContent: 'center' }}><TouchableOpacity><EvilIcons name="exclamation" size={26} color="gray" /></TouchableOpacity></View>
                         <View style={{ width: '85%' }}>
                             <TextInput
-                                name="about"
-                                value={auth.auth?.about}
+                                name="About"
+                                value={auth.auth?.About}
                                 style={styles.input}
                                 placeholder='About'
                                 autoCapitalize="none"
                                 placeholderTextColor='#9B9B9B'
-                                onChangeText={handleChange('about')}
-                                onBlur={handleBlur("about")}
+                                onChangeText={handleChange('About')}
+                                onBlur={handleBlur("About")}
                             ></TextInput>
                         </View>
 
                     </View>
 
                 </TouchableOpacity>
-                <Text style={{ color: 'red', size: 20 }}>{errors.about && touched.about ? errors.about : ''}</Text>
+                <Text style={{ color: 'red', size: 20 }}>{errors.About && touched.About ? errors.About : ''}</Text>
                 <View style={{ width: '90%', borderWidth: 0.3, marginLeft: 48, backgroundColor: 'black' }}></View>
                 <TouchableOpacity>
                     <View style={styles.Profilebody}>
                         <View style={{ width: '10%', justifyContent: 'center' }}><TouchableOpacity><MaterialIcons name="phone" size={23} color="gray" /></TouchableOpacity></View>
                         <View style={{ width: '85%', }}>
                             <TextInput
-                                name="phonenumber"
-                                value={auth.auth?.phonenumber}
+                                name="Phone"
+                                value={auth.auth?.Phone}
                                 style={styles.input}
                                 placeholder='Phone'
                                 autoCapitalize="none"
                                 placeholderTextColor='#9B9B9B'
-                                onChangeText={handleChange('phonenumber')}
-                                onBlur={handleBlur("phonenumber")}
+                                onChangeText={handleChange('Phone')}
+                                onBlur={handleBlur("Phone")}
                             ></TextInput>
                         </View>
 
                         {/* <View style={{ width: '10%' }}><TouchableOpacity><MaterialIcons name="edit" size={23} color="#DB3022" /></TouchableOpacity></View> */}
                     </View>
                 </TouchableOpacity>
-                <Text style={{ color: 'red', size: 20 }}>{errors.phonenumber && touched.phonenumber ? errors.phonenumber : ''}</Text>
+                <Text style={{ color: 'red', size: 20 }}>{errors.Phone && touched.Phone ? errors.Phone : ''}</Text>
                 <View style={{ width: '90%', borderWidth: 0.3, marginLeft: 48, backgroundColor: 'black' }}></View>
 
                 <View style={{ flex: 1 }} >
@@ -231,7 +248,7 @@ export default function Profilevisit() {
                 </TouchableOpacity>
             </View>
 
-        </View >
+        </View>
     )
 }
 
