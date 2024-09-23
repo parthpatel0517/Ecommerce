@@ -323,13 +323,21 @@ export const storephoto = createAsyncThunk(
                     Phone: data.Phone
                 }
             } else {
+
+                console.log("dsjsdjdjdjdjjdkdkdkdkdkdkdks",data?.imgName);
+                if(data?.imgName){
+                    const reference = await storage().ref('/users/' + data?.imgName);
+
+                    reference.delete();
+                }
+                let arr = data.url.split("/");
                 const rNo = Math.floor(Math.random() * 10000);
 
                 const fileName = rNo + arr[arr.length - 1];
 
                 const reference = await storage().ref('/users/' + fileName);
 
-                const task = await reference.putFile(data.path);
+                const task = await reference.putFile(data.url);
 
                 const url = await storage().ref('/users/' + fileName).getDownloadURL();
 
@@ -364,8 +372,8 @@ export const getuserdata = createAsyncThunk(
         try {
             const { auth } = getState();
             const userDoc = await firestore().collection('Users').doc(auth.auth.uid).get();
-            console.log("usedsjnsjjsdds",userDoc.data());
-            return userDoc.data()
+            console.log("usedsjnsjjsdds", userDoc.data());
+            return { ...userDoc.data(), uid: auth.auth?.uid }
         } catch (error) {
             console.error("Error", error);
         }

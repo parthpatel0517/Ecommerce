@@ -20,6 +20,7 @@ const items = [('')];
 
 
 export default function Profilevisit() {
+
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getuserdata())
@@ -75,11 +76,17 @@ export default function Profilevisit() {
             height: 400,
             cropping: true,
         }).then(image => {
-            // console.log("mksdsssdsdndlsknalsknd",image);
-            setImage(image.path)
+            setImage(image.path);
+
+            let urlData = image.path;
+            dispatch(storephoto({
+                ...values,
+                url: urlData,
+                uid: auth.auth.uid
+            }));
+
+            refRBSheet.current[0]?.close();
         });
-
-
     }
 
     const handleGallery = () => {
@@ -88,13 +95,20 @@ export default function Profilevisit() {
             height: 400,
             cropping: true
         }).then(image => {
-            console.log(image.path);
-            setImage(image.path)
-            // dispatch(storephoto(image.path))
+            setImage(image.path);
+        
+            let urlData = image.path;
+            dispatch(storephoto({
+                ...values,
+                url: urlData,
+                uid: auth.auth.uid
+            }));
+
+            refRBSheet.current[0]?.close();
         });
     }
 
-
+    
     const renderItem = ({ item, index, refRBSheet }) => {
         return (
             <View>
@@ -170,7 +184,7 @@ export default function Profilevisit() {
                         <View style={{ width: '85%' }}>
                             <TextInput
                                 name="name"
-                                value={auth.auth?.name}
+                                value={values.name}
                                 style={styles.input}
                                 placeholder='Name'
                                 autoCapitalize="none"
@@ -195,7 +209,7 @@ export default function Profilevisit() {
                         <View style={{ width: '85%' }}>
                             <TextInput
                                 name="About"
-                                value={auth.auth?.About}
+                                value={values.About}
                                 style={styles.input}
                                 placeholder='About'
                                 autoCapitalize="none"
@@ -216,7 +230,7 @@ export default function Profilevisit() {
                         <View style={{ width: '85%', }}>
                             <TextInput
                                 name="Phone"
-                                value={auth.auth?.Phone}
+                                value={values.Phone}
                                 style={styles.input}
                                 placeholder='Phone'
                                 autoCapitalize="none"
@@ -363,3 +377,5 @@ const styles = StyleSheet.create({
         fontFamily: 'Metropolis-Medium'
     },
 })
+
+
