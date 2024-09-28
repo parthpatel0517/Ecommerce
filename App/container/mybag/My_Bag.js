@@ -77,7 +77,7 @@ export default function My_Bag({ route, navigation }) {
   const hanledelet = (id) => {
     dispatch(deletedata({id,uid:'parth'}))
   }
-  // const totalAmount = bagdata.reduce((sum, item) => sum + item.Price * item.qty, 0);
+  const totalAmount = bagdata.reduce((sum, item) => sum + (item?.Price || 0) * (item?.qty || 0), 0);
 
   const DataCity = ({ v }) => (
     <TouchableOpacity onPress={() => navigation.navigate("ProductCard")}>
@@ -188,7 +188,7 @@ export default function My_Bag({ route, navigation }) {
 
         <View style={Styles.totalamount}>
           <Text style={Styles.totalamountText}>Total Amount:</Text>
-          <Text style={Styles.Text}>0$</Text>
+          <Text style={Styles.Text}>${totalAmount}</Text>
         </View>
 
         <View style={Styles.checkoutBtn}>

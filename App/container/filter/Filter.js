@@ -48,8 +48,6 @@ export default function Filter({ route, navigation }) {
 
 
     const handleCheckboxPress = (checked, id) => {
-
-
         setCheckBoxes(
             checkBoxes.map(item =>
                 item.id === id ? { ...item, isChecked: checked } : item,

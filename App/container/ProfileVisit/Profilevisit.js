@@ -1,4 +1,4 @@
-import { View, StyleSheet, TouchableOpacity, Text, FlatList, TextInput, Image } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Text, FlatList, TextInput, Image, Alert } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -68,7 +68,6 @@ export default function Profilevisit() {
     const { handleChange, errors, values, handleSubmit, handleBlur, touched, setValues } = formik
 
     const refRBSheet = useRef([]);
-    const refVBSheet = useRef([]);
 
     const handleCamera = () => {
         ImagePicker.openCamera({
@@ -85,7 +84,9 @@ export default function Profilevisit() {
                 uid: auth.auth.uid
             }));
 
+
             refRBSheet.current[0]?.close();
+            Alert.alert("set photo")
         });
     }
 
@@ -96,7 +97,7 @@ export default function Profilevisit() {
             cropping: true
         }).then(image => {
             setImage(image.path);
-        
+
             let urlData = image.path;
             dispatch(storephoto({
                 ...values,
@@ -105,10 +106,11 @@ export default function Profilevisit() {
             }));
 
             refRBSheet.current[0]?.close();
+            Alert.alert("set photo")
         });
     }
 
-    
+
     const renderItem = ({ item, index, refRBSheet }) => {
         return (
             <View>

@@ -101,7 +101,8 @@ export default function Shop({ route, navigation }) {
         })}><View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View style={styles.productMainView}>
                     <View style={styles.productImg}>
-                        <Image source={require('../../../assets/img/Dress1.jpg')} style={{ width: '100%', height: '100%', borderTopLeftRadius: 15, borderTopRightRadius: 15 }} />
+                        {/* <Image source={require('../../../assets/img/Dress1.jpg')} style={{ width: '100%', height: '100%', borderTopLeftRadius: 15, borderTopRightRadius: 15 }} /> */}
+                        <Image source={{ uri: v?.url }} style={{ width: "100%", height: "100%", justifyContent:'center' ,marginTop:0}}/>
                     </View>
                     <View>
                         <TouchableOpacity

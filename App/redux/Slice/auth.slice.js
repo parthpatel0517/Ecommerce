@@ -279,7 +279,6 @@ export const storephoto = createAsyncThunk(
 
         if (data.url === '') {
             console.log("gggg");
-
             try {
                 await firestore()
                     .collection('Users')

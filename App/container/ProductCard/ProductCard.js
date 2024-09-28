@@ -148,11 +148,12 @@ export default function ProductCard({ route, navigation }) {
 
 
                     <ScrollView horizontal>
-                        {
+                        {/* {
                             images.map((v) => (
-                                <Image source={v} style={{ width: 320, height: 480, resizeMode: 'cover', marginRight: 20 }} />
+                                <Image source={{ uri : v?.url}} style={{ width: 320, height: 480, resizeMode: 'cover', marginRight: 20 }} />
                             ))
-                        }
+                        } */}
+                         <Image source={{ uri : filterData?.url}} style={{ width: 320, height: 480, resizeMode: 'cover', marginRight: 20 }} />
                     </ScrollView>
 
                     <View style={styles.SizeBlackView}>

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getShopping } from '../../redux/Slice/shopping.slice';
 import { getFavourite, tooglefavourite } from '../../redux/Slice/favourite.slice';
 import { getProducts } from '../../redux/Slice/product.slice';
+import { fetchcolor } from '../../redux/Slice/color.slice';
 
 const data = [
   {
@@ -82,10 +83,14 @@ export default function Favorites({ route, navigation }) {
     // dispatch(getShopping())
     dispatch(getProducts())
     dispatch(getFavourite())
+    dispatch(fetchcolor())
+
   }, [])
 
   const getfavourite = useSelector(state => state.favourite)
   const getshopping = useSelector(state => state.productfire);
+  const color = useSelector(state => state.color);
+console.log("color",color);
 
   console.log("sksksksksk", getshopping);
 
@@ -106,23 +111,24 @@ export default function Favorites({ route, navigation }) {
   );
   const NewProductCard = ({ v }) => (
     <TouchableOpacity style={styles.olldeta} onPress={() => navigation.navigate("ProductCard")}>
-      <Image source={require('../../../assets/img/Dress1.jpg')} style={styles.img} />
+      {/* <Image source={require('../../../assets/img/Dress1.jpg')} style={styles.img} /> */}
+      <Image source={{ uri: v?.url }} style={{ width: "30%", height: "100%",}}/>
       <View style={styles.pullovertext}>
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text style={styles.protext2}>{v.Description}</Text>
+          <Text style={styles.protext2}>{v?.Description}</Text>
           <TouchableOpacity onPress={() => dispatch(tooglefavourite(v.id))}><Fontisto name="close-a" size={18} color="#B9B9B9" /></TouchableOpacity>
         </View>
 
-        <Text style={styles.protext}>{v.Productname}</Text>
+        <Text style={styles.protext}>{v?.Productname}</Text>
 
         <View style={styles.Color}>
-          <Text style={styles.Colortext}>color:<Text style={styles.colorsize}>{v.color}</Text></Text>
+          <Text style={styles.Colortext}>color:<Text style={styles.colorsize}>{color.color.find((v1) => v.color_id === v1.id)?.name}</Text></Text>
           <Text style={styles.Colortext}>Size:<Text style={styles.colorsize}>{v.Size}</Text></Text>
         </View>
 
         <View style={styles.iconview}>
-          <View><Text style={styles.price}>{v.Price}$</Text></View>
+          <View><Text style={styles.price}>{v?.Price}$</Text></View>
 
 
           <View style={styles.star}>
