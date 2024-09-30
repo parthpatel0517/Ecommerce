@@ -30,7 +30,7 @@ export const ShopbySub = createAsyncThunk(
                 });
 
             })
-        console.log("dkkdkdkdkdkkddkdkddkddkkddkdkdkdkdk", ShoppingData);
+        // console.log("dkkdkdkdkdkkddkdkddkddkkddkdkdkdkdk", ShoppingData);
         return ShoppingData
 
     }
@@ -51,7 +51,7 @@ export const getShopping = createAsyncThunk(
                 });
 
             })
-        console.log("dkkdkdkdkdkkddkdkddkddkkddkdkdkdkdk", shooping);
+        // console.log("dkkdkdkdkdkkddkdkddkddkkddkdkdkdkdk", shooping);
         return shooping
 
     }

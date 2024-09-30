@@ -110,7 +110,9 @@ console.log("color",color);
     </TouchableOpacity>
   );
   const NewProductCard = ({ v }) => (
-    <TouchableOpacity style={styles.olldeta} onPress={() => navigation.navigate("ProductCard")}>
+    <TouchableOpacity style={styles.olldeta} onPress={() => navigation.navigate("ProductCard" , {
+      product : v.id
+    })}>
       {/* <Image source={require('../../../assets/img/Dress1.jpg')} style={styles.img} /> */}
       <Image source={{ uri: v?.url }} style={{ width: "30%", height: "100%",}}/>
       <View style={styles.pullovertext}>

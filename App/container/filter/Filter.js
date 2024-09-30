@@ -28,7 +28,7 @@ export default function Filter({ route, navigation }) {
         dispatch(fetchbrand())
     }, [])
 
-    console.log("slskkslsllalalalalalal", brand);
+    console.log("slskkslsllalalalalalal", color.color);
 
     const [checkBoxes, setCheckBoxes] = useState(brand.brand);
     useEffect(() => {
@@ -65,9 +65,9 @@ export default function Filter({ route, navigation }) {
     // })
 
 
-    console.log("ddkdkdkdkkdkdkdkd", checkBoxes);
-    console.log("ddkdkdkdkkdkdkdkd", fbrand);
-    console.log("ddkdkdkdkkdkdkdkd", route?.params?.brands);
+    // console.log("ddkdkdkdkkdkdkdkd", checkBoxes);
+    // console.log("ddkdkdkdkkdkdkdkd", fbrand);
+    // console.log("ddkdkdkdkkdkdkdkd", route?.params?.brands);
 
     const size = ['XS', 'S', 'M', 'L', 'XL'];
 
@@ -123,12 +123,15 @@ export default function Filter({ route, navigation }) {
                         {
                             color.color.map((v) => (
                                 <TouchableOpacity
+                                key={v.id}
                                     onPress={() => setColors(v.id)}
                                     style={[style.circle, { backgroundColor: v.name.toLowerCase(), borderWidth: v.id === colors ? 4 : 0 }]}
                                 ></TouchableOpacity>
                             ))
                         }
                     </View>
+
+
 
 
                     <View>
@@ -220,7 +223,6 @@ const style = StyleSheet.create({
     circleview: {
         marginTop: verticalScale(35),
         backgroundColor: 'white',
-        textAlign: 'center',
         paddingVertical: verticalScale(30),
         paddingLeft: horizontalScale(16),
         paddingRight: horizontalScale(16),

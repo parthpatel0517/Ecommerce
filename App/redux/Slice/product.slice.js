@@ -30,7 +30,7 @@ export const ProBySub = createAsyncThunk(
                 });
 
             })
-        console.log("dkkdkdkdkdkkddkdkddkddkkddkdkdkdkdk", ProdctData);
+        // console.log("dkkdkdkdkdkkddkdkddkddkkddkdkdkdkdk", ProdctData);
         return ProdctData
 
     }

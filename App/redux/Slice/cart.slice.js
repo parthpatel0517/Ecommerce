@@ -97,7 +97,7 @@ export const getcart = createAsyncThunk(
                         cartdata.push({ id: documentSnapshot.id, ...documentSnapshot.data() })
                     }
                 });
-            console.log("dkkdkdkdkdkkddkdkddkddkkddkdkdkdkdk", cartdata);
+            // console.log("dkkdkdkdkdkkddkdkddkddkkddkdkdkdkdk", cartdata);
             return cartdata
         } catch (error) {
             console.log("eoeoeomc nckskss", error);

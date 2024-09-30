@@ -24,7 +24,7 @@ const Stack = createStackNavigator();
 export default function Bottom() {
 
   const auth = useSelector(state => state.auth)
-  console.log("akkskskskksskskks", auth);
+  // console.log("akkskskskksskskks", auth);
   function Customback({ navigation }) {
     return (
       <TouchableOpacity

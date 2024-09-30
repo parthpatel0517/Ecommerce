@@ -4,6 +4,7 @@ import { horizontalScale, moderateScale, verticalScale } from '../../../assets/M
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { fetchcategory } from '../../redux/Slice/category.slice';
 import { useDispatch, useSelector } from 'react-redux';
+import productSlice, { getProducts, productslice } from '../../redux/Slice/product.slice';
 
 
 const Data = [
@@ -82,16 +83,21 @@ export default function HomePage({ route, navigation }) {
 
   useEffect(() => {
     dispatch(fetchcategory())
+    dispatch(getProducts())
   }, [])
 
+  const product = useSelector(state => state.productfire);
+  console.log("skskkskskskks", product.Productfire);
 
   const category = useSelector(state => state.categoryfire);
 
   // console.log("sjdjdjdjjdjjd", category);
-  const ProductCard = ({ v }) => (
-    <TouchableOpacity style={{ marginHorizontal: 10 }} onPress={() => navigation.navigate("ProductCard")}>
+  const ProductCard1 = ({ v }) => (
+    <TouchableOpacity style={{ marginHorizontal: 10 }} onPress={() => navigation.navigate("ProductCard",{
+      product : v.id
+    })}>
 
-      <Image source={v.img} style={{ width: 170, height: 250, borderRadius: 10 }}></Image>
+<Image source={{ uri: v?.url }} style={{ width: 170, height:250, justifyContent:'center' ,marginTop:0}}/>
 
       <View style={style.iconview}>
         <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
@@ -102,11 +108,38 @@ export default function HomePage({ route, navigation }) {
         <Text style={{ color: '#9B9B9B' }}>(10)</Text>
       </View>
 
-      <Text style={style.title}>{v.title}</Text>
-      <Text style={style.subtitle}>{v.subtitle}</Text>
+      <Text style={style.title}>{v?.Productname}</Text>
+      <Text style={style.subtitle}>{v?.Description}</Text>
       <View style={style.PriceView}>
         <Text style={style.discount}>{v.discount}$</Text>
-        <Text style={style.price}>{v.price}$</Text>
+        <Text style={style.price}>{v?.Price}$</Text>
+
+      </View>
+
+    </TouchableOpacity>
+
+
+
+  )
+  const ProductCard = ({ v }) => (
+    <TouchableOpacity style={{ marginHorizontal: 10 }} onPress={() => navigation.navigate("ProductCard")}>
+
+  <Image source={v.img} style={{ width: 170, height:250, justifyContent:'center' ,marginTop:0}}/>
+
+      <View style={style.iconview}>
+        <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
+        <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
+        <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
+        <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
+        <FontAwesome name="star" size={20} style={{ color: '#FFBA49' }} />
+        <Text style={{ color: '#9B9B9B' }}>(10)</Text>
+      </View>
+
+      <Text style={style.title}>{v?.title}</Text>
+      <Text style={style.subtitle}>{v?.subtitle}</Text>
+      <View style={style.PriceView}>
+        <Text style={style.discount}>{v.discount}$</Text>
+        <Text style={style.price}>{v?.price}$</Text>
 
       </View>
 
@@ -154,8 +187,8 @@ export default function HomePage({ route, navigation }) {
         </View>
 
         <FlatList
-          data={Data}
-          renderItem={({ item }) => <ProductCard v={item} />}
+          data={product.Productfire}
+          renderItem={({ item }) => <ProductCard1 v={item} />}
           keyExtractor={item => item.id}
           horizontal={true}
         />

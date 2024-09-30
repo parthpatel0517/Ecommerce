@@ -35,13 +35,14 @@ const useaddresses = [
 
 export default function ShippingAddresses({ route, navigation }) {
     // const [checked, setChecked] = React.useState('first');
+    const auth = useSelector(state => state.auth)
 
     const [selectedId, setSelectedId] = useState();
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getaddshipadreess('parth'))
+        dispatch(getaddshipadreess(auth.auth.uid))
     }, [])
 
     const shipadrress = useSelector(state => state.addshipadrress);

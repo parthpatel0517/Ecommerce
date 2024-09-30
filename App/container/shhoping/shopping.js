@@ -58,7 +58,7 @@ export default function shhoping({ route, navigation }) {
 
     console.log("roooroororor", route);
     const shopping = useSelector(state => state.shoppingfire);
-    console.log("skskkskskskks", shopping.Shoppingfire);
+    // console.log("skskkskskskks", shopping.Shoppingfire);
 
     const dispatch = useDispatch()
 

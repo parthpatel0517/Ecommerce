@@ -54,9 +54,14 @@ export default function Shop({ route, navigation }) {
     const brand = useSelector(state => state.brand);
      const favourite = useSelector(state => state.favourite)
 
+     console.log("Available colors: ", color.color);
+
+    //  console.log("shoppingshoppingshopping",shopping);
+    //  console.log("categorycategorycategory",categoryfire);
+
     
 
-    console.log("roooroororojjjjjjjjjjjjrsjsjsjsjsjsjsjsjsjsjsjsr", favourite);
+    // console.log("roooroororojjjjjjjjjjjjrsjsjsjsjsjsjsjsjsjsjsjsr", favourite);
 
 
     // console.log("skskkskskskks", color.color);
@@ -64,8 +69,8 @@ export default function Shop({ route, navigation }) {
     const dispatch = useDispatch()
 
 
-    const ProductCard = ({ v, i }) => (
-        i === 0 ?
+    const ProductCard = ({ v, index }) => (
+        index === 0 ?(
             <View style={styles.allCategory}>
                 <TouchableOpacity
                     style={styles.CategorisView}
@@ -78,7 +83,7 @@ export default function Shop({ route, navigation }) {
 
                 </TouchableOpacity>
             </View>
-            :
+           ) : (
             <View>
                 <TouchableOpacity
                     style={styles.CategorisView}
@@ -90,6 +95,7 @@ export default function Shop({ route, navigation }) {
 
                 </TouchableOpacity>
             </View>
+           )
 
     )
     const ProductData = ({ v }) => (
@@ -190,7 +196,7 @@ export default function Shop({ route, navigation }) {
 
 
 
-        // // console.log("ddkdkdkdkkkkkkkaalla",FilterData);
+        // console.log("ddkdkdkdkkkkkkkaalla",FilterData);
 
         FilterData = FilterData.filter((v) => (
             v.Productname.toLowerCase().includes(search.toLowerCase()) ||
@@ -235,8 +241,9 @@ export default function Shop({ route, navigation }) {
 
                 <FlatList
                     data={categoryfire.categoryfire}
-                    renderItem={({ item, index }) => <ProductCard v={item} i={index} />}
-                    keyExtractor={(item, index) => String(index)}
+                    ListHeaderComponent={() => <ProductCard v={{}} index ={0}/>}
+                    renderItem={({ item, index }) => <ProductCard v={item} i={index + 1} />}
+                    keyExtractor={(item, index) => index.toString()}
                     horizontal={true}
                 />
 

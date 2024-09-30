@@ -11,7 +11,7 @@ export default function CategoriesTwo({ route, navigation }) {
 
     const dispatch = useDispatch()
     const subcategoryfire = useSelector(state => state.subcategoryfire);
-    console.log("skskkskskskks", subcategoryfire.Subcategoryfire);
+    // console.log("skskkskskskks", subcategoryfire.Subcategoryfire);
     useEffect(() => {
         dispatch(SubByCat(route.params.cat_id))
     }, [])

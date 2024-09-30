@@ -79,7 +79,7 @@ export const getFavourite = createAsyncThunk(
                 });
 
             })
-        console.log("dkkdkdkdkdkkddkdkddkddkkddkdkdkdkdk", favdata);
+        // console.log("dkkdkdkdkdkkddkdkddkddkkddkdkdkdkdk", favdata);
         return favdata
 
     }

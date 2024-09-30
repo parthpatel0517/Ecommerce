@@ -49,35 +49,47 @@ const data = [
 
 export default function My_Bag({ route, navigation }) {
 
+
+  const auth = useSelector(state => state.auth)
+
   const dispatch = useDispatch()
 
 
   useEffect(() => {
     dispatch(getProducts())
-    dispatch(getcart('parth'))
+    dispatch(getcart(auth.auth.uid))
   }, [])
 
   const cart = useSelector(state => state.cart)
   const product = useSelector(state => state.productfire);
 
+  console.log("cartcartcartcartcartcart",cart);
+  console.log("productproductproductproduct",product);
+
+
   const bagdata = cart?.cart[0]?.cart.map((v) => {
+    // console.log("bagdatabagdatabagdatabagdatabagdatabagdatabagdata", bagdata);
+
     const c = product.Productfire.find((v1) => v1.id === v.pid)
     if (c) {
       let dataff = { ...v, ...c }
       return dataff
     }
-  }).sort((a,b) => a.Productname.localeCompare(b.Productname))
-  // console.log("bagdatabagdatabagdatabagdatabagdatabagdatabagdata",bagdata);
+  }).sort((a, b) => a.Productname.localeCompare(b.Productname))
+
   const handleInc = (id) => {
-    dispatch(incrementQty({id,uid:'parth'}))
+    dispatch(incrementQty({ id, uid: auth.auth.uid }))
   }
   const handleDec = (id) => {
-    dispatch(decrementQty({id,uid:'parth'}))
+    dispatch(decrementQty({ id, uid: auth.auth.uid }))
   }
   const hanledelet = (id) => {
-    dispatch(deletedata({id,uid:'parth'}))
+    dispatch(deletedata({ id, uid: auth.auth.uid }))
   }
-  const totalAmount = bagdata.reduce((sum, item) => sum + (item?.Price || 0) * (item?.qty || 0), 0);
+
+  console.log("skdsdkkdkdkdkdkd", bagdata);
+
+  // const totalAmount = bagdata.reduce((sum, item) => sum + (item?.Price || 0) * (item?.qty || 0), 0);
 
   const DataCity = ({ v }) => (
     <TouchableOpacity onPress={() => navigation.navigate("ProductCard")}>
@@ -188,7 +200,7 @@ export default function My_Bag({ route, navigation }) {
 
         <View style={Styles.totalamount}>
           <Text style={Styles.totalamountText}>Total Amount:</Text>
-          <Text style={Styles.Text}>${totalAmount}</Text>
+          <Text style={Styles.Text}>$0</Text>
         </View>
 
         <View style={Styles.checkoutBtn}>
@@ -337,3 +349,4 @@ const Styles = StyleSheet.create({
     fontFamily: 'Metropolis-Regular',
   },
 });
+ 

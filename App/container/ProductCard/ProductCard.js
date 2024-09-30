@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ProBySub, getProducts } from '../../redux/Slice/product.slice';
 import { ShopbySub } from '../../redux/Slice/shopping.slice';
 import { addtoCart, addtocart } from '../../redux/Slice/cart.slice';
+import { getFavourite, tooglefavourite } from '../../redux/Slice/favourite.slice';
 
 const Data = [
     {
@@ -46,16 +47,23 @@ const Data = [
 ]
 
 export default function ProductCard({ route, navigation }) {
-    console.log("amitttttttttttttttttttttt",route);
+    useEffect(() => {
+        dispatch(getProducts())
+        dispatch(getFavourite())
+
+    }, [])
+    console.log("amitttttttttttttttttttttt",route.params);
     
     const product = useSelector(state => state.productfire);
     console.log("skskkskskskks", product.Productfire);
 
-    const  filterData = product.Productfire.find((v)=> v.id === route.params?.id);
+    const  filterData = product.Productfire.find((v)=> v.id === route?.params?.product);
+    const favourite = useSelector(state => state.favourite)
+
 
     console.log("filterDatafilterDatafilterDatafilterData",filterData);
 
-
+    const auth = useSelector(state => state.auth)
 
 
     const dispatch = useDispatch()
@@ -64,15 +72,12 @@ export default function ProductCard({ route, navigation }) {
     //     dispatch(ShopbySub({ cat_id: route.params.cat_id, subcate_id: route.params.subcate_id }))
 
     // }, [])
-        useEffect(() => {
-        dispatch(getProducts())
-
-    }, [])
+    
 
     
 
-    console.log("route.params.cat_id", route.params.cat_id);
-    console.log("route.params.subcate_id", route.params.subcate_id);
+    // console.log("route.params.cat_id", route.params.cat_id);
+    // console.log("route.params.subcate_id", route.params.subcate_id);
 
     const [images, setImages] = useState(
         [
@@ -128,7 +133,7 @@ export default function ProductCard({ route, navigation }) {
     
 
     const handlecart=(id) => {
-        dispatch(addtoCart({id , uid : 'parth'}))
+        dispatch(addtoCart({id , uid : auth.auth.uid}))
         navigation.navigate("My_Bag")
     }
     return (
@@ -166,14 +171,23 @@ export default function ProductCard({ route, navigation }) {
                             <MaterialIcons name="keyboard-arrow-down" size={25} color='black' style={styles.SizeArrow} />
                         </View>
                         <View style={{ position: 'relative' }}>
-                            <TouchableOpacity><FontAwesome name="heart-o" size={20} color="black" style={styles.heart} /></TouchableOpacity>
+                        <TouchableOpacity
+                                    onPress={() => { { dispatch(tooglefavourite(filterData.id)) }}}
+                            >
+                                <FontAwesome 
+                                    name={favourite.favourites.some((v1) => v1.pid === filterData.id) ? 'heart' : 'heart-o'}
+                                    size={20} 
+                                    color="red"
+                                    style={styles.heart2}
+                                 />
+                        </TouchableOpacity> 
                         </View>
                     </View>
                       {/* {product.Productfire.map((v)=>( */}
                          <View>
                          <View style={styles.HandMView}>
                                 <View>
-                                    <Text style={styles.HAndM}>{filterData.Productname}</Text>
+                                    <Text style={styles.HAndM}>{filterData?.Productname}</Text>
                                     <Text style={styles.ShortDress}>Short black dress</Text>
                                  <View style={styles.iconview}>
                                             <FontAwesome name="star" size={13} style={{ color: '#FFBA49', marginRight: 2, marginTop: 2 }} />
@@ -185,11 +199,11 @@ export default function ProductCard({ route, navigation }) {
                                 </View>
                                     </View>
                          <View>
-                            <Text style={styles.HANdMPrice}>${filterData.Price}</Text>
+                            <Text style={styles.HANdMPrice}>${filterData?.Price}</Text>
                             </View>   
                              </View>
                              <View style={styles.TextsView}>
-                             <Text style={styles.Texts}> {filterData.Description}
+                             <Text style={styles.Texts}> {filterData?.Description}
         
                              </Text>
                          </View>
