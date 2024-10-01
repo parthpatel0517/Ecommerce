@@ -104,7 +104,7 @@ export default function Filter({ route, navigation }) {
                             style={style.Slider}
                             step={1}
                             minimumValue={0}
-                            maximumValue={900}
+                            maximumValue={100000}
                             minimumTrackTintColor="#DB3022"
                             maximumTrackTintColor="#d3d3d3"
                             thumbTintColor="#DB3022"
@@ -123,7 +123,7 @@ export default function Filter({ route, navigation }) {
                         {
                             color.color.map((v) => (
                                 <TouchableOpacity
-                                key={v.id}
+                                    key={v.id}
                                     onPress={() => setColors(v.id)}
                                     style={[style.circle, { backgroundColor: v.name.toLowerCase(), borderWidth: v.id === colors ? 4 : 0 }]}
                                 ></TouchableOpacity>
@@ -170,7 +170,11 @@ export default function Filter({ route, navigation }) {
 
             <View style={style.applayview}>
                 <View style={style.buttonview}>
-                    <TouchableOpacity style={style.discardbutton}><Text style={style.buttontext1}>Discard</Text></TouchableOpacity>
+                    <TouchableOpacity style={style.discardbutton}  onPress={() => navigation.navigate("shhoping", {
+                            price:'',
+                            colors:'',
+                            brands:''
+                        })}><Text style={style.buttontext1}>Discard</Text></TouchableOpacity>
                     <TouchableOpacity style={style.applybutton}
                         onPress={() => navigation.navigate("shhoping", {
                             price,

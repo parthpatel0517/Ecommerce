@@ -19,33 +19,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DecQty, IncQty, decrementQty, deletedata, getcart, incrementQty } from '../../redux/Slice/cart.slice';
 import { getProducts } from '../../redux/Slice/product.slice';
 import { increment } from '@react-native-firebase/firestore';
+import { CardStyleInterpolators } from '@react-navigation/stack';
 
-const data = [
-  {
-    id: 0,
-    title: 'Pullover',
-    color: 'Black',
-    size: 'L',
-    image: require('../../../assets/img/see_you.png'),
-    price: 51,
-  },
-  {
-    id: 1,
-    title: 'T-Shirt',
-    color: 'Gray',
-    image: require('../../../assets/img/see_you.png'),
-    size: 'L',
-    price: 30,
-  },
-  {
-    id: 1,
-    title: 'Sport Dress',
-    color: 'Black',
-    image: require('../../../assets/img/see_you.png'),
-    size: 'M',
-    price: 43,
-  },
-];
 
 export default function My_Bag({ route, navigation }) {
 
@@ -60,14 +35,16 @@ export default function My_Bag({ route, navigation }) {
     dispatch(getcart(auth.auth.uid))
   }, [])
 
-  const cart = useSelector(state => state.cart)
+  const Cart = useSelector(state => state.cart)
   const product = useSelector(state => state.productfire);
 
-  console.log("cartcartcartcartcartcart",cart);
-  console.log("productproductproductproduct",product);
+  console.log("cart----------",JSON.stringify(Cart));
+  console.log("productproductproductproduct",product.Productfire);
+  const cartsss = Cart?.cart?.cart || []
 
+  console.log("cartssscartssscartsss11", cartsss);
 
-  const bagdata = cart?.cart[0]?.cart.map((v) => {
+  const bagdata =cartsss.map((v) => {
     // console.log("bagdatabagdatabagdatabagdatabagdatabagdatabagdata", bagdata);
 
     const c = product.Productfire.find((v1) => v1.id === v.pid)

@@ -101,7 +101,7 @@ export default function Shop({ route, navigation }) {
     const ProductData = ({ v }) => (
 
         <TouchableOpacity onPress={() => navigation.navigate("ProductCard", {
-            id: v.id
+            product: v.id
             // cat_id: route.params.cat_id,
             // subcate_id: route.params.subcate_id
         })}><View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>

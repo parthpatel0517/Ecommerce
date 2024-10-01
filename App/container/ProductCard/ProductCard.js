@@ -175,7 +175,7 @@ export default function ProductCard({ route, navigation }) {
                                     onPress={() => { { dispatch(tooglefavourite(filterData.id)) }}}
                             >
                                 <FontAwesome 
-                                    name={favourite.favourites.some((v1) => v1.pid === filterData.id) ? 'heart' : 'heart-o'}
+                                    name={favourite.favourites.some((v1) => v1.pid === filterData?.id) ? 'heart' : 'heart-o'}
                                     size={20} 
                                     color="red"
                                     style={styles.heart2}
