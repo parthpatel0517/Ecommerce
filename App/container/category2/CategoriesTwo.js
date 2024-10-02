@@ -42,7 +42,7 @@ export default function CategoriesTwo({ route, navigation }) {
                     subcategoryfire.Subcategoryfire.map((v) => (
 
                         <TouchableOpacity
-                            onPress={() => navigation.navigate("shhoping", {
+                            onPress={() => navigation.navigate("Shhoping", {
                                 cat_id: route.params.cat_id,
                                 subcate_id: v.id
                             })}

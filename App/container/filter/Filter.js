@@ -170,13 +170,13 @@ export default function Filter({ route, navigation }) {
 
             <View style={style.applayview}>
                 <View style={style.buttonview}>
-                    <TouchableOpacity style={style.discardbutton}  onPress={() => navigation.navigate("shhoping", {
+                    <TouchableOpacity style={style.discardbutton}  onPress={() => navigation.navigate("Shhoping", {
                             price:'',
                             colors:'',
                             brands:''
                         })}><Text style={style.buttontext1}>Discard</Text></TouchableOpacity>
                     <TouchableOpacity style={style.applybutton}
-                        onPress={() => navigation.navigate("shhoping", {
+                        onPress={() => navigation.navigate("Shhoping", {
                             price,
                             colors,
                             brands: fbrand

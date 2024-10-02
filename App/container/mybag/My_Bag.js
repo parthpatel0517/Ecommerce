@@ -29,20 +29,23 @@ export default function My_Bag({ route, navigation }) {
 
   const dispatch = useDispatch()
 
+  const Cart = useSelector(state => state.cart)
 
   useEffect(() => {
     dispatch(getProducts())
     dispatch(getcart(auth.auth.uid))
-  }, [])
+  }, [dispatch])
 
-  const Cart = useSelector(state => state.cart)
+ 
   const product = useSelector(state => state.productfire);
 
-  console.log("cart----------",JSON.stringify(Cart));
-  console.log("productproductproductproduct",product.Productfire);
-  const cartsss = Cart?.cart?.cart || []
+  // console.log("cart----------", JSON.stringify(Cart));
+  // console.log("productproductproductproduct",product.Productfire);
+  const cartsss = Cart?.cart[0]?.cart || []
 
-  console.log("cartssscartssscartsss11", cartsss);
+  // console.log("pplplplp", Cart?.cart[0]?.cart);
+
+  // console.log("cartssscartssscartsss11", cartsss);
 
   const bagdata =cartsss.map((v) => {
     // console.log("bagdatabagdatabagdatabagdatabagdatabagdatabagdata", bagdata);
@@ -54,30 +57,36 @@ export default function My_Bag({ route, navigation }) {
     }
   }).sort((a, b) => a.Productname.localeCompare(b.Productname))
 
+  const decqty = bagdata;
+
+  console.log("sijsidsdiijdsdsjjds",decqty);
   const handleInc = (id) => {
     dispatch(incrementQty({ id, uid: auth.auth.uid }))
   }
   const handleDec = (id) => {
-    dispatch(decrementQty({ id, uid: auth.auth.uid }))
+    decqty.map((v) => {
+      if (v.qty > 1) {
+        dispatch(decrementQty({ id, uid: auth.auth.uid }));
+      }
+    });
+  
   }
   const hanledelet = (id) => {
     dispatch(deletedata({ id, uid: auth.auth.uid }))
   }
 
-  console.log("skdsdkkdkdkdkdkd", bagdata);
-
-  // const totalAmount = bagdata.reduce((sum, item) => sum + (item?.Price || 0) * (item?.qty || 0), 0);
+  // console.log("skdsdkkdkdkdkdkd", bagdata);
+    
+  const totalAmount = bagdata?.reduce((sum, item) => sum + (item?.Price || 0) * (item?.qty || 0), 0);
 
   const DataCity = ({ v }) => (
-    <TouchableOpacity onPress={() => navigation.navigate("ProductCard")}>
+    <TouchableOpacity onPress={() => navigation.navigate("ProductCard",{
+      product : v.id
+    })}>
       <View style={{ paddingHorizontal: 26, marginVertical: 15 }}>
         <View style={Styles.img_main_view}>
           <View>
-            <Image
-
-              style={Styles.img}
-              source={require('../../../assets/img/Dress1.jpg')}
-            />
+          <Image source={{ uri : v?.url}} style={{ width: 100, height: 140, resizeMode: 'cover', marginRight: 20 }} />
           </View>
           <View style={{ padding: 4, marginHorizontal: 10 }}>
             <View style={Styles.dotshead}>
@@ -177,7 +186,7 @@ export default function My_Bag({ route, navigation }) {
 
         <View style={Styles.totalamount}>
           <Text style={Styles.totalamountText}>Total Amount:</Text>
-          <Text style={Styles.Text}>$0</Text>
+          <Text style={Styles.Text}>${totalAmount}</Text>
         </View>
 
         <View style={Styles.checkoutBtn}>

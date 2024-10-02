@@ -7,9 +7,9 @@ import My_Bag from "../container/mybag/My_Bag";
 import My_Profile from "../container/myorders/My_Orders";
 import My_Orders from "../container/myprofile/My_Profile";
 import OrderDetails from "../container/orderdetail/OrderDetails";
-import SubCategories2 from "../container/shhoping/shopping";
+import SubCategories2 from "../container/shhoping/Shopping";
 
-import shhoping from "../container/shhoping/shopping";
+import Shhoping from "../container/shhoping/Shopping";
 import AddShipingAddress from "../container/AddShipingAddress/AddShipingAddress";
 import ShippingAddresses from "../container/shippingadresses/ShippingAddresses";
 import Success from "../container/success/Success";
@@ -194,8 +194,8 @@ export const Homestack = () => {
         })}
       />
       <Stack.Screen
-        name="shhoping"
-        component={shhoping}
+        name="Shhoping"
+        component={Shhoping}
         options={({ navigation }) => ({
           title: 'Shopping',
           headerLeft: () => (
@@ -468,7 +468,7 @@ export const Shoppingstack = () => {
         },
       }}>
       <Stack.Screen
-        name="shhoping"
+        name="Shhoping"
         component={Shop}
         options={({ navigation }) => ({
           title: 'Shopping',

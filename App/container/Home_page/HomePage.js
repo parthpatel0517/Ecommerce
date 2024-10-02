@@ -87,7 +87,7 @@ export default function HomePage({ route, navigation }) {
   }, [])
 
   const product = useSelector(state => state.productfire);
-  console.log("skskkskskskks", product.Productfire);
+  // console.log("skskkskskskks", product.Productfire);
 
   const category = useSelector(state => state.categoryfire);
 

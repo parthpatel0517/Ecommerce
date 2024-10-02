@@ -45,7 +45,7 @@ const YourOwnComponent = () => (
     </View>
 );
 
-export default function shhoping({ route, navigation }) {
+export default function Shhoping({ route, navigation }) {
     // useFocusEffect(
     //     React.useCallback(() => {
     //       return () => bottomSheetRef.current?.close()
@@ -80,7 +80,7 @@ export default function shhoping({ route, navigation }) {
             id: v.id,
             cat_id: route.params.cat_id,
             subcate_id: route.params.subcate_id
-        })}><View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        })}><View style={{ flexDirection: 'row', justifyContent: 'space-between' }} key={v.id}>
                         <View style={styles.productMainView}>
                             <View style={styles.productImg}>
                                 <Image source={require('../../../assets/img/Dress1.jpg')} style={{ width: '100%', height: '100%', borderTopLeftRadius: 15, borderTopRightRadius: 15 }} />
@@ -195,27 +195,6 @@ export default function shhoping({ route, navigation }) {
                         title="OPEN BOTTOM SHEET"
                         onPress={() => refRBSheet.current[0].open()}
                     /> */}
-                    <RBSheet
-                        ref={refRBSheet.current[0]}
-                        useNativeDriver={true}
-                        customStyles={{
-                            wrapper: {
-                                backgroundColor: 'transparent',
-                            },
-                            draggableIcon: {
-                                backgroundColor: '#000',
-                            },
-                        }}
-                        customModalProps={{
-                            animationType: 'slide',
-                            statusBarTranslucent: true,
-                        }}
-                        customAvoidingViewProps={{
-                            enabled: false,
-                        }}
-                    >
-                        <YourOwnComponent />
-                    </RBSheet>
                 </View>
                 <View>
                     <TextInput
@@ -232,6 +211,7 @@ export default function shhoping({ route, navigation }) {
                 columnWrapperStyle={{ justifyContent: 'space-between' }}
                 renderItem={({ item }) => <TouchableOpacity><ProductData v={item} /></TouchableOpacity>}
                 keyExtractor={item => item.id}
+                scrollEnabled={false}
             // horizontal={true}
             />
 

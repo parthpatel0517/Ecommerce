@@ -5,7 +5,7 @@ import Signup from './App/container/Signup/Signup';
 import Login from './App/container/Login/Login';
 import Forgot_pass from './App/container/Forgot_pass/Forgot_pass';
 import HomePage from './App/container/Home_page/HomePage';
-import SubCategories2 from './App/container/shhoping/shopping';
+import SubCategories2 from './App/container/shhoping/Shopping';
 import FavoritesPage from './App/container/FavoritesPage/FavoritesPage';
 import ProductCard from './App/container/ProductCard/ProductCard';
 import AddShipingAddress from './App/container/AddShipingAddress/AddShipingAddress';

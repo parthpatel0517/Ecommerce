@@ -172,8 +172,9 @@ console.log("color",color);
       <FlatList
         data={data}
         renderItem={({ item }) => <ProductCard v={item} />}
-        keyExtractor={item => item.id}
+        keyExtractor={(item , index) => index.toString()}
         horizontal={true}
+        scrollEnabled={false}
       />
 
       <View style={styles.fontsicon}>
@@ -185,8 +186,9 @@ console.log("color",color);
       <FlatList
         data={fav}
         renderItem={({ item }) => <NewProductCard v={item} />}
-        keyExtractor={item => item.id}
+        keyExtractor={(item , index) => index.toString()}
       // horizontal={true}
+      scrollEnabled={false}
       />
 
 

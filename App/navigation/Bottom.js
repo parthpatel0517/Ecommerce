@@ -5,7 +5,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import React from 'react'
 import Signup from '../container/Signup/Signup';
-import SubCategories2 from '../container/shhoping/shopping';
+import SubCategories2 from '../container/shhoping/Shopping';
 import HomePage from '../container/Home_page/HomePage';
 import Favorites from '../container/favorites/Favorites';
 import { Favoritestack, Homestack, Mybagstack, Profilestack, Shoppingstack, Subcategorystack, shoppingstack, subcategorystack } from './stacknavigator';

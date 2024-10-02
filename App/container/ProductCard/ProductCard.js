@@ -55,7 +55,7 @@ export default function ProductCard({ route, navigation }) {
     console.log("amitttttttttttttttttttttt",route.params);
     
     const product = useSelector(state => state.productfire);
-    console.log("skskkskskskks", product.Productfire);
+    // console.log("skskkskskskks", product.Productfire);
 
     const  filterData = product.Productfire.find((v)=> v.id === route?.params?.product);
     const favourite = useSelector(state => state.favourite)
