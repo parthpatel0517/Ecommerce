@@ -76,7 +76,7 @@ export default function My_Bag({ route, navigation }) {
   }
 
   // console.log("skdsdkkdkdkdkdkd", bagdata);
-    
+    const datacart = bagdata.length
   const totalAmount = bagdata?.reduce((sum, item) => sum + (item?.Price || 0) * (item?.qty || 0), 0);
 
   const DataCity = ({ v }) => (
@@ -164,6 +164,7 @@ export default function My_Bag({ route, navigation }) {
   );
 
   return (
+    datacart >= 1 ?
     <ScrollView>
       <View>
         <StatusBar backgroundColor="transparent" barStyle="dark-content" />
@@ -186,7 +187,7 @@ export default function My_Bag({ route, navigation }) {
 
         <View style={Styles.totalamount}>
           <Text style={Styles.totalamountText}>Total Amount:</Text>
-          <Text style={Styles.Text}>${totalAmount}</Text>
+          <Text style={Styles.text}>${totalAmount}</Text>
         </View>
 
         <View style={Styles.checkoutBtn}>
@@ -196,6 +197,12 @@ export default function My_Bag({ route, navigation }) {
         </View>
       </View>
     </ScrollView>
+
+    :
+
+    <View style={{margin : 'auto'}}>
+      <Text style={Styles.Text}>Your bag is empty</Text>
+    </View>
   );
 }
 
@@ -316,7 +323,7 @@ const Styles = StyleSheet.create({
     color: '#9B9B9B',
     fontFamily: 'Metropolis-Regular',
   },
-  Text: {
+  text: {
     color: '#222222',
     fontFamily: 'Metropolis-Bold',
   },
@@ -334,5 +341,10 @@ const Styles = StyleSheet.create({
     color: '#FFFFFF',
     fontFamily: 'Metropolis-Regular',
   },
+  Text:{
+    color:'red',
+    fontFamily:'Metropolis-Bold',
+    fontSize:24
+  }
 });
  

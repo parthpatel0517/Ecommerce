@@ -189,7 +189,8 @@ export default function HomePage({ route, navigation }) {
         <FlatList
           data={product.Productfire}
           renderItem={({ item }) => <ProductCard1 v={item} />}
-          keyExtractor={item => item.id}
+          keyExtractor={(item, index) => String(index)}
+          scrollEnabled={false}
           horizontal={true}
         />
 
@@ -210,15 +211,16 @@ export default function HomePage({ route, navigation }) {
         <FlatList
           data={Data1}
           renderItem={({ item }) => <ProductCard v={item} />}
-          keyExtractor={item => item.id}
+          keyExtractor={(item, index) => String(index)}
+          scrollEnabled={false}
           horizontal={true}
         />
 
       </View>
-      {/* {category.categoryfire.map((v, i) => {
+      {category.categoryfire.map((v, i) => {
         return (
 
-          <View>
+          <View key={i}>
             {i % 10 === 0 &&
 
               <View>
@@ -226,7 +228,7 @@ export default function HomePage({ route, navigation }) {
                   <TouchableOpacity onPress={() => navigation.navigate("CategoriesTwo", {
                     cat_id: v.id
                   })}><Image source={require('../../../assets/img/Graphic.png')} style={{ width: '100%', height: '100%' }} /></TouchableOpacity>
-                  <Text style={style.FistViewText}>New collection {v.name}</Text>
+                  <Text style={style.FistViewText}>New collection {v?.name}</Text>
                 </View>
 
 
@@ -234,7 +236,7 @@ export default function HomePage({ route, navigation }) {
                   <View style={style.SecondView}>
                     <View style={style.SummSale}>
                       <View style={style.SumTextView}>
-                        <TouchableOpacity><Text style={style.SummText1}> {v.name}</Text></TouchableOpacity>
+                        <TouchableOpacity><Text style={style.SummText1}> {v?.name}</Text></TouchableOpacity>
                       </View>
 
 
@@ -257,7 +259,7 @@ export default function HomePage({ route, navigation }) {
             }
           </View>
         )
-      })} */}
+      })}
     </ScrollView>
   )
 }

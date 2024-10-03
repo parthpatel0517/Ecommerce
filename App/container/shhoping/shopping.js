@@ -69,7 +69,7 @@ export default function Shhoping({ route, navigation }) {
 
     const ProductCard = ({ v }) => (
 
-        <View style={styles.CategorisView}>
+        <View style={styles.CategorisView} key={v.id}>
             <View style={styles.Options}><Text style={styles.OptionsText}>{v.title}</Text></View>
 
         </View>

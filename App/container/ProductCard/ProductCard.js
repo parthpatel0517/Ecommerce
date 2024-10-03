@@ -158,7 +158,7 @@ export default function ProductCard({ route, navigation }) {
                                 <Image source={{ uri : v?.url}} style={{ width: 320, height: 480, resizeMode: 'cover', marginRight: 20 }} />
                             ))
                         } */}
-                         <Image source={{ uri : filterData?.url}} style={{ width: 320, height: 480, resizeMode: 'cover', marginRight: 20 }} />
+                         <Image source={{ uri : filterData?.url}} style={{ width: 400, height: 480, resizeMode: 'cover', marginRight: 20 }} />
                     </ScrollView>
 
                     <View style={styles.SizeBlackView}>
@@ -483,7 +483,7 @@ const styles = StyleSheet.create({
     heart2: {
         position: 'absolute',
         right: horizontalScale(0),
-        bottom: verticalScale(10),
+        bottom: verticalScale(-45),
         padding: horizontalScale(10),
         padding:verticalScale(10),
         backgroundColor: 'white',
