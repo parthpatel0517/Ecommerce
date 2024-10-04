@@ -61,7 +61,7 @@ export default function Shhoping({ route, navigation }) {
     // console.log("skskkskskskks", shopping.Shoppingfire);
 
     const dispatch = useDispatch()
-
+    
     useEffect(() => {
         dispatch(ShopbySub({ cat_id: route.params.cat_id, subcate_id: route.params.subcate_id }))
 

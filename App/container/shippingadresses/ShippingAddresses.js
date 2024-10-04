@@ -8,6 +8,7 @@ import { deleteadrress, getaddshipadreess } from '../../redux/Slice/addshipingad
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 // import { RadioButton } from 'react-native-paper';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
+import Payment from '../Payment/Payment';
 
 const useaddresses = [
     {
@@ -163,8 +164,8 @@ export default function ShippingAddresses({ route, navigation }) {
             </View>
 
             <View>
-                <TouchableOpacity style={styles.placeorder} onPress={() => navigation.navigate("Success")}>
-                    <Text style={styles.AddCart}>Place your order</Text>
+                <TouchableOpacity style={styles.placeorder}>
+                    <Payment />
                 </TouchableOpacity>
             </View>
 
@@ -196,7 +197,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     olldeta: {
-        width:'90%',
+        width: '90%',
         padding: 15,
         // height: 15,
         marginTop: 20,
@@ -204,7 +205,7 @@ const styles = StyleSheet.create({
         borderRadius: horizontalScale(5),
         elevation: 2,
         position: 'relative',
-        marginLeft:20
+        marginLeft: 20
     },
     addtext: {
         fontSize: 16,

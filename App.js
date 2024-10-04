@@ -36,8 +36,14 @@ export default function App() {
       </PersistGate>
 
     </Provider>
+  //   <StripeProvider publishableKey="your-publishable-key-here">
+  //   <PaymentScreen />
+  // </StripeProvider>
+
+  
   )
 }
+
 // import { View, Text } from 'react-native'
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
