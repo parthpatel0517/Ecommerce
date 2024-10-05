@@ -2,8 +2,8 @@ import { View, Text, Alert, Button } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { StripeProvider, useStripe } from '@stripe/stripe-react-native';
 
-export default function Payment() {
-
+export default function Payment(props) {
+  console.log("kjjkjjjjkjjjkjkjkjkjkjjjjkkj",props.amountt);
     const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const [loading, setLoading] = useState(false);
 
@@ -12,12 +12,18 @@ export default function Payment() {
   }, []);
 
   const fetchPaymentSheetParams = async () => {
-    const response = await fetch(`http://192.168.1.46:8080/payment-sheet`, {
+    const response = await fetch(`http://192.168.1.6:8080/payment-sheet`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        amount: props.amountt,
+        }),
+        
     });
+    
+  
 
     console.log("tttt", response);
     const { paymentIntent, ephemeralKey, customer } = await response.json();

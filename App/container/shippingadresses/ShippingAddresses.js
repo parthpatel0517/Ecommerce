@@ -9,6 +9,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 // import { RadioButton } from 'react-native-paper';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 import Payment from '../Payment/Payment';
+import { startAfter } from '@react-native-firebase/firestore';
 
 const useaddresses = [
     {
@@ -35,9 +36,10 @@ const useaddresses = [
 ];
 
 export default function ShippingAddresses({ route, navigation }) {
+    console.log("ffgffdffggffffdfd",route);
     // const [checked, setChecked] = React.useState('first');
     const auth = useSelector(state => state.auth)
-
+    // const cart = useSelector(state => statecart)
     const [selectedId, setSelectedId] = useState();
 
     const dispatch = useDispatch();
@@ -165,7 +167,7 @@ export default function ShippingAddresses({ route, navigation }) {
 
             <View>
                 <TouchableOpacity style={styles.placeorder}>
-                    <Payment />
+                    <Payment amountt={route.params}  />
                 </TouchableOpacity>
             </View>
 
