@@ -29,7 +29,9 @@ export default function My_Bag({ route, navigation }) {
 
   const dispatch = useDispatch()
 
-  const Cart = useSelector(state => state.cart)
+  const Cart = useSelector(state => state.cart) 
+
+  console.log("ggffggfgfggffgfgfgfggfgf",Cart);
 
   useEffect(() => {
     dispatch(getProducts())
@@ -41,21 +43,22 @@ export default function My_Bag({ route, navigation }) {
 
   // console.log("cart----------", JSON.stringify(Cart));
   // console.log("productproductproductproduct",product.Productfire);
-  const cartsss = Cart?.cart[0]?.cart || []
+  const cartsss = Cart?.cart?.[0]?.cart || [];
 
   // console.log("pplplplp", Cart?.cart[0]?.cart);
 
-  // console.log("cartssscartssscartsss11", cartsss);
+  console.log("cartssscartssscartsss11", cartsss);
 
-  const bagdata =cartsss.map((v) => {
-    // console.log("bagdatabagdatabagdatabagdatabagdatabagdatabagdata", bagdata);
-
-    const c = product.Productfire.find((v1) => v1.id === v.pid)
+  const bagdata = cartsss
+  .map((v) => {
+    const c = product?.Productfire?.find((v1) => v1.id === v.pid);
     if (c) {
-      let dataff = { ...v, ...c }
-      return dataff
+      return { ...v, ...c };
     }
-  }).sort((a, b) => a.Productname.localeCompare(b.Productname))
+    return null; // return null if no match is found
+  })
+  .filter(Boolean) // filter out null or undefined values
+  .sort((a, b) => a?.Productname?.localeCompare(b?.Productname));
 
   const decqty = bagdata;
 

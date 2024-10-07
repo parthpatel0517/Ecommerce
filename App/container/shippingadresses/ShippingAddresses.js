@@ -40,7 +40,7 @@ export default function ShippingAddresses({ route, navigation }) {
     // const [checked, setChecked] = React.useState('first');
     const auth = useSelector(state => state.auth)
     // const cart = useSelector(state => statecart)
-    const [selectedId, setSelectedId] = useState();
+    const [selectedId, setSelectedId] = useState(0);
 
     const dispatch = useDispatch();
 
@@ -48,10 +48,15 @@ export default function ShippingAddresses({ route, navigation }) {
         dispatch(getaddshipadreess(auth.auth.uid))
     }, [])
 
+    const cart = useSelector(state => state.cart)
+    console.log("CARTACARTAACARTCATCARTCARTCART",cart);
+
+
     const shipadrress = useSelector(state => state.addshipadrress);
     console.log('shipadrress', shipadrress?.adsshipadrress?.[0]?.addrress)
 
     const shipflat = shipadrress?.adsshipadrress?.[0]?.addrress
+
 
     console.log("");
 
@@ -167,7 +172,12 @@ export default function ShippingAddresses({ route, navigation }) {
 
             <View>
                 <TouchableOpacity style={styles.placeorder}>
-                    <Payment amountt={route.params}  />
+                    <Payment data ={{ 
+                        uid : auth.auth.uid,
+                        amt: route.params,
+                        cart : cart.cart,
+                        address : shipflat?.[selectedId]
+                    }} />
                 </TouchableOpacity>
             </View>
 

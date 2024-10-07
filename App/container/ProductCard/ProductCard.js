@@ -74,8 +74,6 @@ export default function ProductCard({ route, navigation }) {
     // }, [])
     
 
-    
-
     // console.log("route.params.cat_id", route.params.cat_id);
     // console.log("route.params.subcate_id", route.params.subcate_id);
 
@@ -132,8 +130,8 @@ export default function ProductCard({ route, navigation }) {
     )
     
 
-    const handlecart=(id) => {
-        dispatch(addtoCart({id , uid : auth.auth.uid}))
+    const handlecart=(id, Price) => {
+        dispatch(addtoCart({id , uid : auth.auth.uid ,amt: Price}))
         navigation.navigate("My_Bag")
     }
     return (
@@ -290,7 +288,7 @@ export default function ProductCard({ route, navigation }) {
                     
                 </ScrollView>
             </View>
-            <TouchableOpacity style={styles.ButtonView} onPress={() =>handlecart(filterData.id) }>
+            <TouchableOpacity style={styles.ButtonView} onPress={() =>handlecart(filterData.id , filterData.Price) }>
                 <View style={styles.ButtonUnderView}>
                     <Text style={styles.AddCart}>ADD TO CART</Text>
                 </View>

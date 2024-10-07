@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { StripeProvider, useStripe } from '@stripe/stripe-react-native';
 
 export default function Payment(props) {
-  console.log("kjjkjjjjkjjjkjkjkjkjkjjjjkkj",props.amountt);
+  console.log("kjjkjjjjkjjjkjkjkjkjkjjjjkkj",JSON.stringify(props.data));
     const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const [loading, setLoading] = useState(false);
 
@@ -18,7 +18,7 @@ export default function Payment(props) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        amount: props.amountt,
+        amount:props.data.amt,
         }),
         
     });
@@ -27,7 +27,7 @@ export default function Payment(props) {
 
     console.log("tttt", response);
     const { paymentIntent, ephemeralKey, customer } = await response.json();
-
+    console.log("paymentIntentpaymentIntentpaymentIntentpaymentIntent",paymentIntent);
     return {
       paymentIntent,
       ephemeralKey,
@@ -61,9 +61,9 @@ export default function Payment(props) {
 
   
     const openPaymentSheet = async () => {
-        const { error } = await presentPaymentSheet();
+        const data  = await presentPaymentSheet();
     
-        if (error) {
+        if (data) {
           Alert.alert(`Error code: ${error.code}`, error.message);
         } else {
           Alert.alert('Success', 'Your order is confirmed!');

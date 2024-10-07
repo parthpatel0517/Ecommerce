@@ -382,6 +382,7 @@ export const addtoCart = createAsyncThunk(
                         await userDoc.update({
                             cart: firebase.firestore.FieldValue.arrayRemove({
                                 pid: data.id,
+                                amt : data.amt,
                                 qty: cartData[0].cart[index].qty
                             })
                         });
@@ -389,6 +390,7 @@ export const addtoCart = createAsyncThunk(
                         await userDoc.update({
                             cart: firebase.firestore.FieldValue.arrayUnion({
                                 pid: data.id,
+                                amt : data.amt,
                                 qty: cartData[0].cart[index].qty + 1
                             })
                         });
@@ -399,6 +401,7 @@ export const addtoCart = createAsyncThunk(
                     await userDoc.update({
                         cart: firebase.firestore.FieldValue.arrayUnion({
                             pid: data.id,
+                            amt : data.amt,
                             qty: 1
                         })
                     });
@@ -408,6 +411,7 @@ export const addtoCart = createAsyncThunk(
                 await userDoc.set({
                     cart: [{
                         pid: data.id,
+                        amt : data.amt,
                         qty: 1
                     }]
                 });
