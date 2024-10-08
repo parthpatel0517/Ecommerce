@@ -1,12 +1,16 @@
 import { View, Text, Alert, Button } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { StripeProvider, useStripe } from '@stripe/stripe-react-native';
+import { orderdata } from '../../redux/Slice/order.slice';
+import { useDispatch } from 'react-redux';
 
 export default function Payment(props) {
   console.log("kjjkjjjjkjjjkjkjkjkjkjjjjkkj",JSON.stringify(props.data));
     const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const [loading, setLoading] = useState(false);
 
+  const [customerId , setCustomerId] = useState(null)
+  const dispatch = useDispatch()
   useEffect(() => {
     initializePaymentSheet();
   }, []);
@@ -28,6 +32,8 @@ export default function Payment(props) {
     console.log("tttt", response);
     const { paymentIntent, ephemeralKey, customer } = await response.json();
     console.log("paymentIntentpaymentIntentpaymentIntentpaymentIntent",paymentIntent);
+
+    setCustomerId(customer)
     return {
       paymentIntent,
       ephemeralKey,
@@ -61,11 +67,15 @@ export default function Payment(props) {
 
   
     const openPaymentSheet = async () => {
-        const data  = await presentPaymentSheet();
+        const {data}  = await presentPaymentSheet();
+        console.log("data",data);
     
         if (data) {
           Alert.alert(`Error code: ${error.code}`, error.message);
         } else {
+
+          dispatch(orderdata({customerId, data:props.data})) 
+          console.log("adsjjdsjjdsjsajksajkadsjsajs",{customerId, data:props.data});
           Alert.alert('Success', 'Your order is confirmed!');
         }
       };

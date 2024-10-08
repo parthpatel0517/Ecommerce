@@ -11,6 +11,7 @@ import cartSlice from "../Slice/cart.slice";
 import ShippingAddresses from "../../container/shippingadresses/ShippingAddresses";
 import addshipingadressSlice from "../Slice/addshipingadress.slice";
 import authSlice from "../Slice/auth.slice";
+import orderSlice from "../Slice/order.slice";
 
 
 
@@ -26,5 +27,6 @@ export const rootReducer = combineReducers({
     favourite : favouriteSlice,
     cart : cartSlice,
     addshipadrress : addshipingadressSlice,
-    auth : authSlice
+    auth : authSlice,
+    order : orderSlice
 })
