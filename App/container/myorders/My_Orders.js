@@ -9,8 +9,10 @@ import {
   FlatList,
 } from 'react-native';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics';
+import { useDispatch, useSelector } from 'react-redux';
+import { getorderdata } from '../../redux/Slice/order.slice';
 
 const Data = [
   {
@@ -52,7 +54,7 @@ const DataStructure = ({v,n}) => (
     <View style={Styles.orderDatamainBody}>
       <View style={{marginTop: 6}}>
         <View style={{flexDirection: 'row',justifyContent:'space-between'}}>
-          <Text style={Styles.orderData1}>{v.Order_no}</Text>
+          <Text style={Styles.orderData1}>Order Num : {v.Ordernum}</Text>
           <Text style={Styles.orderData2}>{v.Date}</Text>
         </View>
 
@@ -69,7 +71,7 @@ const DataStructure = ({v,n}) => (
 
           <View style={{flexDirection: 'row',justifyContent:'space-between'}}>
             <Text style={Styles.orderData2}>Total Amount:</Text>
-            <Text style={Styles.orderData1}>{v.total_amount}$</Text>
+            <Text style={Styles.orderData1}>{v.totalAmount}$</Text>
           </View>
         </View>
 
@@ -91,6 +93,18 @@ const DataStructure = ({v,n}) => (
 );
 
 export default function My_Profile( {route, navigation }) {
+
+  const dispatch = useDispatch()
+  const orderdetails  =  useSelector(state => state.order)
+  console.log("orderdetailsdbehfrjbebjfejbe",orderdetails?.order[0]);
+
+  const auth = useSelector(state => state.auth)
+  useEffect(() => {
+    dispatch(getorderdata(auth?.auth?.uid))
+  }, [])
+ 
+  // orderdetailsdbehfrjbebjfejbe {"id": "gzsYC9y4TsbuhVYgkadA00B4n9i2", "order": [{"CustomerId": "cus_QzzyFB1eSG6xoU", "Date": "9-10-2024", "Ordernum": 133, "Status": "Pending", "address": [Object], "cart": [Array]}]}
+ 
   return (
     <ScrollView>
       <StatusBar backgroundColor="#F4F4F4" barStyle="dark-content" />
@@ -120,7 +134,7 @@ export default function My_Profile( {route, navigation }) {
         </View>
 
         <FlatList
-          data={Data}
+          data={orderdetails?.order?.[0]?.order}
           renderItem={({item}) => <DataStructure v={item} n={navigation}/>}
           keyExtractor={item => item.id}
         />

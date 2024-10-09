@@ -10,34 +10,50 @@ const initialState = {
 export const orderdata = createAsyncThunk(
     'order/orderdata',
     async (data) => {
-        console.log("datadatadatadatadata",data);
+        console.log("datadatadatadatadata",data.data.cart[0].cart);
         try {
             // const AddShippingData = []
 
-            const userRefrence = await firestore().collection('OrderData').doc(data.uid);
+            const userRefrence = await firestore().collection('OrderData').doc(data.data.uid);
             const userDoc = await userRefrence.get();
 
             console.log("userDocuserDoc", userDoc.exists);
+            const ordernum  = Math.floor(Math.random() * 1000)
+            const d = new Date();
+            const date = `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`
 
-            try {
+
+             try {
                 if (userDoc.exists) {
                     await userRefrence.update(
                         {
-                            order: firebase.firestore.FieldValue.arrayUnion(
-                                data.address,
-                            )
+                            order: firebase.firestore.FieldValue.arrayUnion({
+                                address: data.data.address, 
+                                cart: data.data.cart[0].cart,     
+                                CustomerId : data.customerId  ,
+                                Status : "Pending",
+                                Ordernum : ordernum,
+                                Date :  date
+                            })
                         }
                     );
                 } else {
                     await userRefrence.set({
-                        order: [data.address]
+                        order: [{
+                            address: data.data.address,
+                            cart: data.data.cart[0].cart,
+                            CustomerId : data.customerId  ,
+                            Status : "Pending",
+                            Ordernum : ordernum,
+                            Date :  date
+                        }]
                     })
                 }
 
                 const getorderdata = [];
                 await firestore()
                     .collection('OrderData')
-                    .doc(data.uid)
+                    .doc(data.data.uid)
                     .get()
                     .then(documentSnapshot => {
                         if (documentSnapshot.exists) {
@@ -92,8 +108,13 @@ const orderSlice = createSlice({
     initialState,
     extraReducers: (builder) => {
         builder.addCase(orderdata.fulfilled, (state, action) => {
-            state.adsshipadrress = action.payload
+            state.order = action.payload
         })
+        builder.addCase(getorderdata.fulfilled, (state, action) => {
+            state.order = action.payload
+        })
+        
+
     }
 })
 
