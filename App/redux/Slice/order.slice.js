@@ -33,7 +33,8 @@ export const orderdata = createAsyncThunk(
                                 CustomerId : data.customerId  ,
                                 Status : "Pending",
                                 Ordernum : ordernum,
-                                Date :  date
+                                Date :  date,
+                                TotalAmount : data.data.amt
                             })
                         }
                     );
@@ -45,7 +46,8 @@ export const orderdata = createAsyncThunk(
                             CustomerId : data.customerId  ,
                             Status : "Pending",
                             Ordernum : ordernum,
-                            Date :  date
+                            Date :  date,
+                            TotalAmount : data.data.amt
                         }]
                     })
                 }

@@ -13,6 +13,7 @@ import React, { useEffect } from 'react';
 import { horizontalScale, moderateScale, verticalScale } from '../../../assets/Metrics/Metrics';
 import { useDispatch, useSelector } from 'react-redux';
 import { getorderdata } from '../../redux/Slice/order.slice';
+import { getcart } from '../../redux/Slice/cart.slice';
 
 const Data = [
   {
@@ -50,11 +51,13 @@ const Data = [
 ];
 
 const DataStructure = ({v,n}) => (
-  <TouchableOpacity onPress={() => n.navigate("OrderDetails")}>
+  <TouchableOpacity onPress={() => n.navigate("OrderDetails" ,
+  v
+  )}>
     <View style={Styles.orderDatamainBody}>
       <View style={{marginTop: 6}}>
         <View style={{flexDirection: 'row',justifyContent:'space-between'}}>
-          <Text style={Styles.orderData1}>Order Num : {v.Ordernum}</Text>
+          <Text style={Styles.orderData11111}>Order Num : {v.Ordernum}</Text>
           <Text style={Styles.orderData2}>{v.Date}</Text>
         </View>
 
@@ -66,13 +69,19 @@ const DataStructure = ({v,n}) => (
         <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
           <View style={{flexDirection: 'row'}}>
             <Text style={Styles.orderData2}>Quantity:</Text>
-            <Text style={Styles.orderData1}>{v.quantity}</Text>
+            <Text style={Styles.orderData1}>{v?.cart.reduce((sum,v1) =>  sum + v1.qty,0)}</Text>
+
           </View>
 
           <View style={{flexDirection: 'row',justifyContent:'space-between'}}>
             <Text style={Styles.orderData2}>Total Amount:</Text>
-            <Text style={Styles.orderData1}>{v.totalAmount}$</Text>
+            <Text style={Styles.orderData1}>{v.TotalAmount}$</Text>
           </View>
+        </View>
+
+        <View style={{flexDirection: 'row', justifyContent:'space-between' ,marginTop : 10 ,width:300}}>
+          <Text style={Styles.orderData2}>Address:</Text>
+          <Text style={Styles.addresssss}>{`${v.address?.address}, ${v.address?.city}, ${v.address?.state}, ${v.address?.zip_code}, ${v.address?.country}`}</Text>
         </View>
 
         <View style={Styles.detailBtnHead}>
@@ -83,7 +92,7 @@ const DataStructure = ({v,n}) => (
           </View>
           <View>
             <TouchableOpacity>
-              <Text style={Styles.delieverdText}>Delievered</Text>
+              <Text style={Styles.delieverdText}>{v.Status}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -101,6 +110,7 @@ export default function My_Profile( {route, navigation }) {
   const auth = useSelector(state => state.auth)
   useEffect(() => {
     dispatch(getorderdata(auth?.auth?.uid))
+   
   }, [])
  
   // orderdetailsdbehfrjbebjfejbe {"id": "gzsYC9y4TsbuhVYgkadA00B4n9i2", "order": [{"CustomerId": "cus_QzzyFB1eSG6xoU", "Date": "9-10-2024", "Ordernum": 133, "Status": "Pending", "address": [Object], "cart": [Array]}]}
@@ -204,6 +214,19 @@ const Styles = StyleSheet.create({
     fontFamily: 'Metropolis-Bold',
     color: '#222222',
     lineHeight: 24,
+    marginLeft:5
+  },
+  orderData11111: {
+    fontFamily: 'Metropolis-Bold',
+    color: '#222222',
+    lineHeight: 24
+  },
+  addresssss:{
+
+    fontFamily: 'Metropolis-Bold',
+    color: '#222222',
+    lineHeight: 24,
+    // fontSize:13.5
   },
   orderData2: {
     fontFamily: 'Metropolis-Regular',
