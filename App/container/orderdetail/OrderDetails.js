@@ -54,7 +54,7 @@ const Orderdata = [
 ]
 export default function OrderDetails({route}) {
   console.log("orderdetailsdbehfrjbebjfejbe",route.param);
-
+  const a = route.params.address
   const dispatch = useDispatch()
   const orderdetails  =  useSelector(state => state.order)
   const product = useSelector(state => state.productfire);
@@ -148,7 +148,10 @@ export default function OrderDetails({route}) {
         keyExtractor={item => item.id}
       // horizontal={true}
       />
-
+      <TouchableOpacity style={styles.olldeta}>
+      <Text style={styles.orderData2}>Address:</Text>
+          <Text style={styles.addresssss}>{`${a.address}, ${a.city}, ${a.state}, ${a.zip_code}, ${a.country}`}</Text>
+      </TouchableOpacity>
 
     </ScrollView>
   )
@@ -162,6 +165,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: horizontalScale(19),
     paddingTop: horizontalScale(13),
   
+  },
+  addresssss:{
+    width:200,
+    fontFamily: 'Metropolis-Bold',
+    color: '#222222',
+    lineHeight: 24,
+    // fontSize:13.5
+  },
+  orderData2: {
+    fontFamily: 'Metropolis-Regular',
+    color: '#9B9B9B',
+    lineHeight: 24,
+    marginLeft:10,
   },
   olldeta: {
     flexDirection: 'row',

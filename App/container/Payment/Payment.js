@@ -66,7 +66,7 @@ export default function Payment(props) {
   };
 
   
-    const openPaymentSheet = async () => {
+    const openPaymentSheet = async () => {    
         const {data}  = await presentPaymentSheet();
         console.log("data",data);
     

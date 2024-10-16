@@ -11,6 +11,7 @@ import { ShopbySub } from '../../redux/Slice/shopping.slice';
 import { addtoCart, addtocart } from '../../redux/Slice/cart.slice';
 import { getFavourite, tooglefavourite } from '../../redux/Slice/favourite.slice';
 
+
 const Data = [
     {
         id: 1,
